@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bản đồ 9 khu phố Tân Hải - Tỷ lệ cần khám</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=d5uto7DtsK10HxbdkrrUMh_0CedG7slMbQW2A-W70yU6oU5SOzDUb3NM-RK65CxPDewgCh0b__S6ZJegpS7Pp4m9MNCTB4lfmf_xMQw3E7Qz8Ne7NkDJ5mN5SVMaPcU2dw24Hjos00xX0hv6jnWB3mOJP8JXUddKGP4mQtCxOzHstU4nM0t5ilN0ZtKVB8kqYQYjmF10LKKtlN4kj7ETg1fXU3gHoD6EqTjljhG4BWD4WjYdDXoi29l9ki1S4BAt6ZlH_cBrzZn3X9eOuN9gxLDkumRhAVKl7YEwoUBecjpTEMoJZ-97onD8CbxIjKefEWs1b4FLtfeNwpjdy2Zzxg" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMDk2MWM4MjA2ODNhNTU5MTlmM2ZmNjNjYSZmbj1CYW5fZG9fOV9LaHVfcGhvX1Rhbl9IYWlfYmlldV9kby5odG1sJmNkPWF0dGFjaG1lbnQmdHM9NDk2Mzc3JnA9ZnMmY2lkPTEmc2lnPTY0MjJlMjI5ZDc3OWM5NTc5NDJhM2E1Y2NkZDFjOTQ5ZWYyMDc1MWExZjY3ZWMxMDg3MmUyNzZlM2IwZmQzODkmdj0w"/><style>
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#173b2d}
+header{padding:18px 22px;background:#087f5b;color:#fff}
+h1{margin:0;font-size:23px} h2{margin:12px 0}
+main{padding:16px 20px}
+.note{background:#fff;padding:12px 15px;border-radius:10px;margin-bottom:12px;font-size:13px}
+#map{height:54vh;min-height:430px}
+.panel{background:#fff;border-radius:12px;padding:16px;margin-top:16px;box-shadow:0 2px 8px #0001}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 15px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px}
+.chart{width:100%;overflow-x:auto}
+.row{display:grid;grid-template-columns:115px 1fr 70px;gap:10px;align-items:center;margin:10px 0}
+.label{font-weight:bold;font-size:14px}
+.track{height:25px;background:#e9ecef;border-radius:6px;overflow:hidden}
+.bar{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;box-sizing:border-box;color:#fff;font-weight:bold;font-size:12px}
+.val{font-weight:bold;text-align:right}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{background:#fff;border:1px solid #dce8e2;border-radius:10px;padding:13px;cursor:pointer}
+.name{font-weight:bold;font-size:17px} .num{font-size:22px;font-weight:bold;margin-top:7px}
+.small{font-size:12px;color:#666}
+</style></head>
+<body>
+<header>
+<h1>🗺️ BẢN ĐỒ 9 KHU PHỐ PHƯỜNG TÂN HẢI</h1>
+<div>Tỷ lệ cần khám sức khỏe • Đã loại KhongRoKP</div>
+</header>
+<main>
+<div class="note"><b>Cách tính:</b> Tỷ lệ cần khám = Số cần khám / Tổng cộng × 100%. Đây là tỷ lệ theo số liệu hiện có trong file, chưa phải tỷ lệ hoàn thành khám thực tế.</div>
+</main>
+<div id="map"></div>
+<main>
+<div class="panel">
+<h2>📊 TỶ LỆ CẦN KHÁM SỨC KHỎE THEO KHU PHỐ</h2>
+<div class="legend">
+<span><i class="dot" style="background:#198754"></i>≥ 85%</span>
+<span><i class="dot" style="background:#f59f00"></i>80–84,9%</span>
+<span><i class="dot" style="background:#dc3545"></i>&lt; 80%</span>
+</div>
+<div id="chart" class="chart"></div>
+</div>
+<div class="panel">
+<h2>📋 Chi tiết 9 khu phố</h2>
+<div id="cards" class="cards"></div>
+</div>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const data=[{"name": "Phước Hải", "lat": 10.5025, "lon": 107.10944444444443, "total": 2490, "18_60": 2177, "free": 1741.6, "60plus": 313, "adult": 2490, "exam": 2054.6, "rate": 82.5}, {"name": "Chu Hải", "lat": 10.5, "lon": 107.11361111111111, "total": 3143, "18_60": 2583, "free": 2066.4, "60plus": 560, "adult": 3143, "exam": 2626.4, "rate": 83.6}, {"name": "Đông Hải", "lat": 10.50611111111111, "lon": 107.11888888888888, "total": 2108, "18_60": 1804, "free": 1443.2, "60plus": 304, "adult": 2108, "exam": 1747.2, "rate": 82.9}, {"name": "Láng Cát", "lat": 10.506944444444445, "lon": 107.09138888888889, "total": 2758, "18_60": 2369, "free": 1895.2, "60plus": 389, "adult": 2758, "exam": 2284.2, "rate": 82.8}, {"name": "Cát Hải", "lat": 10.502777777777778, "lon": 107.09055555555555, "total": 1519, "18_60": 1269, "free": 1015.2, "60plus": 250, "adult": 1519, "exam": 1265.2, "rate": 83.3}, {"name": "Phước Hiệp", "lat": 10.521666666666668, "lon": 107.08083333333333, "total": 2603, "18_60": 2158, "free": 1726.4, "60plus": 445, "adult": 2603, "exam": 2171.4, "rate": 83.4}, {"name": "Phước Long", "lat": 10.5175, "lon": 107.08416666666666, "total": 3047, "18_60": 2513, "free": 2010.4, "60plus": 534, "adult": 3047, "exam": 2544.4, "rate": 83.5}, {"name": "Phước Tấn", "lat": 10.524166666666668, "lon": 107.09027777777777, "total": 3155, "18_60": 2555, "free": 2044.0, "60plus": 600, "adult": 3155, "exam": 2644.0, "rate": 83.8}, {"name": "Phước Thành", "lat": 10.54, "lon": 107.10583333333332, "total": 1225, "18_60": 815, "free": 652.0, "60plus": 410, "adult": 1225, "exam": 1062.0, "rate": 86.7}];
+const map=L.map('map').setView([10.51,107.10],14);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+
+const markers={}, bounds=[];
+function colorFor(r){
+  return r.rate>=85?'#198754':(r.rate>=80?'#f59f00':'#dc3545');
+}
+function popup(r){
+ return `<b style="font-size:17px">KHU PHỐ ${r.name}</b><hr>
+ <b>Tỷ lệ cần khám: ${r.rate}%</b><br>
+ Số cần khám: ${r.exam.toLocaleString('vi-VN')}<br>
+ Tổng cộng: ${r.total.toLocaleString('vi-VN')}`;
+}
+data.forEach(r=>{
+ let m=L.circleMarker([r.lat,r.lon],{radius:12,color:'#fff',weight:2,fillColor:colorFor(r),fillOpacity:.9})
+ .addTo(map).bindPopup(popup(r));
+ markers[r.name]=m; bounds.push([r.lat,r.lon]);
+});
+map.fitBounds(bounds,{padding:[30,30]});
+
+const sorted=[...data].sort((a,b)=>b.rate-a.rate);
+document.getElementById('chart').innerHTML=sorted.map(r=>`
+<div class="row">
+ <div class="label">${r.name}</div>
+ <div class="track"><div class="bar" style="width:${Math.min(r.rate,100)}%;background:${colorFor(r)}">${r.rate}%</div></div>
+ <div class="val">${r.exam.toLocaleString('vi-VN')}</div>
+</div>`).join('');
+
+const cards=document.getElementById('cards');
+data.forEach(r=>{
+ let c=document.createElement('div'); c.className='card';
+ c.style.borderLeft='7px solid '+colorFor(r);
+ c.innerHTML=`<div class="name">${r.name}</div>
+ <div class="num" style="color:${colorFor(r)}">${r.rate}%</div>
+ <div class="small">Cần khám: ${r.exam.toLocaleString('vi-VN')} / ${r.total.toLocaleString('vi-VN')}</div>`;
+ c.onclick=()=>{let m=markers[r.name];map.setView(m.getLatLng(),16);m.openPopup();};
+ cards.appendChild(c);
+});
+</script>
+</body></html>
