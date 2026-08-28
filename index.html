@@ -1,5 +1,4 @@
-
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -30,7 +29,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Khởi tạo bản đồ zoom ngay vào khu vực Phú Mỹ
+        // 1. Khởi tạo bản đồ
         var map = L.map('map').setView([10.5360, 107.1350], 13);
 
         // 2. Lớp bản đồ nền đường xá Google Maps
@@ -40,28 +39,25 @@
         }).addTo(map);
 
         // 3. Chèn ảnh ranh giới
-        // LƯU Ý: Đảm bảo tên file trên GitHub của bạn khớp đúng với tên ở đây
-        var imageUrl = './anh_ranh_gioi_tan_hai.jpg'; 
-        
-        // Tọa độ đã được tinh chỉnh lại cho Phường Tân Hải (Góc Dưới-Trái và Trên-Phải)
+        var imageUrl = './anh_ranh_gioi.jpg'; 
         var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
 
         L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.65, // Chỉnh độ mờ 65% để dễ nhìn đường thật bên dưới
+            opacity: 0.65, 
             interactive: false 
         }).addTo(map);
 
-        // 4. Dữ liệu 9 khu phố (Đã đặt tọa độ tạm thời vào khu vực Tân Hải)
+        // 4. Dữ liệu 9 khu phố (Đã đặt lại tên và rải tọa độ theo mảng màu)
         var khuPhoData = [
-            { name: "Khu phố 1", lat: 10.5350, lng: 107.1300, tyle: 86.5 }, 
-            { name: "Khu phố 2", lat: 10.5380, lng: 107.1350, tyle: 82.0 }, 
-            { name: "Khu phố 3", lat: 10.5310, lng: 107.1280, tyle: 75.2 }, 
-            { name: "Khu phố 4", lat: 10.5290, lng: 107.1320, tyle: 88.1 },
-            { name: "Khu phố 5", lat: 10.5250, lng: 107.1360, tyle: 90.0 },
-            { name: "Khu phố 6", lat: 10.5330, lng: 107.1400, tyle: 81.4 },
-            { name: "Khu phố 7", lat: 10.5360, lng: 107.1250, tyle: 79.9 },
-            { name: "Khu phố 8", lat: 10.5220, lng: 107.1300, tyle: 84.5 },
-            { name: "Khu phố Phước Long", lat: 10.5280, lng: 107.1220, tyle: 70.0 }
+            { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, // Góc trên phải (Màu xanh dương đậm)
+            { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1200, tyle: 82.0 },   // Giữa trái (Màu cam)
+            { name: "Khu phố Phước Hiệp", lat: 10.5350, lng: 107.1080, tyle: 75.2 },  // Góc ngoài cùng bên trái (Màu vàng)
+            { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    // Ở giữa (Màu xanh lá)
+            { name: "Khu phố Chu Hải", lat: 10.5350, lng: 107.1550, tyle: 90.0 },     // Giữa phải (Màu tím)
+            { name: "Khu phố Đông Hải", lat: 10.5200, lng: 107.1550, tyle: 81.4 },    // Góc dưới phải (Màu vàng nhạt)
+            { name: "Khu phố Phước Hải", lat: 10.5150, lng: 107.1400, tyle: 79.9 },   // Dưới, giữa phải (Màu tím đậm)
+            { name: "Khu phố Cát Hải", lat: 10.5150, lng: 107.1250, tyle: 84.5 },     // Dưới, giữa trái (Màu xanh dương)
+            { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   // Góc dưới trái (Màu hồng/tím nhạt)
         ];
 
         // 5. Vẽ các chấm tròn
