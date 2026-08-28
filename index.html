@@ -47,28 +47,28 @@
             interactive: false 
         }).addTo(map);
 
-   // 4. Dữ liệu 9 khu phố (ĐÃ ÉP SÁT PHƯỚC HIỆP, CÁT HẢI, ĐÔNG HẢI)
+   // 4. Dữ liệu 9 khu phố (Đã dời Phước Hiệp, Cát Hải, Đông Hải, và Phước Hải vào đúng ranh)
         var khuPhoData = [
             { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, 
             { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   
             
-            // 🎯 Kéo mạnh Phước Hiệp sang sát mép trái
-            { name: "Khu phố Phước Hiệp", lat: 10.5360, lng: 107.1110, tyle: 75.2 },  
+            // 🎯 Dời Phước Hiệp vào mảng màu cam/vàng bên trái
+            { name: "Khu phố Phước Hiệp", lat: 10.5320, lng: 107.1180, tyle: 75.2 },  
             
             { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    
             { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     
             
-            // 🎯 Kéo Đông Hải thấp xuống và ép ra mép phải (dải màu vàng nhạt)
-            { name: "Khu phố Đông Hải", lat: 10.5240, lng: 107.1550, tyle: 81.4 },    
-
-            { name: "Khu phố Phước Hải", lat: 10.5180, lng: 107.1400, tyle: 79.9 },   
+            // 🎯 Dời Đông Hải vào dải màu vàng nhạt rìa bên phải
+            { name: "Khu phố Đông Hải", lat: 10.5230, lng: 107.1510, tyle: 81.4 },    
             
-            // 🎯 Kéo Cát Hải thấp xuống và lùi sang trái (trung tâm mảng xanh dương)
-            { name: "Khu phố Cát Hải", lat: 10.5180, lng: 107.1200, tyle: 84.5 },     
+            // 🎯 Kéo Phước Hải lùi lại vào mảng màu tím đậm
+            { name: "Khu phố Phước Hải", lat: 10.5200, lng: 107.1440, tyle: 79.9 },   
+            
+            // 🎯 Dời Cát Hải sang phải vào mảng màu xanh dương
+            { name: "Khu phố Cát Hải", lat: 10.5200, lng: 107.1320, tyle: 84.5 },     
             
             { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
         ];
-
         // 5. Vẽ các chấm tròn
         khuPhoData.forEach(function(kp) {
             var markerColor = (kp.tyle >= 85) ? "#28a745" : (kp.tyle >= 80) ? "#ffc107" : "#dc3545";
