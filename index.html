@@ -47,20 +47,19 @@
             interactive: false 
         }).addTo(map);
 
-       // 4. Dữ liệu 9 khu phố (Đã tinh chỉnh thêm Chu Hải và Đông Hải)
+     // 4. Dữ liệu 9 khu phố (Đã tinh chỉnh thêm Cát Hải)
         var khuPhoData = [
             { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, // Góc trên phải (Màu xanh dương đậm)
-            
             { name: "Khu phố Phước Tân", lat: 10.5440, lng: 107.1150, tyle: 82.0 },   // Giữa trái (Màu cam)
             { name: "Khu phố Phước Hiệp", lat: 10.5400, lng: 107.1040, tyle: 75.2 },  // Góc ngoài cùng bên trái (Màu vàng)
             { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    // Ở giữa (Màu xanh lá)
-            
-            // ĐÃ KÉO LẠI CHU HẢI VÀ ĐÔNG HẢI
-            { name: "Khu phố Chu Hải", lat: 10.5300, lng: 107.1500, tyle: 90.0 },     // Giữa phải (Màu tím) - Đã kéo xích xuống & sang trái
-            { name: "Khu phố Đông Hải", lat: 10.5130, lng: 107.1520, tyle: 81.4 },    // Dải nhỏ bên phải (Màu vàng nhạt) - Đã kéo thấp xuống
-
+            { name: "Khu phố Chu Hải", lat: 10.5300, lng: 107.1500, tyle: 90.0 },     // Giữa phải (Màu tím)
+            { name: "Khu phố Đông Hải", lat: 10.5130, lng: 107.1520, tyle: 81.4 },    // Dải nhỏ bên phải (Màu vàng nhạt)
             { name: "Khu phố Phước Hải", lat: 10.5150, lng: 107.1400, tyle: 79.9 },   // Dưới, giữa phải (Màu tím đậm)
-            { name: "Khu phố Cát Hải", lat: 10.5150, lng: 107.1250, tyle: 84.5 },     // Dưới, giữa trái (Màu xanh dương)
+            
+            // ĐÃ KÉO LẠI CÁT HẢI
+            { name: "Khu phố Cát Hải", lat: 10.5220, lng: 107.1240, tyle: 84.5 },     // Đã kéo xích lên trên để vào giữa mảng xanh dương
+            
             { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   // Góc dưới trái (Màu hồng/tím nhạt)
         ];
 
