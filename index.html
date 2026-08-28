@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản đồ 9 Khu phố phường Tân Hải</title>
-    <!-- Tải thư viện CSS của Leaflet để hiện giao diện bản đồ -->
+    <title>Bản đồ 9 Khu phố phường Tân Hải (Dán đè ảnh ranh giới)</title>
+    <!-- Tải thư viện CSS của Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
@@ -12,7 +12,6 @@
         #header h1 { margin: 0; font-size: 22px; }
         #header p { margin: 5px 0 0 0; font-size: 14px; }
         
-        /* ĐÂY LÀ CHỖ SỬA LỖI: Bắt buộc phải có chiều cao thì bản đồ mới hiện */
         #map { height: calc(100vh - 80px); width: 100%; }
         
         .legend { background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2); line-height: 24px; font-size: 14px;}
@@ -29,23 +28,46 @@
     <!-- Khung chứa bản đồ -->
     <div id="map"></div>
 
-    <!-- Tải thư viện JS của Leaflet để vẽ bản đồ -->
+    <!-- Tải thư viện JS của Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Khởi tạo bản đồ. 
-        // [10.6728, 107.7816] là Vĩ độ và Kinh độ tạm thời. 
-        // 14 là mức độ phóng to (zoom).
-        var map = L.map('map').setView([10.6728, 107.7816], 14);
+        // 1. Khởi tạo bản đồ. Dùng tọa độ trung tâm của khu vực ranh giới ước lượng.
+        var map = L.map('map').setView([10.6750, 107.7850], 15);
 
-        // 2. Thêm lớp bản đồ nền từ OpenStreetMap (Miễn phí, không lo lỗi API)
-       L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        // 2. Thêm lớp bản đồ nền từ Google Maps (bạn đã làm được)
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
-        // 3. Dữ liệu 9 khu phố 
-        // LƯU Ý: Bạn có thể sửa "tyle" thành số thật của bạn. Bản đồ sẽ tự đổi màu.
-        // Bạn có thể lên Google Maps lấy lại số [lat, lng] thực tế để điền vào đây.
+        // ================================================================
+        // 2.5. HIỂN THỊ ẢNH RANH GIỚI CỦA BẠN DÁN ĐÈ LÊN BẢN ĐỒ
+        // ================================================================
+        
+        // Thay tên file ảnh của bạn vào đây (nhớ ghi đúng đuôi .png hay .jpg)
+        var imageUrl = './anh_ranh_gioi_tan_hai.png'; 
+        
+        // Tọa độ để ghim ảnh: [[Vĩ độ góc Dưới-Trái, Kinh độ góc Dưới-Trái], [Vĩ độ góc Trên-Phải, Kinh độ góc Trên-Phải]]
+        // LƯU Ý: Đây là các con số mình ước chừng, bạn sẽ phải tự thay đổi các số này để ảnh khớp với bản đồ thật!
+        var imageBounds = [[10.6650, 107.7650], [10.6850, 107.8000]]; 
+
+        // Chèn ảnh vào bản đồ
+        L.imageOverlay(imageUrl, imageBounds, {
+            opacity: 0.6,    // Độ mờ của ảnh (từ 0 đến 1). Chỉnh 0.6 để nhìn xuyên thấu đường xá bên dưới.
+            interactive: false // Bỏ qua tương tác chuột để không cản trở việc bấm vào các chấm tròn
+        }).addTo(map);
+
+        // Tự động căn chỉnh bản đồ để nhìn thấy toàn bộ ảnh
+        map.fitBounds(imageBounds);
+
+        // Thêm một marker ẩn với popup ở trung tâm để thông báo (bạn có thể xóa đoạn này nếu muốn)
+        L.marker([10.6750, 107.7850], {opacity: 0})
+            .addTo(map)
+            .bindPopup("🎉 Ảnh ranh giới đã được chèn vào! 🚧 Lưu ý: Tọa độ là ước lượng. Bạn cần tự tinh chỉnh để ảnh khớp chính xác hơn.")
+            .openPopup();
+        // ================================================================
+
+        // 3. Dữ liệu 9 khu phố (giữ nguyên)
         var khuPhoData = [
             { name: "Khu phố 1", lat: 10.6750, lng: 107.7800, tyle: 86.5 }, 
             { name: "Khu phố 2", lat: 10.6780, lng: 107.7850, tyle: 82.0 }, 
@@ -58,7 +80,7 @@
             { name: "Khu phố 9", lat: 10.6680, lng: 107.7720, tyle: 70.0 }
         ];
 
-        // 4. Mã lệnh để vẽ các điểm lên bản đồ
+        // 4. Vẽ các chấm tròn (giữ nguyên)
         khuPhoData.forEach(function(kp) {
             var markerColor = "";
             if (kp.tyle >= 85) {
@@ -78,11 +100,10 @@
                 fillOpacity: 0.9
             }).addTo(map);
 
-            // Thông tin hiện ra khi bấm chuột vào chấm tròn
             circleMarker.bindPopup("<div style='text-align:center;'><b>" + kp.name + "</b><br>Tỷ lệ cần khám: <b>" + kp.tyle + "%</b></div>");
         });
 
-        // 5. Thêm bảng chú giải (Legend) góc dưới bên phải
+        // 5. Thêm bảng chú giải (giữ nguyên)
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
