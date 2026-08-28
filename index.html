@@ -38,8 +38,9 @@
         var map = L.map('map').setView([10.6728, 107.7816], 14);
 
         // 2. Thêm lớp bản đồ nền từ OpenStreetMap (Miễn phí, không lo lỗi API)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+       L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            attribution: '© Google Maps',
+            maxZoom: 20
         }).addTo(map);
 
         // 3. Dữ liệu 9 khu phố 
