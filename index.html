@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -29,47 +30,37 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Khởi tạo bản đồ
+        // Khởi tạo bản đồ
         var map = L.map('map').setView([10.5360, 107.1350], 13);
 
-        // 2. Lớp bản đồ nền đường xá Google Maps
+        // Lớp bản đồ nền đường xá Google Maps
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
-        // 3. Chèn ảnh ranh giới
-        var imageUrl = './anh_ranh_gioi_tan_hai.png'; 
+        // Chèn ảnh ranh giới
+        var imageUrl = './anh_ranh_gioi.jpg'; 
         var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
-
         L.imageOverlay(imageUrl, imageBounds, {
             opacity: 0.65, 
             interactive: false 
         }).addTo(map);
 
-   // 4. Dữ liệu 9 khu phố (Đã dời Phước Hiệp, Cát Hải, Đông Hải, và Phước Hải vào đúng ranh)
+        // 4. Dữ liệu 9 khu phố 
         var khuPhoData = [
             { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, 
             { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   
-            
-            // 🎯 Dời Phước Hiệp vào mảng màu cam/vàng bên trái
             { name: "Khu phố Phước Hiệp", lat: 10.5320, lng: 107.1180, tyle: 75.2 },  
-            
             { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    
             { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     
-            
-            // 🎯 Dời Đông Hải vào dải màu vàng nhạt rìa bên phải
             { name: "Khu phố Đông Hải", lat: 10.5230, lng: 107.1510, tyle: 81.4 },    
-            
-            // 🎯 Kéo Phước Hải lùi lại vào mảng màu tím đậm
             { name: "Khu phố Phước Hải", lat: 10.5200, lng: 107.1440, tyle: 79.9 },   
-            
-            // 🎯 Dời Cát Hải sang phải vào mảng màu xanh dương
             { name: "Khu phố Cát Hải", lat: 10.5200, lng: 107.1320, tyle: 84.5 },     
-            
             { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
         ];
-        // 5. Vẽ các chấm tròn
+
+        // Vẽ các chấm tròn
         khuPhoData.forEach(function(kp) {
             var markerColor = (kp.tyle >= 85) ? "#28a745" : (kp.tyle >= 80) ? "#ffc107" : "#dc3545";
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
@@ -83,7 +74,7 @@
             circleMarker.bindPopup("<div style='text-align:center;'><b>" + kp.name + "</b><br>Tỷ lệ cần khám: <b>" + kp.tyle + "%</b></div>");
         });
 
-        // 6. Bảng chú giải
+        // Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
@@ -94,6 +85,16 @@
             return div;
         };
         legend.addTo(map);
+
+        // ==========================================
+        // VŨ KHÍ BÍ MẬT: BẤM CHUỘT ĐỂ LẤY TỌA ĐỘ
+        // ==========================================
+        map.on('click', function(e) {
+            var lat = e.latlng.lat.toFixed(4); // Lấy 4 số thập phân
+            var lng = e.latlng.lng.toFixed(4);
+            alert("Tọa độ điểm bạn vừa bấm là:\n\nlat: " + lat + "\nlng: " + lng + "\n\nHãy chép 2 số này vào code nhé!");
+        });
+
     </script>
 </body>
 </html>
