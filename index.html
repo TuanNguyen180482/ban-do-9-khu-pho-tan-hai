@@ -49,7 +49,7 @@
         .legend b { font-size: 15px; color: #004a99; display: block; margin-bottom: 5px;}
         .legend i { width: 16px; height: 16px; float: left; margin-right: 10px; margin-top: 5px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 4px rgba(0,0,0,0.4);}
 
-        /* Popup tùy chỉnh */
+        /* Popup thông tin chi tiết */
         .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.25); }
         .leaflet-popup-content { margin: 15px 18px; font-size: 14px; line-height: 1.6; color: #222; }
         .popup-title { font-size: 18px; font-weight: bold; color: #111; border-bottom: 2px solid #ccc; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; }
@@ -65,7 +65,7 @@
             100% { fill-opacity: 0.5; stroke-width: 1; }
         }
 
-        /* NÚT BẬT/TẮT BIỂU ĐỒ */
+        /* Nút Bật/Tắt Biểu đồ */
         #chart-toggle-btn {
             position: absolute;
             bottom: 25px;
@@ -84,7 +84,7 @@
         }
         #chart-toggle-btn:hover { background: #003366; transform: translateY(-2px); }
 
-        /* KHUNG CHỨA BIỂU ĐỒ NỔI */
+        /* Khung Biểu đồ */
         #chart-container {
             position: absolute;
             bottom: 75px;
@@ -98,7 +98,7 @@
             padding: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             border: 1px solid rgba(255,255,255,0.7);
-            display: none; /* Mặc định ẩn, bấm nút mới mở */
+            display: none;
         }
         #chart-container h4 {
             margin: 0 0 10px 0;
@@ -114,7 +114,7 @@
     <!-- Tiêu đề lơ lửng -->
     <div id="header">
         <h1>🗺️ BẢN ĐỒ PHƯỜNG TÂN HẢI</h1>
-        <p>Tỷ lệ người dân cần khám sức khỏe trên địa bàn phường</p>
+        <p>Tỷ lệ cần khám sức khỏe trên địa bàn phuòng</p>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -133,78 +133,72 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Khởi tạo bản đồ
-        var map = L.map('map', {zoomControl: false}).setView([10.5360, 107.1350], 13);
+        // Khởi tạo bản đồ zoom thẳng vào khu vực Phường Tân Hải, TX Phú Mỹ
+        var map = L.map('map', {zoomControl: false}).setView([10.5150, 107.1200], 13);
         
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-        // Lớp bản đồ nền
+        // Lớp bản đồ nền Google Maps thực tế
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
-        // Chèn ảnh ranh giới
-        var imageUrl = './anh_ranh_gioi_tan_hai.jpg'; 
-        var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
-        L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.65, 
-            interactive: false 
-        }).addTo(map);
+        // (Đã xóa hoàn toàn ảnh ranh giới phủ lên)
 
-        // Dữ liệu 9 khu phố đầy đủ thông tin
+        // Dữ liệu 9 khu phố được gắn tọa độ thực tế trên Google Maps
         var khuPhoData = [
             { 
-                name: "Chu Hải", lat: 10.5380, lng: 107.1470, 
-                tyle: 83.6, danhGia: "Trung bình", tongCong: "3.143", tuoi18_60: "2.583", 
-                laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4" 
-            },
-            { 
-                name: "Phước Thành", lat: 10.5550, lng: 107.1450, 
+                name: "Phước Thành", lat: 10.5420, lng: 107.1350, 
                 tyle: 86.5, danhGia: "Tốt", tongCong: "2.850", tuoi18_60: "2.300", 
                 laoDongTuDo: "1.840", tuoi60TroLen: "550", congTuoi18TroLen: "2.850", soCanKham: "2.465,25" 
             },
             { 
-                name: "Phước Tân", lat: 10.5352, lng: 107.1217, 
+                name: "Phước Tân", lat: 10.5320, lng: 107.1220, 
                 tyle: 82.0, danhGia: "Trung bình", tongCong: "2.500", tuoi18_60: "2.000", 
                 laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050" 
             },
             { 
-                name: "Phước Hiệp", lat: 10.5340, lng: 107.1200, 
+                name: "Phước Hiệp", lat: 10.5260, lng: 107.1120, 
                 tyle: 75.2, danhGia: "Mức thấp", tongCong: "1.900", tuoi18_60: "1.500", 
                 laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8" 
             },
             { 
-                name: "Láng Cát", lat: 10.5300, lng: 107.1300, 
+                name: "Láng Cát", lat: 10.5180, lng: 107.1250, 
                 tyle: 88.1, danhGia: "Tốt", tongCong: "3.000", tuoi18_60: "2.400", 
                 laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643" 
             },
             { 
-                name: "Đông Hải", lat: 10.5240, lng: 107.1427, 
+                name: "Chu Hải", lat: 10.5000, lng: 107.1200, 
+                tyle: 83.6, danhGia: "Trung bình", tongCong: "3.143", tuoi18_60: "2.583", 
+                laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4" 
+            },
+            { 
+                name: "Đông Hải", lat: 10.5080, lng: 107.1350, 
                 tyle: 81.4, danhGia: "Trung bình", tongCong: "2.100", tuoi18_60: "1.700", 
                 laoDongTuDo: "1.360", tuoi60TroLen: "400", congTuoi18TroLen: "2.100", soCanKham: "1.709,4" 
             },
             { 
-                name: "Phước Hải", lat: 10.5233, lng: 107.1360, 
+                name: "Phước Hải", lat: 10.5020, lng: 107.1280, 
                 tyle: 79.9, danhGia: "Mức thấp", tongCong: "2.400", tuoi18_60: "1.950", 
                 laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6" 
             },
             { 
-                name: "Cát Hải", lat: 10.5200, lng: 107.1320, 
+                name: "Cát Hải", lat: 10.4950, lng: 107.1120, 
                 tyle: 84.5, danhGia: "Trung bình", tongCong: "2.700", tuoi18_60: "2.200", 
                 laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5" 
             },
             { 
-                name: "Phước Long", lat: 10.5150, lng: 107.1080, 
+                name: "Phước Long", lat: 10.4900, lng: 107.1020, 
                 tyle: 70.0, danhGia: "Mức thấp", tongCong: "1.800", tuoi18_60: "1.450", 
                 laoDongTuDo: "1.160", tuoi60TroLen: "350", congTuoi18TroLen: "1.800", soCanKham: "1.260" 
             }
         ];
 
-        var markersList = []; // Lưu danh sách các marker để tương tác từ biểu đồ
+        var markersList = [];
 
-        // Vẽ các chấm tròn và gán Popup
-        khuPhoData.forEach(function(kp, index) {
+        // Vẽ các chấm tròn
+        khuPhoData.forEach(function(kp) {
             var markerColor = "";
             var classHieuUng = "";
 
@@ -227,12 +221,14 @@
                 className: classHieuUng 
             }).addTo(map);
 
+            // Hiện tên khu phố khi rê chuột qua
             circleMarker.bindTooltip("<b>KHU PHỐ " + kp.name + "</b>", {
                 direction: 'top', 
                 offset: [0, -10],
                 opacity: 0.9
             });
 
+            // Hiện thông tin chi tiết khi click vào
             var popupContent = `
                 <div class="popup-title">KHU PHỐ ${kp.name}</div>
                 <div class="popup-row">Tỷ lệ: <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b> — ${kp.danhGia}</div>
@@ -245,7 +241,7 @@
             `;
             
             circleMarker.bindPopup(popupContent);
-            markersList.push(circleMarker); // Lưu trữ marker
+            markersList.push(circleMarker);
         });
 
         // Bảng chú giải
@@ -260,16 +256,14 @@
         };
         legend.addTo(map);
 
-        // Công cụ bấm chuột lấy tọa độ
+        // Mẹo: Click chuột bất kỳ đâu trên bản đồ để xem tọa độ thực tế nếu bạn muốn nhích vị trí điểm nào
         map.on('click', function(e) {
             var lat = e.latlng.lat.toFixed(4);
             var lng = e.latlng.lng.toFixed(4);
-            console.log("lat: " + lat + ", lng: " + lng);
+            alert("Tọa độ bạn vừa click:\nlat: " + lat + "\nlng: " + lng);
         });
 
-        // ==========================================
-        // VẼ BIỂU ĐỒ BẰNG CHART.JS
-        // ==========================================
+        // Vẽ biểu đồ Chart.js
         var labels = khuPhoData.map(d => d.name);
         var dataValues = khuPhoData.map(d => d.tyle);
         var barColors = khuPhoData.map(d => d.tyle >= 85 ? '#28a745' : (d.tyle >= 80 ? '#ffc107' : '#dc3545'));
@@ -302,7 +296,6 @@
                         ticks: { font: { size: 10 } }
                     }
                 },
-                // Click vào cột trên biểu đồ sẽ định vị tới Marker trên bản đồ
                 onClick: (e, activeElements) => {
                     if (activeElements.length > 0) {
                         var index = activeElements[0].index;
