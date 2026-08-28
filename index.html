@@ -94,17 +94,55 @@
             interactive: false 
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố (Tọa độ chuẩn đã ghim)
+       // Dữ liệu 9 khu phố (ĐÃ TINH CHỈNH VỊ TRÍ PHƯỚC HIỆP VÀ ĐÔNG HẢI)
         var khuPhoData = [
-            { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, 
-            { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   
-            { name: "Khu phố Phước Hiệp", lat: 10.5320, lng: 107.1180, tyle: 75.2 },  
-            { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    
-            { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     
-            { name: "Khu phố Đông Hải", lat: 10.5230, lng: 107.1510, tyle: 81.4 },    
-            { name: "Khu phố Phước Hải", lat: 10.5200, lng: 107.1440, tyle: 79.9 },   
-            { name: "Khu phố Cát Hải", lat: 10.5200, lng: 107.1320, tyle: 84.5 },     
-            { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
+            { 
+                name: "Chu Hải", lat: 10.5380, lng: 107.1470, 
+                tyle: 83.6, danhGia: "Trung bình", tongCong: "3.143", tuoi18_60: "2.583", 
+                laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4" 
+            },
+            { 
+                name: "Phước Thành", lat: 10.5550, lng: 107.1450, 
+                tyle: 86.5, danhGia: "Tốt", tongCong: "2.850", tuoi18_60: "2.300", 
+                laoDongTuDo: "1.840", tuoi60TroLen: "550", congTuoi18TroLen: "2.850", soCanKham: "2.465,25" 
+            },
+            { 
+                name: "Phước Tân", lat: 10.5400, lng: 107.1260, 
+                tyle: 82.0, danhGia: "Trung bình", tongCong: "2.500", tuoi18_60: "2.000", 
+                laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050" 
+            },
+            { 
+                // 🎯 ĐÃ DỜI PHƯỚC HIỆP SANG PHẢI MỘT CHÚT (107.1180 -> 107.1200)
+                name: "Phước Hiệp", lat: 10.5340, lng: 107.1200, 
+                tyle: 75.2, danhGia: "Mức thấp", tongCong: "1.900", tuoi18_60: "1.500", 
+                laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8" 
+            },
+            { 
+                name: "Láng Cát", lat: 10.5300, lng: 107.1300, 
+                tyle: 88.1, danhGia: "Tốt", tongCong: "3.000", tuoi18_60: "2.400", 
+                laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643" 
+            },
+            { 
+                // 🎯 ĐÃ DỜI ĐÔNG HẢI SANG TRÁI MỘT CHÚT (107.1510 -> 107.1480)
+                name: "Đông Hải", lat: 10.5230, lng: 107.1480, 
+                tyle: 81.4, danhGia: "Trung bình", tongCong: "2.100", tuoi18_60: "1.700", 
+                laoDongTuDo: "1.360", tuoi60TroLen: "400", congTuoi18TroLen: "2.100", soCanKham: "1.709,4" 
+            },
+            { 
+                name: "Phước Hải", lat: 10.5200, lng: 107.1440, 
+                tyle: 79.9, danhGia: "Mức thấp", tongCong: "2.400", tuoi18_60: "1.950", 
+                laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6" 
+            },
+            { 
+                name: "Cát Hải", lat: 10.5200, lng: 107.1320, 
+                tyle: 84.5, danhGia: "Trung bình", tongCong: "2.700", tuoi18_60: "2.200", 
+                laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5" 
+            },
+            { 
+                name: "Phước Long", lat: 10.5150, lng: 107.1080, 
+                tyle: 70.0, danhGia: "Mức thấp", tongCong: "1.800", tuoi18_60: "1.450", 
+                laoDongTuDo: "1.160", tuoi60TroLen: "350", congTuoi18TroLen: "1.800", soCanKham: "1.260" 
+            }
         ];
 
         // Vẽ các chấm tròn và nhãn
