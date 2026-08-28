@@ -47,23 +47,26 @@
             interactive: false 
         }).addTo(map);
 
-     // 4. Dữ liệu 9 khu phố (ĐÃ GIM LẠI TỌA ĐỘ VÀO CHÍNH GIỮA CÁC MẢNG MÀU)
+   // 4. Dữ liệu 9 khu phố (ĐÃ ÉP SÁT PHƯỚC HIỆP, CÁT HẢI, ĐÔNG HẢI)
         var khuPhoData = [
-            { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, // (Màu xanh dương đậm trên cùng)
+            { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, 
+            { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   
             
-            // ĐÃ KÉO MẠNH 4 KHU PHỐ NÀY VÀO GIỮA
-            { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   // Kéo hẳn vào giữa mảng màu Cam
-            { name: "Khu phố Phước Hiệp", lat: 10.5380, lng: 107.1190, tyle: 75.2 },  // Kéo hẳn vào giữa mảng màu Vàng bên trái
-            { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     // Kéo hẳn vào giữa mảng màu Tím bên phải
-            { name: "Khu phố Đông Hải", lat: 10.5300, lng: 107.1510, tyle: 81.4 },    // Kéo vào dải màu Vàng nhạt bên dưới Chu Hải
+            // 🎯 Kéo mạnh Phước Hiệp sang sát mép trái
+            { name: "Khu phố Phước Hiệp", lat: 10.5360, lng: 107.1110, tyle: 75.2 },  
+            
+            { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    
+            { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     
+            
+            // 🎯 Kéo Đông Hải thấp xuống và ép ra mép phải (dải màu vàng nhạt)
+            { name: "Khu phố Đông Hải", lat: 10.5240, lng: 107.1550, tyle: 81.4 },    
 
-            { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    // (Màu xanh lá ở giữa)
-            { name: "Khu phố Phước Hải", lat: 10.5180, lng: 107.1400, tyle: 79.9 },   // (Màu tím đậm bên dưới)
+            { name: "Khu phố Phước Hải", lat: 10.5180, lng: 107.1400, tyle: 79.9 },   
             
-            // Tinh chỉnh lại Cát Hải cho chuẩn hơn
-            { name: "Khu phố Cát Hải", lat: 10.5260, lng: 107.1300, tyle: 84.5 },     // Kéo vào giữa mảng màu Xanh dương bên trái
+            // 🎯 Kéo Cát Hải thấp xuống và lùi sang trái (trung tâm mảng xanh dương)
+            { name: "Khu phố Cát Hải", lat: 10.5180, lng: 107.1200, tyle: 84.5 },     
             
-            { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   // (Màu hồng dưới cùng bên trái)
+            { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
         ];
 
         // 5. Vẽ các chấm tròn
