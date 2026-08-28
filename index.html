@@ -7,32 +7,66 @@
     <!-- Tải thư viện CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        #header { background-color: #004a99; color: white; padding: 15px; text-align: center; }
-        #header h1 { margin: 0; font-size: 22px; }
-        #header p { margin: 5px 0 0 0; font-size: 14px; }
-        #map { height: calc(100vh - 80px); width: 100%; }
+        /* Cài đặt chung */
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef;}
         
-        .legend { background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2); line-height: 24px; font-size: 14px;}
-        .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.9; border-radius: 50%; border: 1px solid #999;}
-
-        /* ========================================= */
-        /* CSS TẠO HIỆU ỨNG NHẤP NHÁY (MỚI THÊM)     */
-        /* ========================================= */
-        .diem-nhap-nhay {
-            animation: chopTat 0.8s infinite alternate;
+        /* Bản đồ tràn viền 100% màn hình */
+        #map { height: 100vh; width: 100%; z-index: 1;}
+        
+        /* Giao diện Header nổi bóng bẩy (Hiệu ứng kính mờ) */
+        #header { 
+            position: absolute; 
+            top: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(8px);
+            color: #004a99; 
+            padding: 15px 35px; 
+            text-align: center; 
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.6);
+            white-space: nowrap;
         }
-        @keyframes chopTat {
-            0% { opacity: 1; }
-            100% { opacity: 0.2; } /* Làm mờ đi tạo cảm giác chớp tắt */
+        #header h1 { margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+        #header p { margin: 4px 0 0 0; font-size: 14px; color: #444; font-weight: 500;}
+        
+        /* Bảng chú giải bo góc hiện đại */
+        .legend { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 15px 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); 
+            line-height: 26px; 
+            font-size: 14px;
+            color: #333;
+        }
+        .legend b { font-size: 15px; color: #004a99; display: block; margin-bottom: 5px;}
+        .legend i { width: 16px; height: 16px; float: left; margin-right: 10px; margin-top: 5px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 4px rgba(0,0,0,0.4);}
+
+        /* Popup hiện đại */
+        .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .leaflet-popup-content { margin: 15px; font-size: 14px; line-height: 1.5; }
+        
+        /* Hiệu ứng nhịp đập (Mềm mại hơn) */
+        .diem-nhap-nhay {
+            animation: nhipDap 1.2s infinite ease-in-out;
+        }
+        @keyframes nhipDap {
+            0% { fill-opacity: 0.5; stroke-width: 1; }
+            50% { fill-opacity: 1; stroke-width: 5; stroke: rgba(40, 167, 69, 0.6); }
+            100% { fill-opacity: 0.5; stroke-width: 1; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Tiêu đề lơ lửng -->
     <div id="header">
-        <h1>🗺️ BẢN ĐỒ 9 KHU PHỐ PHƯỜNG TÂN HẢI</h1>
-        <p>Tỷ lệ người dân cần khám sức khỏe các khu phố trên địa bàn phường</p>
+        <h1>🗺️ BẢN ĐỒ PHƯỜNG TÂN HẢI</h1>
+        <p>Tỷ lệ cần khám sức khỏe • Đã loại KhongRoKP</p>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -41,44 +75,46 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Khởi tạo bản đồ
-        var map = L.map('map').setView([10.5360, 107.1350], 13);
+        var map = L.map('map', {zoomControl: false}).setView([10.5360, 107.1350], 13);
+        
+        // Chuyển nút Zoom xuống góc dưới bên trái cho đỡ vướng Header
+        L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-        // Lớp bản đồ nền đường xá Google Maps
+        // Lớp bản đồ nền
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
         // Chèn ảnh ranh giới
-        var imageUrl = './anh_ranh_gioi_tan_hai.png'; 
+        var imageUrl = './anh_ranh_gioi.jpg'; 
         var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
         L.imageOverlay(imageUrl, imageBounds, {
             opacity: 0.65, 
             interactive: false 
         }).addTo(map);
 
-        // 4. Dữ liệu 9 khu phố 
+        // Dữ liệu 9 khu phố (Tọa độ chuẩn đã ghim)
         var khuPhoData = [
             { name: "Khu phố Phước Thành", lat: 10.5550, lng: 107.1450, tyle: 86.5 }, 
             { name: "Khu phố Phước Tân", lat: 10.5400, lng: 107.1260, tyle: 82.0 },   
-            { name: "Khu phố Phước Hiệp", lat: 10.5346, lng: 107.1213, tyle: 75.2 },  
+            { name: "Khu phố Phước Hiệp", lat: 10.5320, lng: 107.1180, tyle: 75.2 },  
             { name: "Khu phố Láng Cát", lat: 10.5300, lng: 107.1300, tyle: 88.1 },    
             { name: "Khu phố Chu Hải", lat: 10.5380, lng: 107.1470, tyle: 90.0 },     
-            { name: "Khu phố Đông Hải", lat: 10.5241, lng: 107.1425, tyle: 81.4 },    
-            { name: "Khu phố Phước Hải", lat: 10.5230, lng: 107.1357, tyle: 79.9 },   
-            { name: "Khu phố Cát Hải", lat: 10.5211, lng: 107.1274, tyle: 84.5 },     
+            { name: "Khu phố Đông Hải", lat: 10.5230, lng: 107.1510, tyle: 81.4 },    
+            { name: "Khu phố Phước Hải", lat: 10.5200, lng: 107.1440, tyle: 79.9 },   
+            { name: "Khu phố Cát Hải", lat: 10.5200, lng: 107.1320, tyle: 84.5 },     
             { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
         ];
 
-       // Vẽ các chấm tròn và gán hiệu ứng
+        // Vẽ các chấm tròn và nhãn
         khuPhoData.forEach(function(kp) {
             var markerColor = "";
-            var classHieuUng = ""; // Biến để chứa class nhấp nháy
+            var classHieuUng = "";
 
-            // Phân loại màu sắc và hiệu ứng
             if (kp.tyle >= 85) {
                 markerColor = "#28a745"; // Xanh lá
-                classHieuUng = "diem-nhap-nhay"; // CHỈ GẮN NHẤP NHÁY CHO TỶ LỆ CAO
+                classHieuUng = "diem-nhap-nhay"; 
             } else if (kp.tyle >= 80) {
                 markerColor = "#ffc107"; // Vàng
             } else {
@@ -88,35 +124,38 @@
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
                 radius: 12,
                 fillColor: markerColor,
-                color: "#000",
-                weight: 1,
+                color: "#fff", // Viền trắng mỏng cho sang trọng
+                weight: 1.5,
                 opacity: 1,
                 fillOpacity: 0.9,
-                className: classHieuUng // Đưa class nhấp nháy vào marker
+                className: classHieuUng 
             }).addTo(map);
 
-            circleMarker.bindPopup("<div style='text-align:center;'><b>" + kp.name + "</b><br>Tỷ lệ cần khám: <b>" + kp.tyle + "%</b></div>");
+            // Gắn Tooltip (Hiện tên khi rê chuột)
+            circleMarker.bindTooltip("<b>" + kp.name + "</b>", {
+                direction: 'top', 
+                offset: [0, -10],
+                opacity: 0.9
+            });
+
+            // Gắn Popup (Hiện chi tiết khi click)
+            var popupContent = "<div style='text-align:center;'><h3 style='margin:0 0 8px 0; color:#004a99; font-size: 16px;'>" + kp.name + "</h3>" +
+                               "<div style='font-size: 14px;'>Tỷ lệ cần khám: <b style='color:" + markerColor + "; font-size: 18px;'>" + kp.tyle + "%</b></div></div>";
+            circleMarker.bindPopup(popupContent);
         });
 
         // Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
-            div.innerHTML += '<b>Tỷ lệ cần khám</b><br>';
-            div.innerHTML += '<i style="background: #28a745"></i> ≥ 85%<br>';
-            div.innerHTML += '<i style="background: #ffc107"></i> 80 – 84,9%<br>';
-            div.innerHTML += '<i style="background: #dc3545"></i> &lt; 80%<br>';
+            div.innerHTML += '<b>Tỷ lệ cần khám</b>';
+            div.innerHTML += '<i style="background: #28a745"></i> Đạt chuẩn (≥ 85%)<br>';
+            div.innerHTML += '<i style="background: #ffc107"></i> Cần chú ý (80 - 84.9%)<br>';
+            div.innerHTML += '<i style="background: #dc3545"></i> Mức thấp (< 80%)<br>';
             return div;
         };
         legend.addTo(map);
-
-        // Công cụ bấm chuột lấy tọa độ (Mình vẫn giữ lại phòng khi bạn cần dời thêm)
-        map.on('click', function(e) {
-            var lat = e.latlng.lat.toFixed(4);
-            var lng = e.latlng.lng.toFixed(4);
-            alert("Tọa độ điểm bạn vừa bấm:\nlat: " + lat + "\nlng: " + lng);
-        });
-
+        
     </script>
 </body>
 </html>
