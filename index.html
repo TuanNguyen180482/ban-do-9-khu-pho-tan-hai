@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bản đồ 9 Khu phố phường Tân Hải</title>
-    <!-- Tải thư viện CSS -->
+    <!-- Thư viện Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Thư viện Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         /* Cài đặt chung */
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef;}
@@ -13,27 +16,27 @@
         /* Bản đồ tràn viền 100% màn hình */
         #map { height: 100vh; width: 100%; z-index: 1;}
         
-        /* Giao diện Header nổi bóng bẩy (Hiệu ứng kính mờ) */
+        /* Giao diện Header nổi bóng bẩy */
         #header { 
             position: absolute; 
             top: 20px; 
             left: 50%; 
             transform: translateX(-50%); 
             z-index: 1000; 
-            background: rgba(255, 255, 255, 0.85); 
+            background: rgba(255, 255, 255, 0.88); 
             backdrop-filter: blur(8px);
             color: #004a99; 
-            padding: 15px 35px; 
+            padding: 12px 30px; 
             text-align: center; 
             border-radius: 50px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             border: 1px solid rgba(255,255,255,0.6);
             white-space: nowrap;
         }
-        #header h1 { margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
-        #header p { margin: 4px 0 0 0; font-size: 14px; color: #444; font-weight: 500;}
+        #header h1 { margin: 0; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+        #header p { margin: 3px 0 0 0; font-size: 13px; color: #444; font-weight: 500;}
         
-        /* Bảng chú giải bo góc hiện đại */
+        /* Bảng chú giải */
         .legend { 
             background: rgba(255, 255, 255, 0.95); 
             padding: 15px 20px; 
@@ -46,11 +49,13 @@
         .legend b { font-size: 15px; color: #004a99; display: block; margin-bottom: 5px;}
         .legend i { width: 16px; height: 16px; float: left; margin-right: 10px; margin-top: 5px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 4px rgba(0,0,0,0.4);}
 
-        /* Popup hiện đại */
-        .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .leaflet-popup-content { margin: 15px; font-size: 14px; line-height: 1.5; }
+        /* Popup tùy chỉnh */
+        .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.25); }
+        .leaflet-popup-content { margin: 15px 18px; font-size: 14px; line-height: 1.6; color: #222; }
+        .popup-title { font-size: 18px; font-weight: bold; color: #111; border-bottom: 2px solid #ccc; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; }
+        .popup-row { margin-bottom: 4px; }
         
-        /* Hiệu ứng nhịp đập (Mềm mại hơn) */
+        /* Hiệu ứng nhịp đập */
         .diem-nhap-nhay {
             animation: nhipDap 1.2s infinite ease-in-out;
         }
@@ -59,6 +64,49 @@
             50% { fill-opacity: 1; stroke-width: 5; stroke: rgba(40, 167, 69, 0.6); }
             100% { fill-opacity: 0.5; stroke-width: 1; }
         }
+
+        /* NÚT BẬT/TẮT BIỂU ĐỒ */
+        #chart-toggle-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            z-index: 1000;
+            background: #004a99;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+        #chart-toggle-btn:hover { background: #003366; transform: translateY(-2px); }
+
+        /* KHUNG CHỨA BIỂU ĐỒ NỔI */
+        #chart-container {
+            position: absolute;
+            bottom: 75px;
+            left: 20px;
+            z-index: 1000;
+            width: 380px;
+            height: 260px;
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.7);
+            display: none; /* Mặc định ẩn, bấm nút mới mở */
+        }
+        #chart-container h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #004a99;
+            text-align: center;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -66,18 +114,28 @@
     <!-- Tiêu đề lơ lửng -->
     <div id="header">
         <h1>🗺️ BẢN ĐỒ PHƯỜNG TÂN HẢI</h1>
-        <p>Tỷ lệ người dân các khu phố cần khám sức khỏe trên địa bàn phường </p>
+        <p>Tỷ lệ người dân cần khám sức khỏe trên địa bàn phường</p>
     </div>
 
     <!-- Khung chứa bản đồ -->
     <div id="map"></div>
+
+    <!-- Nút Toggle Biểu đồ -->
+    <button id="chart-toggle-btn" onclick="toggleChart()">📊 Biểu đồ tỷ lệ</button>
+
+    <!-- Khung Biểu đồ -->
+    <div id="chart-container">
+        <h4>Tỷ lệ cần khám sức khỏe (%)</h4>
+        <div style="height: 210px;">
+            <canvas id="rateChart"></canvas>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Khởi tạo bản đồ
         var map = L.map('map', {zoomControl: false}).setView([10.5360, 107.1350], 13);
         
-        // Chuyển nút Zoom xuống góc dưới bên trái cho đỡ vướng Header
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
         // Lớp bản đồ nền
@@ -87,19 +145,14 @@
         }).addTo(map);
 
         // Chèn ảnh ranh giới
-        var imageUrl = './anh_ranh_gioi_tan_hai.png'; 
+        var imageUrl = './anh_ranh_gioi_tan_hai.jpg'; 
         var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
         L.imageOverlay(imageUrl, imageBounds, {
             opacity: 0.65, 
             interactive: false 
         }).addTo(map);
-// Bấm chuột vào bất kỳ đâu trên bản đồ để lấy tọa độ
-        map.on('click', function(e) {
-            var lat = e.latlng.lat.toFixed(4);
-            var lng = e.latlng.lng.toFixed(4);
-            alert("Tọa độ bạn vừa bấm:\n\nlat: " + lat + "\nlng: " + lng);
-        });
-       // Dữ liệu 9 khu phố (ĐÃ TINH CHỈNH VỊ TRÍ PHƯỚC HIỆP VÀ ĐÔNG HẢI)
+
+        // Dữ liệu 9 khu phố đầy đủ thông tin
         var khuPhoData = [
             { 
                 name: "Chu Hải", lat: 10.5380, lng: 107.1470, 
@@ -117,8 +170,7 @@
                 laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050" 
             },
             { 
-                // 🎯 ĐÃ DỜI PHƯỚC HIỆP SANG PHẢI MỘT CHÚT (107.1180 -> 107.1200)
-                name: "Phước Hiệp", lat: 10.5352, lng: 107.1217, 
+                name: "Phước Hiệp", lat: 10.5340, lng: 107.1200, 
                 tyle: 75.2, danhGia: "Mức thấp", tongCong: "1.900", tuoi18_60: "1.500", 
                 laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8" 
             },
@@ -128,18 +180,17 @@
                 laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643" 
             },
             { 
-                // 🎯 ĐÃ DỜI ĐÔNG HẢI SANG TRÁI MỘT CHÚT (107.1510 -> 107.1480)
-                name: "Đông Hải", lat: 10.5240, lng: 107.1427, 
+                name: "Đông Hải", lat: 10.5230, lng: 107.1480, 
                 tyle: 81.4, danhGia: "Trung bình", tongCong: "2.100", tuoi18_60: "1.700", 
                 laoDongTuDo: "1.360", tuoi60TroLen: "400", congTuoi18TroLen: "2.100", soCanKham: "1.709,4" 
             },
             { 
-                name: "Phước Hải", lat: 10.5233, lng: 107.1360, 
+                name: "Phước Hải", lat: 10.5200, lng: 107.1440, 
                 tyle: 79.9, danhGia: "Mức thấp", tongCong: "2.400", tuoi18_60: "1.950", 
                 laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6" 
             },
             { 
-                name: "Cát Hải", lat: 10.5191, lng: 107.1270, 
+                name: "Cát Hải", lat: 10.5200, lng: 107.1320, 
                 tyle: 84.5, danhGia: "Trung bình", tongCong: "2.700", tuoi18_60: "2.200", 
                 laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5" 
             },
@@ -150,8 +201,10 @@
             }
         ];
 
-        // Vẽ các chấm tròn và nhãn
-        khuPhoData.forEach(function(kp) {
+        var markersList = []; // Lưu danh sách các marker để tương tác từ biểu đồ
+
+        // Vẽ các chấm tròn và gán Popup
+        khuPhoData.forEach(function(kp, index) {
             var markerColor = "";
             var classHieuUng = "";
 
@@ -167,26 +220,34 @@
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
                 radius: 12,
                 fillColor: markerColor,
-                color: "#fff", // Viền trắng mỏng cho sang trọng
+                color: "#fff",
                 weight: 1.5,
                 opacity: 1,
                 fillOpacity: 0.9,
                 className: classHieuUng 
             }).addTo(map);
 
-            // Gắn Tooltip (Hiện tên khi rê chuột)
-            circleMarker.bindTooltip("<b>" + kp.name + "</b>", {
+            circleMarker.bindTooltip("<b>KHU PHỐ " + kp.name + "</b>", {
                 direction: 'top', 
                 offset: [0, -10],
                 opacity: 0.9
             });
 
-            // Gắn Popup (Hiện chi tiết khi click)
-            var popupContent = "<div style='text-align:center;'><h3 style='margin:0 0 8px 0; color:#004a99; font-size: 16px;'>" + kp.name + "</h3>" +
-                               "<div style='font-size: 14px;'>Tỷ lệ cần khám: <b style='color:" + markerColor + "; font-size: 18px;'>" + kp.tyle + "%</b></div></div>";
+            var popupContent = `
+                <div class="popup-title">KHU PHỐ ${kp.name}</div>
+                <div class="popup-row">Tỷ lệ: <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b> — ${kp.danhGia}</div>
+                <div class="popup-row">Tổng cộng: <b>${kp.tongCong}</b></div>
+                <div class="popup-row">18—<60 tuổi: ${kp.tuoi18_60}</div>
+                <div class="popup-row">Ước tính lao động tự do (80%): ${kp.laoDongTuDo}</div>
+                <div class="popup-row">Từ 60 tuổi trở lên: ${kp.tuoi60TroLen}</div>
+                <div class="popup-row">Cộng từ 18 tuổi trở lên: ${kp.congTuoi18TroLen}</div>
+                <div class="popup-row">Số cần khám: <b>${kp.soCanKham}</b></div>
+            `;
+            
             circleMarker.bindPopup(popupContent);
+            markersList.push(circleMarker); // Lưu trữ marker
         });
-        
+
         // Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
@@ -198,7 +259,73 @@
             return div;
         };
         legend.addTo(map);
-        
+
+        // Công cụ bấm chuột lấy tọa độ
+        map.on('click', function(e) {
+            var lat = e.latlng.lat.toFixed(4);
+            var lng = e.latlng.lng.toFixed(4);
+            console.log("lat: " + lat + ", lng: " + lng);
+        });
+
+        // ==========================================
+        // VẼ BIỂU ĐỒ BẰNG CHART.JS
+        // ==========================================
+        var labels = khuPhoData.map(d => d.name);
+        var dataValues = khuPhoData.map(d => d.tyle);
+        var barColors = khuPhoData.map(d => d.tyle >= 85 ? '#28a745' : (d.tyle >= 80 ? '#ffc107' : '#dc3545'));
+
+        var ctx = document.getElementById('rateChart').getContext('2d');
+        var rateChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Tỷ lệ %',
+                    data: dataValues,
+                    backgroundColor: barColors,
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { callback: v => v + '%' }
+                    },
+                    x: {
+                        ticks: { font: { size: 10 } }
+                    }
+                },
+                // Click vào cột trên biểu đồ sẽ định vị tới Marker trên bản đồ
+                onClick: (e, activeElements) => {
+                    if (activeElements.length > 0) {
+                        var index = activeElements[0].index;
+                        var targetKp = khuPhoData[index];
+                        map.flyTo([targetKp.lat, targetKp.lng], 15);
+                        markersList[index].openPopup();
+                    }
+                }
+            }
+        });
+
+        // Hàm Bật/Tắt Biểu đồ
+        function toggleChart() {
+            var container = document.getElementById('chart-container');
+            var btn = document.getElementById('chart-toggle-btn');
+            if (container.style.display === 'none' || container.style.display === '') {
+                container.style.display = 'block';
+                btn.innerHTML = '✖ Đóng biểu đồ';
+            } else {
+                container.style.display = 'none';
+                btn.innerHTML = '📊 Biểu đồ tỷ lệ';
+            }
+        }
     </script>
 </body>
 </html>
