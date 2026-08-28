@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -16,13 +15,24 @@ HTML
         
         .legend { background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2); line-height: 24px; font-size: 14px;}
         .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.9; border-radius: 50%; border: 1px solid #999;}
+
+        /* ========================================= */
+        /* CSS TẠO HIỆU ỨNG NHẤP NHÁY (MỚI THÊM)     */
+        /* ========================================= */
+        .diem-nhap-nhay {
+            animation: chopTat 0.8s infinite alternate;
+        }
+        @keyframes chopTat {
+            0% { opacity: 1; }
+            100% { opacity: 0.2; } /* Làm mờ đi tạo cảm giác chớp tắt */
+        }
     </style>
 </head>
 <body>
 
     <div id="header">
         <h1>🗺️ BẢN ĐỒ 9 KHU PHỐ PHƯỜNG TÂN HẢI</h1>
-        <p>Tỷ lệ người dân các khu phố cần khám sức khỏe Phường Tân Hải</p>
+        <p>Tỷ lệ người dân cần khám sức khỏe các khu phố trên địa bàn phường</p>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -60,17 +70,31 @@ HTML
             { name: "Khu phố Phước Long", lat: 10.5150, lng: 107.1080, tyle: 70.0 }   
         ];
 
-        // Vẽ các chấm tròn
+       // Vẽ các chấm tròn và gán hiệu ứng
         khuPhoData.forEach(function(kp) {
-            var markerColor = (kp.tyle >= 85) ? "#28a745" : (kp.tyle >= 80) ? "#ffc107" : "#dc3545";
+            var markerColor = "";
+            var classHieuUng = ""; // Biến để chứa class nhấp nháy
+
+            // Phân loại màu sắc và hiệu ứng
+            if (kp.tyle >= 85) {
+                markerColor = "#28a745"; // Xanh lá
+                classHieuUng = "diem-nhap-nhay"; // CHỈ GẮN NHẤP NHÁY CHO TỶ LỆ CAO
+            } else if (kp.tyle >= 80) {
+                markerColor = "#ffc107"; // Vàng
+            } else {
+                markerColor = "#dc3545"; // Đỏ
+            }
+
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
                 radius: 12,
                 fillColor: markerColor,
                 color: "#000",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.9
+                fillOpacity: 0.9,
+                className: classHieuUng // Đưa class nhấp nháy vào marker
             }).addTo(map);
+
             circleMarker.bindPopup("<div style='text-align:center;'><b>" + kp.name + "</b><br>Tỷ lệ cần khám: <b>" + kp.tyle + "%</b></div>");
         });
 
@@ -86,13 +110,11 @@ HTML
         };
         legend.addTo(map);
 
-        // ==========================================
-        // VŨ KHÍ BÍ MẬT: BẤM CHUỘT ĐỂ LẤY TỌA ĐỘ
-        // ==========================================
+        // Công cụ bấm chuột lấy tọa độ (Mình vẫn giữ lại phòng khi bạn cần dời thêm)
         map.on('click', function(e) {
-            var lat = e.latlng.lat.toFixed(4); // Lấy 4 số thập phân
+            var lat = e.latlng.lat.toFixed(4);
             var lng = e.latlng.lng.toFixed(4);
-            alert("Tọa độ điểm bạn vừa bấm là:\n\nlat: " + lat + "\nlng: " + lng + "\n\nHãy chép 2 số này vào code nhé!");
+            alert("Tọa độ điểm bạn vừa bấm:\nlat: " + lat + "\nlng: " + lng);
         });
 
     </script>
