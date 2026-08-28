@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+
+   <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản đồ 9 Khu phố phường Tân Hải (Dán đè ảnh ranh giới)</title>
-    <!-- Tải thư viện CSS của Leaflet -->
+    <title>Bản đồ 9 Khu phố phường Tân Hải</title>
+    <!-- Tải thư viện CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
         #header { background-color: #004a99; color: white; padding: 15px; text-align: center; }
         #header h1 { margin: 0; font-size: 22px; }
         #header p { margin: 5px 0 0 0; font-size: 14px; }
-        
         #map { height: calc(100vh - 80px); width: 100%; }
         
         .legend { background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2); line-height: 24px; font-size: 14px;}
@@ -28,82 +28,57 @@
     <!-- Khung chứa bản đồ -->
     <div id="map"></div>
 
-    <!-- Tải thư viện JS của Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Khởi tạo bản đồ. Dùng tọa độ trung tâm của khu vực ranh giới ước lượng.
-        var map = L.map('map').setView([10.5350, 107.1450], 13);
+        // 1. Khởi tạo bản đồ zoom ngay vào khu vực Phú Mỹ
+        var map = L.map('map').setView([10.5360, 107.1350], 13);
 
-        // 2. Thêm lớp bản đồ nền từ Google Maps (bạn đã làm được)
+        // 2. Lớp bản đồ nền đường xá Google Maps
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
-        // ================================================================
-        // 2.5. HIỂN THỊ ẢNH RANH GIỚI CỦA BẠN DÁN ĐÈ LÊN BẢN ĐỒ
-        // ================================================================
+        // 3. Chèn ảnh ranh giới
+        // LƯU Ý: Đảm bảo tên file trên GitHub của bạn khớp đúng với tên ở đây
+        var imageUrl = './anh_ranh_gioi_tan_hai.jpg'; 
         
-        // Thay tên file ảnh của bạn vào đây (nhớ ghi đúng đuôi .png hay .jpg)
-        var imageUrl = './anh_ranh_gioi_tan_hai.png'; 
-        
-        // Tọa độ để ghim ảnh: [[Vĩ độ góc Dưới-Trái, Kinh độ góc Dưới-Trái], [Vĩ độ góc Trên-Phải, Kinh độ góc Trên-Phải]]
-        // LƯU Ý: Đây là các con số mình ước chừng, bạn sẽ phải tự thay đổi các số này để ảnh khớp với bản đồ thật!
-        var imageBounds = [[10.5050, 107.1150], [10.5650, 107.1750]];
+        // Tọa độ đã được tinh chỉnh lại cho Phường Tân Hải (Góc Dưới-Trái và Trên-Phải)
+        var imageBounds = [[10.5015, 107.0985], [10.5720, 107.1680]]; 
 
-        // Chèn ảnh vào bản đồ
         L.imageOverlay(imageUrl, imageBounds, {
-            opacity: 0.6,    // Độ mờ của ảnh (từ 0 đến 1). Chỉnh 0.6 để nhìn xuyên thấu đường xá bên dưới.
-            interactive: false // Bỏ qua tương tác chuột để không cản trở việc bấm vào các chấm tròn
+            opacity: 0.65, // Chỉnh độ mờ 65% để dễ nhìn đường thật bên dưới
+            interactive: false 
         }).addTo(map);
 
-        // Tự động căn chỉnh bản đồ để nhìn thấy toàn bộ ảnh
-        map.fitBounds(imageBounds);
-
-        // Thêm một marker ẩn với popup ở trung tâm để thông báo (bạn có thể xóa đoạn này nếu muốn)
-        L.marker([10.6750, 107.7850], {opacity: 0})
-            .addTo(map)
-            .bindPopup("🎉 Ảnh ranh giới đã được chèn vào! 🚧 Lưu ý: Tọa độ là ước lượng. Bạn cần tự tinh chỉnh để ảnh khớp chính xác hơn.")
-            .openPopup();
-        // ================================================================
-
-        // 3. Dữ liệu 9 khu phố (giữ nguyên)
+        // 4. Dữ liệu 9 khu phố (Đã đặt tọa độ tạm thời vào khu vực Tân Hải)
         var khuPhoData = [
-            { name: "Khu phố 1", lat: 10.6750, lng: 107.7800, tyle: 86.5 }, 
-            { name: "Khu phố 2", lat: 10.6780, lng: 107.7850, tyle: 82.0 }, 
-            { name: "Khu phố 3", lat: 10.6710, lng: 107.7780, tyle: 75.2 }, 
-            { name: "Khu phố 4", lat: 10.6690, lng: 107.7820, tyle: 88.1 },
-            { name: "Khu phố 5", lat: 10.6650, lng: 107.7860, tyle: 90.0 },
-            { name: "Khu phố 6", lat: 10.6730, lng: 107.7900, tyle: 81.4 },
-            { name: "Khu phố 7", lat: 10.6760, lng: 107.7750, tyle: 79.9 },
-            { name: "Khu phố 8", lat: 10.6620, lng: 107.7800, tyle: 84.5 },
-            { name: "Khu phố 9", lat: 10.6680, lng: 107.7720, tyle: 70.0 }
+            { name: "Khu phố 1", lat: 10.5350, lng: 107.1300, tyle: 86.5 }, 
+            { name: "Khu phố 2", lat: 10.5380, lng: 107.1350, tyle: 82.0 }, 
+            { name: "Khu phố 3", lat: 10.5310, lng: 107.1280, tyle: 75.2 }, 
+            { name: "Khu phố 4", lat: 10.5290, lng: 107.1320, tyle: 88.1 },
+            { name: "Khu phố 5", lat: 10.5250, lng: 107.1360, tyle: 90.0 },
+            { name: "Khu phố 6", lat: 10.5330, lng: 107.1400, tyle: 81.4 },
+            { name: "Khu phố 7", lat: 10.5360, lng: 107.1250, tyle: 79.9 },
+            { name: "Khu phố 8", lat: 10.5220, lng: 107.1300, tyle: 84.5 },
+            { name: "Khu phố Phước Long", lat: 10.5280, lng: 107.1220, tyle: 70.0 }
         ];
 
-        // 4. Vẽ các chấm tròn (giữ nguyên)
+        // 5. Vẽ các chấm tròn
         khuPhoData.forEach(function(kp) {
-            var markerColor = "";
-            if (kp.tyle >= 85) {
-                markerColor = "#28a745"; // Xanh lá
-            } else if (kp.tyle >= 80) {
-                markerColor = "#ffc107"; // Vàng
-            } else {
-                markerColor = "#dc3545"; // Đỏ
-            }
-
+            var markerColor = (kp.tyle >= 85) ? "#28a745" : (kp.tyle >= 80) ? "#ffc107" : "#dc3545";
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
-                radius: 12, // Kích thước chấm tròn
+                radius: 12,
                 fillColor: markerColor,
-                color: "#000", // Viền đen mỏng
+                color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.9
             }).addTo(map);
-
             circleMarker.bindPopup("<div style='text-align:center;'><b>" + kp.name + "</b><br>Tỷ lệ cần khám: <b>" + kp.tyle + "%</b></div>");
         });
 
-        // 5. Thêm bảng chú giải (giữ nguyên)
+        // 6. Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
