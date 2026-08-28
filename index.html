@@ -32,7 +32,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // 1. Khởi tạo bản đồ. Dùng tọa độ trung tâm của khu vực ranh giới ước lượng.
-        var map = L.map('map').setView([10.6750, 107.7850], 15);
+        var map = L.map('map').setView([10.5350, 107.1450], 13);
 
         // 2. Thêm lớp bản đồ nền từ Google Maps (bạn đã làm được)
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
@@ -49,7 +49,7 @@
         
         // Tọa độ để ghim ảnh: [[Vĩ độ góc Dưới-Trái, Kinh độ góc Dưới-Trái], [Vĩ độ góc Trên-Phải, Kinh độ góc Trên-Phải]]
         // LƯU Ý: Đây là các con số mình ước chừng, bạn sẽ phải tự thay đổi các số này để ảnh khớp với bản đồ thật!
-        var imageBounds = [[10.6650, 107.7650], [10.6850, 107.8000]]; 
+        var imageBounds = [[10.5050, 107.1150], [10.5650, 107.1750]];
 
         // Chèn ảnh vào bản đồ
         L.imageOverlay(imageUrl, imageBounds, {
