@@ -186,19 +186,7 @@
                                "<div style='font-size: 14px;'>Tỷ lệ cần khám: <b style='color:" + markerColor + "; font-size: 18px;'>" + kp.tyle + "%</b></div></div>";
             circleMarker.bindPopup(popupContent);
         });
-         // Nội dung Popup thiết kế y hệt ảnh mẫu
-            var popupContent = `
-                <div class="popup-title">KHU PHỐ ${kp.name}</div>
-                <div class="popup-row">Tỷ lệ: <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b> — ${kp.danhGia}</div>
-                <div class="popup-row">Tổng cộng: <b>${kp.tongCong}</b></div>
-                <div class="popup-row">18—<60 tuổi: ${kp.tuoi18_60}</div>
-                <div class="popup-row">Ước tính lao động tự do (80%): ${kp.laoDongTuDo}</div>
-                <div class="popup-row">Từ 60 tuổi trở lên: ${kp.tuoi60TroLen}</div>
-                <div class="popup-row">Cộng từ 18 tuổi trở lên: ${kp.congTuoi18TroLen}</div>
-                <div class="popup-row">Số cần khám: <b>${kp.soCanKham}</b></div>
-            `;
-            
-            circleMarker.bindPopup(popupContent);
+        
         // Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
