@@ -93,7 +93,12 @@
             opacity: 0.65, 
             interactive: false 
         }).addTo(map);
-
+// Bấm chuột vào bất kỳ đâu trên bản đồ để lấy tọa độ
+        map.on('click', function(e) {
+            var lat = e.latlng.lat.toFixed(4);
+            var lng = e.latlng.lng.toFixed(4);
+            alert("Tọa độ bạn vừa bấm:\n\nlat: " + lat + "\nlng: " + lng);
+        });
        // Dữ liệu 9 khu phố (ĐÃ TINH CHỈNH VỊ TRÍ PHƯỚC HIỆP VÀ ĐÔNG HẢI)
         var khuPhoData = [
             { 
