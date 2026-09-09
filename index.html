@@ -192,10 +192,15 @@
 
     <!-- Header nổi cao cấp -->
     <div id="header">
-        <h1>🗺️ BẢN ĐỒ THỂ HIỆN TỶ LỆ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-       
+        <h1>🗺️ BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
+        <p>Số liệu thể hiện tỷ lệ đã hoàn thành tại các khu phố</p>
         
-
+        <!-- Thanh tổng quan số liệu -->
+        <div class="stats-summary">
+            <div class="stat-item">Đã khám: <b style="color:#0284c7;">862</b></div>
+            <div class="stat-item">18–59 tuổi: <b style="color:#0f172a;">630</b></div>
+            <div class="stat-item">≥60 tuổi: <b style="color:#e11d48;">232</b></div>
+        </div>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -203,7 +208,7 @@
 
     <!-- Đơn vị thiết kế dưới bản đồ -->
     <div id="footer-credits">
-        🏥 Đơn vị thiết kế: TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG 
+        🏥 Đơn vị thiết kế: TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG 
     </div>
 
     <!-- Nút Bật/Tắt Biểu đồ -->
@@ -233,55 +238,55 @@
         // Dữ liệu 9 khu phố cập nhật "Số lượng đã khám" trực tiếp
         var khuPhoData = [
             { 
-                name: "ĐÔNG HẢI", lat: 10.5080, lng: 107.1350, 
+                name: "Đông Hải", lat: 10.5080, lng: 107.1350, 
                 tyle: 81.4, danhGia: "Trung bình", tongCong: "2.100", tuoi18_60: "1.700", 
                 laoDongTuDo: "1.360", tuoi60TroLen: "400", congTuoi18TroLen: "2.100", soCanKham: "1.709,4",
                 soLuongDaKham: "247 người (179 ng 18-59t | 68 ng ≥60t)" 
             },
             { 
-                name: "PHƯỚC HẢI", lat: 10.5020, lng: 107.1280, 
+                name: "Phước Hải", lat: 10.5020, lng: 107.1280, 
                 tyle: 79.9, danhGia: "Mức thấp", tongCong: "2.400", tuoi18_60: "1.950", 
                 laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6",
                 soLuongDaKham: "103 người (76 ng 18-59t | 27 ng ≥60t)" 
             },
             { 
-                name: "CÁT HẢI", lat: 10.4950, lng: 107.1120, 
+                name: "Cát Hải", lat: 10.4950, lng: 107.1120, 
                 tyle: 84.5, danhGia: "Trung bình", tongCong: "2.700", tuoi18_60: "2.200", 
                 laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5",
                 soLuongDaKham: "102 người (77 ng 18-59t | 25 ng ≥60t)" 
             },
             { 
-                name: "CHU HẢI", lat: 10.5000, lng: 107.1200, 
+                name: "Chu Hải", lat: 10.5000, lng: 107.1200, 
                 tyle: 83.6, danhGia: "Trung bình", tongCong: "3.143", tuoi18_60: "2.583", 
                 laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4",
                 soLuongDaKham: "73 người (56 ng 18-59t | 17 ng ≥60t)" 
             },
             { 
-                name: "LÁNG CÁT", lat: 10.5180, lng: 107.1250, 
+                name: "Láng Cát", lat: 10.5180, lng: 107.1250, 
                 tyle: 88.1, danhGia: "Tốt", tongCong: "3.000", tuoi18_60: "2.400", 
                 laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643",
                 soLuongDaKham: "44 người (40 ng 18-59t | 4 ng ≥60t)" 
             },
             { 
-                name: "PHƯỚC THÀNH", lat: 10.5420, lng: 107.1350, 
+                name: "Phước Thành", lat: 10.5420, lng: 107.1350, 
                 tyle: 86.5, danhGia: "Tốt", tongCong: "2.850", tuoi18_60: "2.300", 
                 laoDongTuDo: "1.840", tuoi60TroLen: "550", congTuoi18TroLen: "2.850", soCanKham: "2.465,25",
                 soLuongDaKham: "57 người (40 ng 18-59t | 17 ng ≥60t)"
             },
             { 
-                name: "PHƯỚC HIỆP", lat: 10.5260, lng: 107.1120, 
+                name: "Phước Hiệp", lat: 10.5260, lng: 107.1120, 
                 tyle: 75.2, danhGia: "Mức thấp", tongCong: "1.900", tuoi18_60: "1.500", 
                 laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8",
                 soLuongDaKham: "116 người (79 ng 18-59t | 37 ng ≥60t)"
             },
             { 
-                name: "PHƯỚC LONG", lat: 10.4900, lng: 107.1020, 
+                name: "Phước Long", lat: 10.4900, lng: 107.1020, 
                 tyle: 70.0, danhGia: "Mức thấp", tongCong: "1.800", tuoi18_60: "1.450", 
                 laoDongTuDo: "1.160", tuoi60TroLen: "350", congTuoi18TroLen: "1.800", soCanKham: "1.260",
                 soLuongDaKham: "67 người (49 ng 18-59t | 18 ng ≥60t)"
             },
             { 
-                name: "PHƯỚC TẤN, lat: 10.5320, lng: 107.1220, 
+                name: "Phước Tân", lat: 10.5320, lng: 107.1220, 
                 tyle: 82.0, danhGia: "Trung bình", tongCong: "2.500", tuoi18_60: "2.000", 
                 laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050",
                 soLuongDaKham: "53 người (34 ng 18-59t | 19 ng ≥60t)"
