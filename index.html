@@ -17,7 +17,7 @@
         /* Bản đồ tràn viền 100% màn hình */
         #map { height: 100vh; width: 100%; z-index: 1;}
         
-        /* Giao diện Header Nổi Cao cấp (Glassmorphism) */
+        /* Giao diện Header Nổi Cao cấp */
         #header { 
             position: absolute; 
             top: 20px; 
@@ -90,7 +90,7 @@
             border: 1px solid rgba(255,255,255,0.6);
         }
 
-        /* Popup Thiết kế theo Dạng Card Thông minh */
+        /* Popup Thiết kế Card Thông minh */
         .leaflet-popup-content-wrapper { 
             border-radius: 16px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.18); 
@@ -193,9 +193,9 @@
     <!-- Header nổi cao cấp -->
     <div id="header">
         <h1>🗺️ BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>Số liệu thể hiện tỷ lệ đã hoàn thành tại các khu phố</p>
+        <p>TỶ LỆ HOÀN THÀNH CỦA CÁC KHU PHỐ TRÊN ĐỊA BÀN PHƯỜNG</p>
         
-       
+     
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -203,15 +203,15 @@
 
     <!-- Đơn vị thiết kế dưới bản đồ -->
     <div id="footer-credits">
-        🏥 Đơn vị thiết kế: TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG 
+        🏥 Đơn vị thiết kế: TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI
     </div>
 
     <!-- Nút Bật/Tắt Biểu đồ -->
-    <button id="chart-toggle-btn" onclick="toggleChart()">📊 Biểu đồ tỷ lệ</button>
+    <button id="chart-toggle-btn" onclick="toggleChart()">📊 Biểu đồ tỷ lệ đã khám</button>
 
     <!-- Khung chứa Biểu đồ -->
     <div id="chart-container">
-        <h4>Tỷ lệ cần khám sức khỏe các khu phố (%)</h4>
+        <h4>Tỷ lệ đã khám sức khỏe các khu phố (%)</h4>
         <div style="height: 215px;">
             <canvas id="rateChart"></canvas>
         </div>
@@ -230,59 +230,59 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố cập nhật "Số lượng đã khám" trực tiếp
+        // Dữ liệu 9 khu phố (ĐÃ TÍNH LẠI TỶ LỆ ĐÃ KHÁM = SỐ LƯỢNG ĐÃ KHÁM / SỐ CẦN KHÁM)
         var khuPhoData = [
             { 
-                name: "Đông Hải", lat: 10.5080, lng: 107.1350, 
-                tyle: 81.4, danhGia: "Trung bình", tongCong: "2.100", tuoi18_60: "1.700", 
+                name: "ĐÔNG HẢI", lat: 10.5080, lng: 107.1350, 
+                tyleDaKham: 14.4, danhGia: "Khá", tongCong: "2.100", tuoi18_60: "1.700", 
                 laoDongTuDo: "1.360", tuoi60TroLen: "400", congTuoi18TroLen: "2.100", soCanKham: "1.709,4",
                 soLuongDaKham: "247 người (179 ng 18-59t | 68 ng ≥60t)" 
             },
             { 
-                name: "Phước Hải", lat: 10.5020, lng: 107.1280, 
-                tyle: 79.9, danhGia: "Mức thấp", tongCong: "2.400", tuoi18_60: "1.950", 
+                name: "PHƯỚC HẢI", lat: 10.5020, lng: 107.1280, 
+                tyleDaKham: 5.4, danhGia: "Trung bình", tongCong: "2.400", tuoi18_60: "1.950", 
                 laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6",
                 soLuongDaKham: "103 người (76 ng 18-59t | 27 ng ≥60t)" 
             },
             { 
-                name: "Cát Hải", lat: 10.4950, lng: 107.1120, 
-                tyle: 84.5, danhGia: "Trung bình", tongCong: "2.700", tuoi18_60: "2.200", 
+                name: "CÁT HẢI", lat: 10.4950, lng: 107.1120, 
+                tyleDaKham: 4.5, danhGia: "Cần phấn đấu", tongCong: "2.700", tuoi18_60: "2.200", 
                 laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5",
                 soLuongDaKham: "102 người (77 ng 18-59t | 25 ng ≥60t)" 
             },
             { 
-                name: "Chu Hải", lat: 10.5000, lng: 107.1200, 
-                tyle: 83.6, danhGia: "Trung bình", tongCong: "3.143", tuoi18_60: "2.583", 
+                name: "CHU HẢI", lat: 10.5000, lng: 107.1200, 
+                tyleDaKham: 2.8, danhGia: "Cần phấn đấu", tongCong: "3.143", tuoi18_60: "2.583", 
                 laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4",
                 soLuongDaKham: "73 người (56 ng 18-59t | 17 ng ≥60t)" 
             },
             { 
-                name: "Láng Cát", lat: 10.5180, lng: 107.1250, 
-                tyle: 88.1, danhGia: "Tốt", tongCong: "3.000", tuoi18_60: "2.400", 
+                name: "LÁNG CÁT", lat: 10.5180, lng: 107.1250, 
+                tyleDaKham: 1.7, danhGia: "Cần phấn đấu", tongCong: "3.000", tuoi18_60: "2.400", 
                 laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643",
                 soLuongDaKham: "44 người (40 ng 18-59t | 4 ng ≥60t)" 
             },
             { 
-                name: "Phước Thành", lat: 10.5420, lng: 107.1350, 
-                tyle: 86.5, danhGia: "Tốt", tongCong: "2.850", tuoi18_60: "2.300", 
+                name: "PHƯỚC THÀNH", lat: 10.5420, lng: 107.1350, 
+                tyleDaKham: 2.3, danhGia: "Cần phấn đấu", tongCong: "2.850", tuoi18_60: "2.300", 
                 laoDongTuDo: "1.840", tuoi60TroLen: "550", congTuoi18TroLen: "2.850", soCanKham: "2.465,25",
                 soLuongDaKham: "57 người (40 ng 18-59t | 17 ng ≥60t)"
             },
             { 
-                name: "Phước Hiệp", lat: 10.5260, lng: 107.1120, 
-                tyle: 75.2, danhGia: "Mức thấp", tongCong: "1.900", tuoi18_60: "1.500", 
+                name: "PHƯỚC HIỆP", lat: 10.5260, lng: 107.1120, 
+                tyleDaKham: 8.1, danhGia: "Trung bình", tongCong: "1.900", tuoi18_60: "1.500", 
                 laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8",
                 soLuongDaKham: "116 người (79 ng 18-59t | 37 ng ≥60t)"
             },
             { 
-                name: "Phước Long", lat: 10.4900, lng: 107.1020, 
-                tyle: 70.0, danhGia: "Mức thấp", tongCong: "1.800", tuoi18_60: "1.450", 
+                name: "PHƯỚC LONG", lat: 10.4900, lng: 107.1020, 
+                tyleDaKham: 5.3, danhGia: "Trung bình", tongCong: "1.800", tuoi18_60: "1.450", 
                 laoDongTuDo: "1.160", tuoi60TroLen: "350", congTuoi18TroLen: "1.800", soCanKham: "1.260",
                 soLuongDaKham: "67 người (49 ng 18-59t | 18 ng ≥60t)"
             },
             { 
-                name: "Phước Tân", lat: 10.5320, lng: 107.1220, 
-                tyle: 82.0, danhGia: "Trung bình", tongCong: "2.500", tuoi18_60: "2.000", 
+                name: "PHƯỚC TẤN", lat: 10.5320, lng: 107.1220, 
+                tyleDaKham: 2.6, danhGia: "Cần phấn đấu", tongCong: "2.500", tuoi18_60: "2.000", 
                 laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050",
                 soLuongDaKham: "53 người (34 ng 18-59t | 19 ng ≥60t)"
             }
@@ -294,13 +294,13 @@
             var markerColor = "";
             var classHieuUng = "";
 
-            if (kp.tyle >= 85) {
-                markerColor = "#22c55e"; 
+            if (kp.tyleDaKham >= 10) {
+                markerColor = "#22c55e"; // Xanh lá - Tốt (≥ 10%)
                 classHieuUng = "diem-nhap-nhay"; 
-            } else if (kp.tyle >= 80) {
-                markerColor = "#eab308"; 
+            } else if (kp.tyleDaKham >= 5) {
+                markerColor = "#eab308"; // Vàng - Khá (5% - 9.9%)
             } else {
-                markerColor = "#f43f5e"; 
+                markerColor = "#f43f5e"; // Đỏ - Thấp (< 5%)
             }
 
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
@@ -324,7 +324,7 @@
                     <span>KHU PHỐ ${kp.name}</span>
                     <span class="popup-badge" style="background:${markerColor}">${kp.danhGia}</span>
                 </div>
-                <div class="popup-row"><span>Tỷ lệ cần khám:</span> <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b></div>
+                <div class="popup-row"><span>Tỷ lệ đã khám:</span> <b style="color:${markerColor}; font-size:16px;">${kp.tyleDaKham}%</b></div>
                 <div class="popup-row"><span>Tổng cộng:</span> <b>${kp.tongCong}</b></div>
                 
                 <div class="popup-box">
@@ -332,8 +332,8 @@
                     <div class="popup-row"><span>Ước tính lao động tự do (80%):</span> <b>${kp.laoDongTuDo}</b></div>
                     <div class="popup-row"><span>Từ 60 tuổi trở lên:</span> <b>${kp.tuoi60TroLen}</b></div>
                     <div class="popup-row"><span>Cộng từ 18 tuổi trở lên:</span> <b>${kp.congTuoi18TroLen}</b></div>
-                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px dashed #cbd5e1;"><span>Số cần khám:</span> <b style="color:#0284c7;">${kp.soCanKham}</b></div>
-                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px solid #e2e8f0;"><span>Số lượng đã khám:</span> <b style="color:#0369a1;">${kp.soLuongDaKham}</b></div>
+                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px dashed #cbd5e1;"><span>Số cần khám:</span> <b>${kp.soCanKham}</b></div>
+                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px solid #e2e8f0;"><span>Số lượng đã khám:</span> <b style="color:#0284c7;">${kp.soLuongDaKham}</b></div>
                 </div>
             `;
             
@@ -341,22 +341,22 @@
             markersList.push(circleMarker);
         });
 
-        // Bảng chú giải
+        // Bảng chú giải cập nhật cho Tỷ lệ đã khám
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
-            div.innerHTML += '<b>Tỷ lệ cần khám</b>';
-            div.innerHTML += '<i style="background: #22c55e"></i> Đạt chuẩn (≥ 85%)<br>';
-            div.innerHTML += '<i style="background: #eab308"></i> Cần chú ý (80 - 84.9%)<br>';
-            div.innerHTML += '<i style="background: #f43f5e"></i> Mức thấp (< 80%)<br>';
+            div.innerHTML += '<b>Tỷ lệ đã khám</b>';
+            div.innerHTML += '<i style="background: #22c55e"></i> Đạt tốt (≥ 10%)<br>';
+            div.innerHTML += '<i style="background: #eab308"></i> Trung bình (5 - 9.9%)<br>';
+            div.innerHTML += '<i style="background: #f43f5e"></i> Cần phấn đấu (< 5%)<br>';
             return div;
         };
         legend.addTo(map);
 
-        // Biểu đồ Chart.js
+        // Biểu đồ Chart.js hiển thị Tỷ lệ đã khám
         var labels = khuPhoData.map(d => d.name);
-        var dataValues = khuPhoData.map(d => d.tyle);
-        var barColors = khuPhoData.map(d => d.tyle >= 85 ? '#22c55e' : (d.tyle >= 80 ? '#eab308' : '#f43f5e'));
+        var dataValues = khuPhoData.map(d => d.tyleDaKham);
+        var barColors = khuPhoData.map(d => d.tyleDaKham >= 10 ? '#22c55e' : (d.tyleDaKham >= 5 ? '#eab308' : '#f43f5e'));
 
         var ctx = document.getElementById('rateChart').getContext('2d');
         var rateChart = new Chart(ctx, {
@@ -364,7 +364,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Tỷ lệ %',
+                    label: 'Tỷ lệ đã khám %',
                     data: dataValues,
                     backgroundColor: barColors,
                     borderRadius: 6,
@@ -375,7 +375,7 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
+                    y: { beginAtZero: true, max: 20, ticks: { callback: v => v + '%' } },
                     x: { ticks: { font: { size: 10, weight: '600' } } }
                 },
                 onClick: (e, activeElements) => {
@@ -397,7 +397,7 @@
                 btn.innerHTML = '✖ Đóng biểu đồ';
             } else {
                 container.style.display = 'none';
-                btn.innerHTML = '📊 Biểu đồ tỷ lệ';
+                btn.innerHTML = '📊 Biểu đồ tỷ lệ đã khám';
             }
         }
     </script>
