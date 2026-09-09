@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -11,135 +12,218 @@
 
     <style>
         /* Cài đặt chung */
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef;}
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; color: #1e293b;}
         
         /* Bản đồ tràn viền 100% màn hình */
         #map { height: 100vh; width: 100%; z-index: 1;}
         
-        /* Giao diện Header nổi */
+        /* Giao diện Header Nổi Cao cấp (Glassmorphism) */
         #header { 
             position: absolute; 
             top: 20px; 
             left: 50%; 
             transform: translateX(-50%); 
             z-index: 1000; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(8px);
-            color: #004a99; 
-            padding: 12px 30px; 
+            background: rgba(255, 255, 255, 0.88); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 14px 32px; 
             text-align: center; 
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             white-space: nowrap;
         }
-        #header h1 { margin: 0; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
-        #header p { margin: 3px 0 0 0; font-size: 13px; color: #444; font-weight: 500;}
+        #header h1 { 
+            margin: 0; 
+            font-size: 21px; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        #header p { margin: 4px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;}
         
-        /* Bảng chú giải */
+        /* Thanh Thống kê Tổng quan (Thêm mới) */
+        .stats-summary {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .stat-item { font-size: 12px; color: #475569; font-weight: 600; }
+        .stat-item b { font-size: 13px; color: #0284c7; }
+
+        /* Bảng chú giải Sang trọng */
         .legend { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 15px 20px; 
-            border-radius: 12px; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15); 
-            line-height: 26px; 
-            font-size: 14px;
-            color: #333;
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);
+            padding: 16px 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            line-height: 28px; 
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            border: 1px solid rgba(255,255,255,0.7);
         }
-        .legend b { font-size: 15px; color: #004a99; display: block; margin-bottom: 5px;}
-        .legend i { width: 16px; height: 16px; float: left; margin-right: 10px; margin-top: 5px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 4px rgba(0,0,0,0.4);}
+        .legend b { font-size: 14px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 6px;}
+        .legend i { width: 14px; height: 14px; float: left; margin-right: 10px; margin-top: 7px; border-radius: 50%; box-shadow: 0 0 6px rgba(0,0,0,0.2);}
 
-        /* Popup thông tin chi tiết */
-        .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.25); }
-        .leaflet-popup-content { margin: 15px 18px; font-size: 14px; line-height: 1.6; color: #222; }
-        .popup-title { font-size: 18px; font-weight: bold; color: #111; border-bottom: 2px solid #ccc; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; }
-        .popup-row { margin-bottom: 4px; }
-        .popup-row-highlight { background-color: #e6f0fa; padding: 4px 8px; border-radius: 5px; margin: 6px 0; border-left: 3px solid #004a99; font-weight: 600; color: #004a99; }
+        /* Popup Thiết kế theo Dạng Card Thông minh */
+        .leaflet-popup-content-wrapper { 
+            border-radius: 16px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18); 
+            padding: 4px;
+            background: #ffffff;
+        }
+        .leaflet-popup-content { margin: 16px 20px; font-size: 13px; line-height: 1.6; color: #334155; }
+        .popup-title { 
+            font-size: 17px; 
+            font-weight: 800; 
+            color: #0f172a; 
+            padding-bottom: 8px; 
+            margin-bottom: 12px; 
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .popup-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 700;
+        }
+        .popup-row { margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .popup-row span { color: #64748b; }
+        .popup-row b { color: #0f172a; }
         
-        /* Hiệu ứng nhịp đập */
-        .diem-nhap-nhay {
-            animation: nhipDap 1.2s infinite ease-in-out;
+        .popup-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-top: 10px;
         }
-        @keyframes nhipDap {
-            0% { fill-opacity: 0.5; stroke-width: 1; }
-            50% { fill-opacity: 1; stroke-width: 5; stroke: rgba(40, 167, 69, 0.6); }
-            100% { fill-opacity: 0.5; stroke-width: 1; }
+        .popup-row-highlight { 
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); 
+            padding: 10px 12px; 
+            border-radius: 10px; 
+            margin-top: 10px; 
+            font-weight: 600; 
+            color: #0369a1; 
+            font-size: 13px;
         }
 
-        /* Nút Bật/Tắt Biểu đồ */
+        /* Hiệu ứng Nhịp đập Phát sáng cho Chấm Xanh */
+        .diem-nhap-nhay {
+            animation: pulseGlow 1.6s infinite ease-in-out;
+        }
+        @keyframes pulseGlow {
+            0% { fill-opacity: 0.6; stroke-width: 2; stroke-opacity: 0.8; }
+            50% { fill-opacity: 1; stroke-width: 8; stroke: rgba(34, 197, 94, 0.5); stroke-opacity: 0.4; }
+            100% { fill-opacity: 0.6; stroke-width: 2; stroke-opacity: 0.8; }
+        }
+
+        /* Nút Bật/Tắt Biểu đồ Hiện đại */
         #chart-toggle-btn {
             position: absolute;
             bottom: 25px;
             left: 20px;
             z-index: 1000;
-            background: #004a99;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: white;
             border: none;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        #chart-toggle-btn:hover { background: #003366; transform: translateY(-2px); }
+        #chart-toggle-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(2, 132, 199, 0.45); }
 
-        /* Khung Biểu đồ */
+        /* Khung Biểu đồ Nổi Cao cấp */
         #chart-container {
             position: absolute;
-            bottom: 75px;
+            bottom: 80px;
             left: 20px;
             z-index: 1000;
-            width: 380px;
-            height: 260px;
-            background: rgba(255, 255, 255, 0.93);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.7);
+            width: 390px;
+            height: 270px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.8);
             display: none;
         }
         #chart-container h4 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #004a99;
+            margin: 0 0 12px 0;
+            font-size: 13px;
+            font-weight: 800;
+            color: #0f172a;
             text-align: center;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Header nổi cao cấp -->
     <div id="header">
-        <h1>🗺️ BẢN ĐỒ PHƯỜNG TÂN HẢI</h1>
-        <p>Cập nhật số liệu khám sức khỏe đợt 20/08 - 24/08/2026</p>
+        <h1>🗺️ BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
+        <p>Số liệu thực tế tính đến ngày    tháng 9 năm 2026 tại các khu phố</p>
+        
+        <!-- Thanh tổng quan số liệu -->
+        <div class="stats-summary">
+            <div class="stat-item">Đã khám: <b style="color:#0284c7;">862</b></div>
+            <div class="stat-item">18–59 tuổi: <b style="color:#0f172a;">630</b></div>
+            <div class="stat-item">≥60 tuổi: <b style="color:#e11d48;">232</b></div>
+        </div>
     </div>
 
+    <!-- Khung chứa bản đồ -->
     <div id="map"></div>
 
+    <!-- Nút Bật/Tắt Biểu đồ -->
     <button id="chart-toggle-btn" onclick="toggleChart()">📊 Biểu đồ tỷ lệ</button>
 
+    <!-- Khung chứa Biểu đồ -->
     <div id="chart-container">
-        <h4>Tỷ lệ cần khám sức khỏe (%)</h4>
-        <div style="height: 210px;">
+        <h4>Tỷ lệ cần khám sức khỏe các khu phố (%)</h4>
+        <div style="height: 215px;">
             <canvas id="rateChart"></canvas>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Khởi tạo bản đồ
         var map = L.map('map', {zoomControl: false}).setView([10.5150, 107.1200], 13);
         
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
+        // Lớp bản đồ nền Google Maps sắc nét
         L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             attribution: '© Google Maps',
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố (HOÀN THÀNH CẬP NHẬT 100% SỐ LIỆU ĐỢT KHÁM 20-24/08/2026)
+        // Dữ liệu 9 khu phố đầy đủ 100%
         var khuPhoData = [
             { 
                 name: "Đông Hải", lat: 10.5080, lng: 107.1350, 
@@ -204,40 +288,46 @@
             var classHieuUng = "";
 
             if (kp.tyle >= 85) {
-                markerColor = "#28a745"; 
+                markerColor = "#22c55e"; // Xanh nhã
                 classHieuUng = "diem-nhap-nhay"; 
             } else if (kp.tyle >= 80) {
-                markerColor = "#ffc107"; 
+                markerColor = "#eab308"; // Vàng nhã
             } else {
-                markerColor = "#dc3545"; 
+                markerColor = "#f43f5e"; // Đỏ hồng
             }
 
             var circleMarker = L.circleMarker([kp.lat, kp.lng], {
-                radius: 12,
+                radius: 13,
                 fillColor: markerColor,
-                color: "#fff",
-                weight: 1.5,
+                color: "#ffffff",
+                weight: 2,
                 opacity: 1,
                 fillOpacity: 0.9,
                 className: classHieuUng 
             }).addTo(map);
 
-            circleMarker.bindTooltip("<b>KHU PHỐ " + kp.name + "</b>", {
+            circleMarker.bindTooltip("<b>KP " + kp.name + "</b>", {
                 direction: 'top', 
                 offset: [0, -10],
-                opacity: 0.9
+                opacity: 0.95
             });
 
             var popupContent = `
-                <div class="popup-title">KHU PHỐ ${kp.name}</div>
-                <div class="popup-row">Tỷ lệ: <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b> — ${kp.danhGia}</div>
-                <div class="popup-row">Tổng cộng: <b>${kp.tongCong}</b></div>
-                <div class="popup-row">18—<60 tuổi: ${kp.tuoi18_60}</div>
-                <div class="popup-row">Ước tính lao động tự do (80%): ${kp.laoDongTuDo}</div>
-                <div class="popup-row">Từ 60 tuổi trở lên: ${kp.tuoi60TroLen}</div>
-                <div class="popup-row">Cộng từ 18 tuổi trở lên: ${kp.congTuoi18TroLen}</div>
-                <div class="popup-row">Số cần khám: <b>${kp.soCanKham}</b></div>
-                <div class="popup-row-highlight">📋 Đã khám đợt 20-24/08: <b>${kp.daKhamDot}</b></div>
+                <div class="popup-title">
+                    <span>KHU PHỐ ${kp.name}</span>
+                    <span class="popup-badge" style="background:${markerColor}">${kp.danhGia}</span>
+                </div>
+                <div class="popup-row"><span>Tỷ lệ cần khám:</span> <b style="color:${markerColor}; font-size:15px;">${kp.tyle}%</b></div>
+                <div class="popup-row"><span>Tổng số dân:</span> <b>${kp.tongCong}</b></div>
+                
+                <div class="popup-box">
+                    <div class="popup-row"><span>Từ 18 — <60 tuổi:</span> <b>${kp.tuoi18_60}</b></div>
+                    <div class="popup-row"><span>Lao động tự do (80%):</span> <b>${kp.laoDongTuDo}</b></div>
+                    <div class="popup-row"><span>Từ 60 tuổi trở lên:</span> <b>${kp.tuoi60TroLen}</b></div>
+                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px dashed #cbd5e1;"><span>Số lượng cần khám:</span> <b style="color:#0284c7;">${kp.soCanKham}</b></div>
+                </div>
+
+                <div class="popup-row-highlight">📋 Đã khám đợt 20-24/08:<br><b style="font-size:14px; color:#0369a1;">${kp.daKhamDot}</b></div>
             `;
             
             circleMarker.bindPopup(popupContent);
@@ -249,9 +339,9 @@
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
             div.innerHTML += '<b>Tỷ lệ cần khám</b>';
-            div.innerHTML += '<i style="background: #28a745"></i> Đạt chuẩn (≥ 85%)<br>';
-            div.innerHTML += '<i style="background: #ffc107"></i> Cần chú ý (80 - 84.9%)<br>';
-            div.innerHTML += '<i style="background: #dc3545"></i> Mức thấp (< 80%)<br>';
+            div.innerHTML += '<i style="background: #22c55e"></i> Đạt chuẩn (≥ 85%)<br>';
+            div.innerHTML += '<i style="background: #eab308"></i> Cần chú ý (80 - 84.9%)<br>';
+            div.innerHTML += '<i style="background: #f43f5e"></i> Mức thấp (< 80%)<br>';
             return div;
         };
         legend.addTo(map);
@@ -259,7 +349,7 @@
         // Biểu đồ Chart.js
         var labels = khuPhoData.map(d => d.name);
         var dataValues = khuPhoData.map(d => d.tyle);
-        var barColors = khuPhoData.map(d => d.tyle >= 85 ? '#28a745' : (d.tyle >= 80 ? '#ffc107' : '#dc3545'));
+        var barColors = khuPhoData.map(d => d.tyle >= 85 ? '#22c55e' : (d.tyle >= 80 ? '#eab308' : '#f43f5e'));
 
         var ctx = document.getElementById('rateChart').getContext('2d');
         var rateChart = new Chart(ctx, {
@@ -270,7 +360,7 @@
                     label: 'Tỷ lệ %',
                     data: dataValues,
                     backgroundColor: barColors,
-                    borderRadius: 4,
+                    borderRadius: 6,
                 }]
             },
             options: {
@@ -279,7 +369,7 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
-                    x: { ticks: { font: { size: 10 } } }
+                    x: { ticks: { font: { size: 10, weight: '600' } } }
                 },
                 onClick: (e, activeElements) => {
                     if (activeElements.length > 0) {
