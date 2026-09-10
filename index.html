@@ -90,7 +90,7 @@
             border: 1px solid rgba(255,255,255,0.6);
         }
 
-        /* Popup Thiết kế Card Thông minh */
+        /* Popup Thiết kế Card Gọn gàng Sạch sẽ */
         .leaflet-popup-content-wrapper { 
             border-radius: 16px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.18); 
@@ -196,8 +196,14 @@
     <!-- Header nổi cao cấp -->
     <div id="header">
         <h1>🗺️ BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>TỶ LỆ HOÀN THÀNH CỦA CÁC KHU PHỐ TRÊN ĐỊA BÀN PHƯỜNG TÍNH ĐẾN NGÀY 06 THÁNG 9 NĂM 2026</p>
+        <p>TỶ LỆ HOÀN THÀNH CỦA CÁC KHU PHỐ TRÊN ĐỊA BÀN PHƯỜNG</p>
         
+        <!-- Thanh tổng quan số liệu -->
+        <div class="stats-summary">
+            <div class="stat-item">Đã khám: <b style="color:#0284c7;">862</b></div>
+            <div class="stat-item">18–59 tuổi: <b style="color:#0f172a;">630</b></div>
+            <div class="stat-item">≥60 tuổi: <b style="color:#e11d48;">232</b></div>
+        </div>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -232,24 +238,22 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố bao gồm Tọa độ Vùng Polygon (Tô màu kín toàn bộ từng khu phố)
+        // Dữ liệu 9 khu phố (Đã tinh chỉnh loại bỏ trường bị trống)
         var khuPhoData = [
             { 
                 name: "Đông Hải", center: [10.5080, 107.1350],
                 polygon: [
                     [10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]
                 ],
-                tyleDaKham: 14.4, tongCong: "3.108", 
-                soCanKham: "2.564",
-                soLuongDaKham: "544 người" 
+                tyleDaKham: 14.4, tongCong: "3.108", soCanKham: "1.709,4",
+                soLuongDaKham: "247 người (179 ng 18-59t | 68 ng ≥60t)" 
             },
             { 
                 name: "Phước Hiệp", center: [10.5260, 107.1120],
                 polygon: [
                     [10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]
                 ],
-                tyleDaKham: 8.1, tongCong: "3.681", tuoi18_60: "1.500", 
-                laoDongTuDo: "1.200", tuoi60TroLen: "400", congTuoi18TroLen: "1.900", soCanKham: "1.428,8",
+                tyleDaKham: 8.1, tongCong: "3.681", soCanKham: "1.428,8",
                 soLuongDaKham: "116 người (79 ng 18-59t | 37 ng ≥60t)"
             },
             { 
@@ -257,8 +261,7 @@
                 polygon: [
                     [10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]
                 ],
-                tyleDaKham: 5.4, tongCong: "3.800", tuoi18_60: "1.950", 
-                laoDongTuDo: "1.560", tuoi60TroLen: "450", congTuoi18TroLen: "2.400", soCanKham: "1.917,6",
+                tyleDaKham: 5.4, tongCong: "3.800", soCanKham: "1.917,6",
                 soLuongDaKham: "103 người (76 ng 18-59t | 27 ng ≥60t)" 
             },
             { 
@@ -266,8 +269,7 @@
                 polygon: [
                     [10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]
                 ],
-                tyleDaKham: 5.3, tongCong: "4.087", tuoi18_60: "1.450", 
-                laoDongTuDo: "1.160", tuoi60TroLen: "350", congTuoi18TroLen: "1.800", soCanKham: "1.260",
+                tyleDaKham: 5.3, tongCong: "4.087", soCanKham: "1.260",
                 soLuongDaKham: "67 người (49 ng 18-59t | 18 ng ≥60t)"
             },
             { 
@@ -275,8 +277,7 @@
                 polygon: [
                     [10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]
                 ],
-                tyleDaKham: 4.5, tongCong: "2.239", tuoi18_60: "2.200", 
-                laoDongTuDo: "1.760", tuoi60TroLen: "500", congTuoi18TroLen: "2.700", soCanKham: "2.281,5",
+                tyleDaKham: 4.5, tongCong: "2.239", soCanKham: "2.281,5",
                 soLuongDaKham: "102 người (77 ng 18-59t | 25 ng ≥60t)" 
             },
             { 
@@ -284,8 +285,7 @@
                 polygon: [
                     [10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]
                 ],
-                tyleDaKham: 2.8, tongCong: "4.570", tuoi18_60: "2.583", 
-                laoDongTuDo: "2.066,4", tuoi60TroLen: "560", congTuoi18TroLen: "3.143", soCanKham: "2.626,4",
+                tyleDaKham: 2.8, tongCong: "4.570", soCanKham: "2.626,4",
                 soLuongDaKham: "73 người (56 ng 18-59t | 17 ng ≥60t)" 
             },
             { 
@@ -293,8 +293,7 @@
                 polygon: [
                     [10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]
                 ],
-                tyleDaKham: 2.6, tongCong: "4.628", tuoi18_60: "2.000", 
-                laoDongTuDo: "1.600", tuoi60TroLen: "500", congTuoi18TroLen: "2.500", soCanKham: "2.050",
+                tyleDaKham: 2.6, tongCong: "4.628", soCanKham: "2.050",
                 soLuongDaKham: "53 người (34 ng 18-59t | 19 ng ≥60t)"
             },
             { 
@@ -302,8 +301,7 @@
                 polygon: [
                     [10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]
                 ],
-                tyleDaKham: 2.3, tongCong: "2.258", tuoi18_60: "2.300", 
-                laoDongTuDo: "1.840", tuoi60TroLen: "550", congTuoi18TroLen: "2.850", soCanKham: "2.465,25",
+                tyleDaKham: 2.3, tongCong: "2.258", soCanKham: "2.465,25",
                 soLuongDaKham: "57 người (40 ng 18-59t | 17 ng ≥60t)"
             },
             { 
@@ -311,8 +309,7 @@
                 polygon: [
                     [10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]
                 ],
-                tyleDaKham: 1.7, tongCong: "4.241", tuoi18_60: "2.400", 
-                laoDongTuDo: "1.920", tuoi60TroLen: "600", congTuoi18TroLen: "3.000", soCanKham: "2.643",
+                tyleDaKham: 1.7, tongCong: "4.241", soCanKham: "2.643",
                 soLuongDaKham: "44 người (40 ng 18-59t | 4 ng ≥60t)" 
             }
         ];
@@ -323,31 +320,28 @@
             var zoneColor = "";
             var danhGiaText = "";
 
-            // Phân loại màu vùng: Dẫn đầu >= 8% (Xanh), Tạm 4-7.9% (Vàng), Yếu < 4% (Đỏ)
             if (kp.tyleDaKham >= 8.0) {
-                zoneColor = "#22c55e"; // Xanh lá
+                zoneColor = "#22c55e"; 
                 danhGiaText = "Dẫn đầu";
             } else if (kp.tyleDaKham >= 4.0) {
-                zoneColor = "#eab308"; // Vàng
+                zoneColor = "#eab308"; 
                 danhGiaText = "Tạm";
             } else {
-                zoneColor = "#f43f5e"; // Đỏ
+                zoneColor = "#f43f5e"; 
                 danhGiaText = "Yếu";
             }
 
             kp.color = zoneColor;
             kp.danhGia = danhGiaText;
 
-            // Vẽ Polygon phủ kín vùng
             var poly = L.polygon(kp.polygon, {
                 color: zoneColor,
                 weight: 2.5,
                 opacity: 0.9,
                 fillColor: zoneColor,
-                fillOpacity: 0.45 // Độ trong suốt của màu phủ
+                fillOpacity: 0.45 
             }).addTo(map);
 
-            // Hiệu ứng rê chuột vào vùng
             poly.on('mouseover', function (e) {
                 this.setStyle({ fillOpacity: 0.7, weight: 4 });
             });
@@ -355,7 +349,6 @@
                 this.setStyle({ fillOpacity: 0.45, weight: 2.5 });
             });
 
-            // Gắn nhãn tên Khu phố nổi giữa vùng
             var labelMarker = L.marker(kp.center, {
                 icon: L.divIcon({
                     className: 'khupho-label',
@@ -365,6 +358,7 @@
                 })
             }).addTo(map);
 
+            // Bảng Popup tối giản loại bỏ trường bị lỗi
             var popupContent = `
                 <div class="popup-title">
                     <span>KHU PHỐ ${kp.name}</span>
@@ -374,11 +368,7 @@
                 <div class="popup-row"><span>Tổng cộng:</span> <b>${kp.tongCong}</b></div>
                 
                 <div class="popup-box">
-                    <div class="popup-row"><span>18—<60 tuổi:</span> <b>${kp.tuoi18_60}</b></div>
-                    <div class="popup-row"><span>Ước tính lao động tự do (80%):</span> <b>${kp.laoDongTuDo}</b></div>
-                    <div class="popup-row"><span>Từ 60 tuổi trở lên:</span> <b>${kp.tuoi60TroLen}</b></div>
-                    <div class="popup-row"><span>Cộng từ 18 tuổi trở lên:</span> <b>${kp.congTuoi18TroLen}</b></div>
-                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px dashed #cbd5e1;"><span>Số cần khám:</span> <b>${kp.soCanKham}</b></div>
+                    <div class="popup-row"><span>Số cần khám:</span> <b>${kp.soCanKham}</b></div>
                     <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px solid #e2e8f0;"><span>Số lượng đã khám:</span> <b style="color:#0284c7;">${kp.soLuongDaKham}</b></div>
                 </div>
             `;
