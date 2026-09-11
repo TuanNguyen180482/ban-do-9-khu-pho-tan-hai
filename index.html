@@ -198,6 +198,11 @@
         <h1>🗺️ BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
         <p>TỶ LỆ HOÀN THÀNH CỦA CÁC KHU PHỐ TRÊN ĐỊA BÀN PHƯỜNG TÍNH ĐẾN NGÀY 06 THÁNG 9 NĂM 2026</p>
         
+        <!-- Thanh tổng quan số liệu -->
+        <div class="stats-summary">
+            <div class="stat-item">Tổng đã khám: <b style="color:#0284c7;" id="sum-da-kham">5.747</b></div>
+            <div class="stat-item">Tổng cần khám: <b style="color:#0f172a;" id="sum-can-kham">24.230</b></div>
+        </div>
     </div>
 
     <!-- Khung chứa bản đồ -->
@@ -232,96 +237,91 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố (Đã tinh chỉnh loại bỏ trường bị trống)
+        // Dữ liệu 9 khu phố với giá trị số nguyên nguyên bản để tự động tính %
         var khuPhoData = [
             { 
-                name: "Đông Hải", center: [10.5080, 107.1350],
-                polygon: [
-                    [10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]
-                ],
-                tyleDaKham: 14.4, tongCong: "2.960", soCanKham: "2.589 người dân",
-                soLuongDaKham: "371 người dân (97 trẻ em dưới 6 tuổi | 247 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)" 
-            },
-            { 
-                name: "Phước Hiệp", center: [10.5260, 107.1120],
-                polygon: [
-                    [10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]
-                ],
-                tyleDaKham: 8.1, tongCong: "3.482", soCanKham: "2.785 người dân",
-                soLuongDaKham: "697 người dân (128 trẻ em dưới 6 tuổi | 569 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
-            },
-            { 
-                name: "Phước Hải", center: [10.5020, 107.1280],
-                polygon: [
-                    [10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]
-                ],
-                tyleDaKham: 5.4, tongCong: "3.578", soCanKham: "2.951 người dân",
-                soLuongDaKham: "627 người dân (130 trẻ em dưới 6 tuổi | 497 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)" 
-            },
-            { 
-                name: "Phước Long", center: [10.4900, 107.1020],
-                polygon: [
-                    [10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]
-                ],
-                tyleDaKham: 5.3, tongCong: "3.980", soCanKham: "3.312 người dân",
-                soLuongDaKham: "668 người dân (125 trẻ em dưới 6 tuổi | 543 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+                name: "Phước Thành", center: [10.5420, 107.1350],
+                polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]],
+                tongCong: "1.350", numCanKham: 786, numDaKham: 564,
+                soCanKhamText: "786 người dân",
+                soLuongDaKhamText: "564 người dân (40 trẻ em dưới 6 tuổi | 524 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
             },
             { 
                 name: "Cát Hải", center: [10.4950, 107.1120],
-                polygon: [
-                    [10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]
-                ],
-                tyleDaKham: 4.5, tongCong: "2.123", soCanKham: "1.531 người dân",
-                soLuongDaKham: "592 người dân (85 trẻ em dưới 6 tuổi | 507 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)" 
-            },
-            { 
-                name: "Chu Hải", center: [10.5000, 107.1200],
-                polygon: [
-                    [10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]
-                ],
-                tyleDaKham: 2.8, tongCong: "4.245", soCanKham: "3.395 người dân",
-                soLuongDaKham: "850 người dân (170 trẻ em dưới 6 tuổi | 680 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)" 
-            },
-            { 
-                name: "Phước Tấn", center: [10.5320, 107.1220],
-                polygon: [
-                    [10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]
-                ],
-                tyleDaKham: 2.6, tongCong: "4.257", soCanKham: "3.694 người dân",
-                soLuongDaKham: "563 người dân (173 trẻ em dưới 6 tuổi | 390 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
-            },
-            { 
-                name: "Phước Thành", center: [10.5420, 107.1350],
-                polygon: [
-                    [10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]
-                ],
-                tyleDaKham: 2.3, tongCong: "1.350", soCanKham: "786 người dân",
-                soLuongDaKham: "564 người dân (40 trẻ em dưới 6 tuổi | 524 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+                polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]],
+                tongCong: "2.123", numCanKham: 1531, numDaKham: 592,
+                soCanKhamText: "1.531 người dân",
+                soLuongDaKhamText: "592 người dân (85 trẻ em dưới 6 tuổi | 507 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
             },
             { 
                 name: "Láng Cát", center: [10.5180, 107.1250],
-                polygon: [
-                    [10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]
-                ],
-                tyleDaKham: 1.7, tongCong: "3.893", soCanKham: "3.085 người dân",
-                soLuongDaKham: "808 người dân (113 trẻ em dưới 6 tuổi | 695 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)" 
+                polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]],
+                tongCong: "3.893", numCanKham: 3085, numDaKham: 808,
+                soCanKhamText: "3.085 người dân",
+                soLuongDaKhamText: "808 người dân (113 trẻ em dưới 6 tuổi | 695 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Phước Hiệp", center: [10.5260, 107.1120],
+                polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]],
+                tongCong: "3.482", numCanKham: 2785, numDaKham: 697,
+                soCanKhamText: "2.785 người dân",
+                soLuongDaKhamText: "697 người dân (128 trẻ em dưới 6 tuổi | 569 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Chu Hải", center: [10.5000, 107.1200],
+                polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]],
+                tongCong: "4.245", numCanKham: 3395, numDaKham: 850,
+                soCanKhamText: "3.395 người dân",
+                soLuongDaKhamText: "850 người dân (170 trẻ em dưới 6 tuổi | 680 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Phước Hải", center: [10.5020, 107.1280],
+                polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]],
+                tongCong: "3.578", numCanKham: 2951, numDaKham: 627,
+                soCanKhamText: "2.951 người dân",
+                soLuongDaKhamText: "627 người dân (130 trẻ em dưới 6 tuổi | 497 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Phước Long", center: [10.4900, 107.1020],
+                polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]],
+                tongCong: "3.980", numCanKham: 3312, numDaKham: 668,
+                soCanKhamText: "3.312 người dân",
+                soLuongDaKhamText: "668 người dân (125 trẻ em dưới 6 tuổi | 543 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Phước Tân", center: [10.5320, 107.1220],
+                polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]],
+                tongCong: "4.257", numCanKham: 3694, numDaKham: 563,
+                soCanKhamText: "3.694 người dân",
+                soLuongDaKhamText: "563 người dân (173 trẻ em dưới 6 tuổi | 390 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
+            },
+            { 
+                name: "Đông Hải", center: [10.5080, 107.1350],
+                polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]],
+                tongCong: "2.960", numCanKham: 2589, numDaKham: 371,
+                soCanKhamText: "2.589 người dân",
+                soLuongDaKhamText: "371 người dân (97 trẻ em dưới 6 tuổi | 247 người dân từ 18 tuổi trở lên | 0 người dân ≥ 60 tuỗi)"
             }
         ];
 
         var polygonsList = [];
 
         khuPhoData.forEach(function(kp) {
+            // TỰ ĐỘNG TÍNH TỶ LỆ PHẦN TRĂM CHÍNH XÁC ĐẾN 1 CHỮ SỐ THẬP PHÂN
+            kp.tyleDaKham = Math.round((kp.numDaKham / kp.numCanKham) * 1000) / 10;
+
             var zoneColor = "";
             var danhGiaText = "";
 
-            if (kp.tyleDaKham >= 8.0) {
-                zoneColor = "#22c55e"; 
+            // Phân loại tự động theo Tỷ lệ % mới
+            if (kp.tyleDaKham >= 20.0) {
+                zoneColor = "#22c55e"; // Xanh lá - Dẫn đầu
                 danhGiaText = "Dẫn đầu";
-            } else if (kp.tyleDaKham >= 4.0) {
-                zoneColor = "#eab308"; 
+            } else if (kp.tyleDaKham >= 10.0) {
+                zoneColor = "#eab308"; // Vàng - Tạm
                 danhGiaText = "Tạm";
             } else {
-                zoneColor = "#f43f5e"; 
+                zoneColor = "#f43f5e"; // Đỏ - Yếu
                 danhGiaText = "Yếu";
             }
 
@@ -352,18 +352,18 @@
                 })
             }).addTo(map);
 
-            // Bảng Popup tối giản loại bỏ trường bị lỗi
+            // Bảng Popup chuẩn đẹp
             var popupContent = `
                 <div class="popup-title">
                     <span>KHU PHỐ ${kp.name}</span>
                     <span class="popup-badge" style="background:${zoneColor}">${danhGiaText}</span>
                 </div>
                 <div class="popup-row"><span>Tỷ lệ đã khám:</span> <b style="color:${zoneColor}; font-size:16px;">${kp.tyleDaKham}%</b></div>
-                <div class="popup-row"><span>Tổng cộng:</span> <b>${kp.tongCong}</b></div>
+                <div class="popup-row"><span>Tổng cộng dân số:</span> <b>${kp.tongCong}</b></div>
                 
                 <div class="popup-box">
-                    <div class="popup-row"><span>Số cần khám:</span> <b>${kp.soCanKham}</b></div>
-                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px solid #e2e8f0;"><span>Số lượng đã khám:</span> <b style="color:#0284c7;">${kp.soLuongDaKham}</b></div>
+                    <div class="popup-row"><span>Số cần khám:</span> <b>${kp.soCanKhamText}</b></div>
+                    <div class="popup-row" style="margin-top:4px; padding-top:4px; border-top:1px solid #e2e8f0;"><span>Số lượng đã khám:</span> <b style="color:#0284c7;">${kp.soLuongDaKhamText}</b></div>
                 </div>
             `;
             
@@ -377,14 +377,14 @@
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
             div.innerHTML += '<b>Tỷ lệ đã khám</b>';
-            div.innerHTML += '<i style="background: #22c55e"></i> Dẫn đầu (≥ 8%)<br>';
-            div.innerHTML += '<i style="background: #eab308"></i> Tạm (4 - 7.9%)<br>';
-            div.innerHTML += '<i style="background: #f43f5e"></i> Yếu (< 4%)<br>';
+            div.innerHTML += '<i style="background: #22c55e"></i> Dẫn đầu (≥ 20%)<br>';
+            div.innerHTML += '<i style="background: #eab308"></i> Tạm (10 - 19.9%)<br>';
+            div.innerHTML += '<i style="background: #f43f5e"></i> Yếu (< 10%)<br>';
             return div;
         };
         legend.addTo(map);
 
-        // Biểu đồ Chart.js
+        // Biểu đồ Chart.js tự động cập nhật độ cao cột theo Tỷ lệ % mới
         var labels = khuPhoData.map(d => d.name);
         var dataValues = khuPhoData.map(d => d.tyleDaKham);
         var barColors = khuPhoData.map(d => d.color);
@@ -406,7 +406,7 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, max: 20, ticks: { callback: v => v + '%' } },
+                    y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
                     x: { ticks: { font: { size: 10, weight: '600' } } }
                 },
                 onClick: (e, activeElements) => {
