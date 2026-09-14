@@ -91,55 +91,6 @@
         .legend b { font-size: 13px; font-weight: 800; color: #0f172a; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;}
         .legend i { width: 14px; height: 14px; float: left; margin-right: 10px; margin-top: 7px; border-radius: 4px; box-shadow: 0 0 6px rgba(0,0,0,0.15);}
 
-        /* HIỆU ỨNG CHỚP TẮT CẢNH BÁO CHO VÙNG POLYGON YẾU */
-        .leaflet-interactive.canh-bao-yeu {
-            animation: polygonAlertPulse 1.2s infinite ease-in-out;
-        }
-        @keyframes polygonAlertPulse {
-            0% { fill-opacity: 0.2; stroke-opacity: 0.5; stroke-width: 2px; }
-            50% { fill-opacity: 0.75; stroke-opacity: 1; stroke-width: 5px; }
-            100% { fill-opacity: 0.2; stroke-opacity: 0.5; stroke-width: 2px; }
-        }
-
-        /* LABEL HIỂN THỊ ĐẦY ĐỦ TÊN KHU PHỐ + CHỚP TẮT CẢNH BÁO */
-        .khupho-label {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #0284c7;
-            border-radius: 20px;
-            padding: 3px 10px;
-            font-size: 11px;
-            font-weight: 800;
-            color: #0f172a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .khupho-label span {
-            background: #0284c7;
-            color: #fff;
-            border-radius: 10px;
-            padding: 1px 6px;
-            font-size: 10px;
-        }
-
-        .khupho-label-warning {
-            background: rgba(220, 38, 38, 0.95) !important;
-            color: #ffffff !important;
-            border: 1px solid #ffffff !important;
-            animation: labelAlertPulse 1.2s infinite ease-in-out;
-        }
-        .khupho-label-warning span {
-            background: #ffffff !important;
-            color: #dc2626 !important;
-        }
-        @keyframes labelAlertPulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(220, 38, 38, 0.4); }
-            50% { transform: scale(1.08); box-shadow: 0 0 15px rgba(220, 38, 38, 0.9); }
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(220, 38, 38, 0.4); }
-        }
-
         /* Thông tin Đơn vị thiết kế */
         #footer-credits {
             position: absolute;
@@ -198,6 +149,29 @@
             border-radius: 14px;
             padding: 12px;
             margin-top: 10px;
+        }
+
+        /* Label Tên Khu phố nổi dạng Badge Sáng */
+        .khupho-label {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #0284c7;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .khupho-label span {
+            background: #0284c7;
+            color: #fff;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 10px;
         }
 
         /* Nút Bật/Tắt Biểu đồ */
@@ -297,9 +271,9 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố
+        // Dữ liệu 9 khu phố (Chuẩn hóa số nguyên cho tổng dân số)
         var khuPhoData = [
-                    { 
+            { 
                 name: "Phước Thành", center: [10.5420, 107.1350],
                 polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]],
                 numTongDan: 1350, numCanKham: 328, numDaKham: 1022,
@@ -397,21 +371,13 @@
         var polygonsList = [];
 
         khuPhoData.forEach(function(kp) {
-            // TẠO LỚP POLYGON BẢN ĐỒ
-            var polyOptions = {
+            var poly = L.polygon(kp.polygon, {
                 color: kp.color,
                 weight: 2.5,
                 opacity: 0.9,
                 fillColor: kp.color,
-                fillOpacity: 0.35
-            };
-
-            // NẾU LÀ KHU PHỐ YẾU (HẠNG 7-9): THÊM CLASS CHỚP TẮT CẢNH BÁO VÙNG
-            if (kp.hang >= 7) {
-                polyOptions.className = 'canh-bao-yeu';
-            }
-
-            var poly = L.polygon(kp.polygon, polyOptions).addTo(map);
+                fillOpacity: 0.35 
+            }).addTo(map);
 
             poly.on('mouseover', function (e) {
                 this.setStyle({ fillOpacity: 0.65, weight: 4 });
@@ -420,18 +386,12 @@
                 this.setStyle({ fillOpacity: 0.35, weight: 2.5 });
             });
 
-            // NHÃN HIỂN THỊ ĐẦY ĐỦ TÊN KHU PHỐ
-            var labelClass = 'khupho-label';
-            if (kp.hang >= 7) {
-                labelClass += ' khupho-label-warning'; // CHỚP TẮT NHÃN CẢNH BÁO
-            }
-
             var labelMarker = L.marker(kp.center, {
                 icon: L.divIcon({
-                    className: labelClass,
-                    html: `<span>${kp.hang}</span> KP ${kp.name}`,
-                    iconSize: [115, 24],
-                    iconAnchor: [57, 12]
+                    className: 'khupho-label',
+                    html: `<span>${kp.hang}</span> ${kp.name}`,
+                    iconSize: [95, 24],
+                    iconAnchor: [47, 12]
                 })
             }).addTo(map);
 
@@ -461,7 +421,7 @@
             div.innerHTML += '<b>Xếp hạng Thi đua</b>';
             div.innerHTML += '<i style="background: #16a34a;"></i> Top Dẫn đầu (Hạng 1 - 3)<br>';
             div.innerHTML += '<i style="background: #d97706;"></i> Mức Trung bình (Hạng 4 - 6)<br>';
-            div.innerHTML += '<i style="background: #dc2626; animation: labelAlertPulse 1.2s infinite ease-in-out;"></i> Cần cố gắng (Hạng 7 - 9 ⚠️ Cảnh báo)<br>';
+            div.innerHTML += '<i style="background: #dc2626;"></i> Cần cố gắng (Hạng 7 - 9)<br>';
             return div;
         };
         legend.addTo(map);
