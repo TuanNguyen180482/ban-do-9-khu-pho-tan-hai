@@ -74,7 +74,7 @@
         #warning-banner .btn-focus {
             background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none;
             padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800;
-            cursor: pointer; transition: transform 0.2s; shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+            cursor: pointer; transition: transform 0.2s;
         }
         #warning-banner .btn-focus:hover { transform: scale(1.08); }
 
@@ -83,7 +83,17 @@
             100% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
         }
 
-        /* Label Tên Khu Phố Đẹp Mắt */
+        /* Thông tin Đơn vị thiết kế (Đã khôi phục) */
+        #footer-credits {
+            position: absolute; bottom: 12px; right: 12px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 6px 14px; border-radius: 30px;
+            font-size: 10px; font-weight: 800; color: #0284c7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12); border: 1px solid rgba(255, 255, 255, 0.9);
+            display: flex; align-items: center; gap: 6px; pointer-events: none;
+        }
+
+        /* Label Tên Khu Phố */
         .khupho-label {
             background: rgba(255, 255, 255, 0.95);
             border: 1.5px solid #0284c7; border-radius: 20px;
@@ -155,6 +165,7 @@
             background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
             padding: 10px 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
             font-size: 10px; font-weight: 700; color: #334155; border: 1px solid rgba(255,255,255,0.8);
+            margin-bottom: 35px; /* Để tránh che mất footer credits */
         }
         .legend i { width: 10px; height: 10px; float: left; margin-right: 6px; margin-top: 3px; border-radius: 2px; }
 
@@ -170,6 +181,7 @@
             #chart-container { bottom: 10px; left: 10px; width: 320px; height: 210px; padding: 8px; }
             #chart-container div { height: 160px !important; }
             .legend { display: none; }
+            #footer-credits { font-size: 8px; padding: 4px 10px; bottom: 8px; right: 8px; }
         }
 
         @media (max-width: 576px) and (orientation: portrait) {
@@ -178,6 +190,7 @@
             #header p { font-size: 8px; }
             #warning-banner { top: 110px; font-size: 9px; padding: 5px 10px; width: calc(100% - 24px); justify-content: space-between; }
             .legend { display: none; }
+            #footer-credits { font-size: 9px; padding: 4px 10px; }
         }
     </style>
 </head>
@@ -213,6 +226,11 @@
 
     <!-- Bản đồ -->
     <div id="map"></div>
+
+    <!-- Đơn vị thiết kế dưới bản đồ -->
+    <div id="footer-credits">
+        <i class="fa-solid fa-hospital"></i> TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI
+    </div>
 
     <!-- Nút Điều khiển -->
     <div class="controls-group">
