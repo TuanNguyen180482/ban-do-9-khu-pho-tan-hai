@@ -160,7 +160,7 @@
             #header p { font-size: 9px; }
             .stat-card { padding: 4px 6px; font-size: 9px; }
             .stat-card b { font-size: 11px; }
-            .legend { display: none; } /* Ẩn legend trên mobile màn nhỏ để tránh che bản đồ */
+            .legend { display: none; }
             #footer-credits { display: none; }
             .controls-group { bottom: 15px; left: 10px; }
             #chart-container { bottom: 65px; left: 10px; width: calc(100vw - 20px); height: 280px; }
@@ -234,7 +234,7 @@
             maxZoom: 20
         }).addTo(map);
 
-        // Dữ liệu 9 khu phố
+        // Dữ liệu 9 khu phố (Tổng dân số = 28.322)
         var khuPhoData = [
             { 
                 name: "Phước Thành", center: [10.5420, 107.1350],
@@ -257,51 +257,51 @@
             { 
                 name: "Phước Hiệp", center: [10.5260, 107.1120],
                 polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]],
-                numTongDan: 3482, numCanKham: 2021, numDaKham: 1461,
-                soCanKhamText: "2.021 người dân", soLuongDaKhamText: "1.461 người dân"
+                numTongDan: 3220, numCanKham: 1759, numDaKham: 1461,
+                soCanKhamText: "1.759 người dân", soLuongDaKhamText: "1.461 người dân"
             },
             { 
                 name: "Chu Hải", center: [10.5000, 107.1200],
                 polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]],
-                numTongDan: 4245, numCanKham: 2460, numDaKham: 1785,
-                soCanKhamText: "2.460 người dân", soLuongDaKhamText: "1.785 người dân"
+                numTongDan: 3950, numCanKham: 2165, numDaKham: 1785,
+                soCanKhamText: "2.165 người dân", soLuongDaKhamText: "1.785 người dân"
             },
             { 
                 name: "Phước Hải", center: [10.5020, 107.1280],
                 polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]],
-                numTongDan: 3578, numCanKham: 1962, numDaKham: 1616,
-                soCanKhamText: "1.962 người dân", soLuongDaKhamText: "1.616 người dân"
+                numTongDan: 3320, numCanKham: 1704, numDaKham: 1616,
+                soCanKhamText: "1.704 người dân", soLuongDaKhamText: "1.616 người dân"
             },
             { 
                 name: "Phước Long", center: [10.4900, 107.1020],
                 polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]],
-                numTongDan: 3980, numCanKham: 2465, numDaKham: 1515,
-                soCanKhamText: "2.465 người dân", soLuongDaKhamText: "1.515 người dân"
+                numTongDan: 3680, numCanKham: 2165, numDaKham: 1515,
+                soCanKhamText: "2.165 người dân", soLuongDaKhamText: "1.515 người dân"
             },
             { 
                 name: "Phước Tấn", center: [10.5320, 107.1220],
                 polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]],
-                numTongDan: 4257, numCanKham: 2546, numDaKham: 1711,
-                soCanKhamText: "2.546 người dân", soLuongDaKhamText: "1.711 người dân"
+                numTongDan: 3950, numCanKham: 2239, numDaKham: 1711,
+                soCanKhamText: "2.239 người dân", soLuongDaKhamText: "1.711 người dân"
             },
             { 
                 name: "Đông Hải", center: [10.5080, 107.1350],
                 polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]],
-                numTongDan: 2960, numCanKham: 1466, numDaKham: 1494,
-                soCanKhamText: "1.466 người dân", soLuongDaKhamText: "1.494 người dân"
+                numTongDan: 2836, numCanKham: 1342, numDaKham: 1494,
+                soCanKhamText: "1.342 người dân", soLuongDaKhamText: "1.494 người dân"
             }
         ];
 
         // TỰ ĐỘNG TÍNH TỔNG CẢ PHƯỜNG TRÊN HEADER
         var sumDaKham = khuPhoData.reduce((acc, cur) => acc + cur.numDaKham, 0);
-        var sumTongDan = khuPhoData.reduce((acc, cur) => acc + cur.numTongDan, 0);
+        var sumTongDan = khuPhoData.reduce((acc, cur) => acc + cur.numTongDan, 0); // Sẽ bằng đúng 28.322
         var tyLeChung = (sumDaKham / sumTongDan * 100).toFixed(1);
 
         document.getElementById('txt-tong-da-kham').innerText = sumDaKham.toLocaleString('vi-VN');
         document.getElementById('txt-tong-dan-so').innerText = sumTongDan.toLocaleString('vi-VN');
         document.getElementById('txt-ty-le-chung').innerText = tyLeChung + '%';
 
-        // TÍNH TỶ LỆ DÃ KHÁM DẠNG %
+        // TÍNH TỶ LỆ ĐÃ KHÁM DẠNG %
         khuPhoData.forEach(kp => {
             kp.tyleDaKham = parseFloat(((kp.numDaKham / kp.numTongDan) * 100).toFixed(1));
         });
@@ -331,7 +331,7 @@
                 fillOpacity: 0.35 
             }).addTo(map);
 
-            kp.polyInstance = poly; // Lưu lại instance polygon
+            kp.polyInstance = poly;
 
             poly.on('mouseover', function () {
                 this.setStyle({ fillOpacity: 0.65, weight: 4 });
@@ -368,14 +368,13 @@
             poly.bindPopup(popupContent);
             labelMarker.bindPopup(popupContent);
 
-            // Bấm vào label marker mở popup của polygon tương ứng
             labelMarker.on('click', function() {
                 poly.openPopup();
                 map.flyTo(kp.center, 14);
             });
         });
 
-        // Bảng chú giải (Chỉ hiện màn hình lớn)
+        // Bảng chú giải
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'legend');
@@ -423,7 +422,7 @@
                 onClick: (e, activeElements) => {
                     if (activeElements.length > 0) {
                         var index = activeElements[0].index;
-                        var targetKp = khuPhoData[index]; // Lấy chuẩn khu phố dựa theo mảng đã sort
+                        var targetKp = khuPhoData[index];
                         map.flyTo(targetKp.center, 15);
                         targetKp.polyInstance.openPopup();
                     }
