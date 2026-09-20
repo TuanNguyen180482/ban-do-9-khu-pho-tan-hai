@@ -198,7 +198,7 @@
     <!-- Header nổi cao cấp -->
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ TÍNH ĐẾN 12 GIỜ 00 PHÚT NGÀY 19/9/2026</p>
+        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ TÍNH ĐẾN 8 GIỜ 00 PHÚT NGÀY 20/9/2026</p>
         
         <!-- Thanh Mini Dashboard Thống Kê -->
         <div class="stats-summary">
@@ -279,14 +279,14 @@
         // Dữ liệu 9 khu phố (Chuẩn tổng dân số: 28.322)
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numCanKham: 42, numDaKham: 1308, soCanKhamText: "42 người", soLuongDaKhamText: "1.308 người" },
-            { name: "Cát Hải", center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2123, numCanKham: 730, numDaKham: 1393, soCanKhamText: "730 người", soLuongDaKhamText: "1.393 người" },
-            { name: "Láng Cát", center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3893, numCanKham: 2121, numDaKham: 1772, soCanKhamText: "2.121 người", soLuongDaKhamText: "1.772 người" },
-            { name: "Phước Hiệp", center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numCanKham: 1739, numDaKham: 1481, soCanKhamText: "1.739 người", soLuongDaKhamText: "1.481 người" },
-            { name: "Chu Hải", center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numCanKham: 2145, numDaKham: 1805, soCanKhamText: "2.145 người", soLuongDaKhamText: "1.805 người" },
-            { name: "Phước Hải", center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numCanKham: 1684, numDaKham: 1636, soCanKhamText: "1.684 người", soLuongDaKhamText: "1.636 người" },
-            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numCanKham: 2145, numDaKham: 1535, soCanKhamText: "2.145 người", soLuongDaKhamText: "1.535 người" },
-            { name: "Phước Tấn", center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numCanKham: 2229, numDaKham: 1731, soCanKhamText: "2.219 người", soLuongDaKhamText: "1.731 người" },
-            { name: "Đông Hải", center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numCanKham: 1322, numDaKham: 1514, soCanKhamText: "1.322 người", soLuongDaKhamText: "1.514 người" }
+            { name: "Cát Hải", center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2123, numCanKham: 727, numDaKham: 1396, soCanKhamText: "727 người", soLuongDaKhamText: "1.396 người" },
+            { name: "Láng Cát", center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3893, numCanKham: 2118, numDaKham: 1775, soCanKhamText: "2.118 người", soLuongDaKhamText: "1.775 người" },
+            { name: "Phước Hiệp", center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numCanKham: 1736, numDaKham: 1484, soCanKhamText: "1.736 người", soLuongDaKhamText: "1.484 người" },
+            { name: "Chu Hải", center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numCanKham: 2142, numDaKham: 1808, soCanKhamText: "2.142 người", soLuongDaKhamText: "1.808 người" },
+            { name: "Phước Hải", center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numCanKham: 1681, numDaKham: 1639, soCanKhamText: "1.681 người", soLuongDaKhamText: "1.639 người" },
+            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numCanKham: 2142, numDaKham: 1538, soCanKhamText: "2.142 người", soLuongDaKhamText: "1.538 người" },
+            { name: "Phước Tấn", center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numCanKham: 2226, numDaKham: 1734, soCanKhamText: "2.216 người", soLuongDaKhamText: "1.734 người" },
+            { name: "Đông Hải", center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numCanKham: 1319, numDaKham: 1517, soCanKhamText: "1.319 người", soLuongDaKhamText: "1.517 người" }
         ];
 
         // Tính toán Thống kê Tổng
