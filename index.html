@@ -178,7 +178,7 @@
     <!-- Header nổi -->
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ (CẬP NHẬT THEO THỜI GIAN THỰC)</p>
+        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ 00 PHÚT NGÀY 21/9/2026</p>
         
         <div class="stats-summary">
             <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">0</b></div>
@@ -269,26 +269,7 @@
         var rateChart = null;
         var warningKhuPhos = [];
 
-        // TẠO BẢNG NHẬP SỐ LIỆU ĐỘNG
-        function initInputPanel() {
-            var container = document.getElementById('input-fields-list');
-            container.innerHTML = '';
-            khuPhoData.forEach((kp, idx) => {
-                var row = document.createElement('div');
-                row.className = 'input-row';
-                row.innerHTML = `
-                    <label>${kp.name}:</label>
-                    <input type="number" value="${kp.numDaKham}" placeholder="Đã khám" onchange="updateSingleData(${idx}, 'numDaKham', this.value)">
-                    <input type="number" value="${kp.numTongDan}" placeholder="Tổng dân" onchange="updateSingleData(${idx}, 'numTongDan', this.value)">
-                `;
-                container.appendChild(row);
-            });
-        }
-
-        function updateSingleData(index, field, value) {
-            khuPhoData[index][field] = parseInt(value) || 0;
-            renderAllSystem();
-        }
+      
 
         // TÍNH TOÁN & CẬP NHẬT GIAO DIỆN HỆ THỐNG
         function renderAllSystem() {
