@@ -100,34 +100,40 @@
         .rank-box div { display: flex; justify-content: space-between; margin-bottom: 4px; }
         .rank-box b { color: #0284c7; font-weight: 800; }
 
-        /* SỬA LỖI HIỂN THỊ TÊN CẢ 9 KHU PHỐ (KỂ CẢ CẦM ĐÈN ĐỎ) */
+        /* SỬA HOÀN TOÀN TẬP TÍNH CHẤT CSS CỦA TẤT CẢ TÊN KHU PHỐ */
         .khupho-label {
-            background: rgba(255, 255, 255, 0.96);
-            border: 1.5px solid #0284c7; border-radius: 20px;
-            padding: 3px 10px; font-size: 11px; font-weight: 800; color: #0f172a;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2); white-space: nowrap;
-            display: flex !important; align-items: center; gap: 6px; cursor: pointer;
-            position: absolute;
+            background: rgba(255, 255, 255, 0.96) !important;
+            border: 1.5px solid #0284c7 !important; 
+            border-radius: 20px !important;
+            padding: 4px 12px !important; 
+            font-size: 11px !important; 
+            font-weight: 800 !important; 
+            color: #0f172a !important;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25) !important; 
+            white-space: nowrap !important;
+            display: flex !important; 
+            align-items: center !important; 
+            gap: 6px !important; 
+            cursor: pointer !important;
         }
         .khupho-label span { 
-            background: #0284c7; color: #fff; border-radius: 10px; 
-            padding: 1px 6px; font-size: 10px; font-weight: 800; 
+            background: #0284c7 !important; 
+            color: #ffffff !important; 
+            border-radius: 10px !important; 
+            padding: 1px 7px !important; 
+            font-size: 10px !important; 
+            font-weight: 800 !important; 
         }
 
-        /* Dáng riêng nhóm Cảnh báo cầm đèn đỏ */
+        /* Định dạng chuẩn cho 3 Khu phố Cầm Đèn Đỏ */
         .khupho-label.label-warning { 
             border-color: #dc2626 !important; 
-            background: rgba(254, 242, 242, 0.98) !important;
-            animation: warningPulse 1.5s infinite; 
+            background: #fef2f2 !important;
+            color: #991b1b !important;
         }
         .khupho-label.label-warning span { 
             background: #dc2626 !important; 
-        }
-
-        @keyframes warningPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            color: #ffffff !important;
         }
 
         /* Group Nút Điều Khiển */
@@ -185,7 +191,7 @@
     <!-- Header nổi -->
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ OO PHÚT NGÀY 21/9/2026</p>
+        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ 00 PHÚT NGÀY 21/9/2026</p>
         
         <div class="stats-summary">
             <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">0</b></div>
@@ -260,12 +266,12 @@
 
         var map = L.map('map', {zoomControl: false}).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 
-        // THÊM LỚP BẢN ĐỒ ĐỊA HÌNH & VỆ TINH
+        // THÊM LỚP BẢN ĐỒ HÀNH CHÍNH / VỆ TINH / ĐỊA HÌNH
         var streetLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, attribution: '© Google Maps' }).addTo(map);
         var satLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 20, attribution: '© Google Maps' });
         var terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '© OpenTopoMap' });
 
-        var mapTileMode = 0; // 0: Street, 1: Satellite, 2: Terrain
+        var mapTileMode = 0;
         function toggleMapTile() {
             map.removeLayer(streetLayer);
             map.removeLayer(satLayer);
@@ -282,7 +288,7 @@
                 btn.innerHTML = '<i class="fa-solid fa-satellite"></i> Bản đồ: Vệ tinh';
             } else {
                 map.addLayer(terrainLayer);
-                btn.innerHTML = '<i class="fa-solid fa-mountain font-icon"></i> Bản đồ: Địa hình';
+                btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Bản đồ: Địa hình';
             }
         }
 
@@ -338,7 +344,7 @@
             document.getElementById('warning-count').innerText = warningKhuPhos.length;
             document.getElementById('warning-banner').style.display = warningKhuPhos.length > 0 ? 'flex' : 'none';
 
-            // KHÔI PHỤC VÀ ĐỒNG BỘ NỔI TÊN CHO 9 KHU PHỐ
+            // XỬ LÝ VẼ BẢN ĐỒ VÀ BẢO ĐẢM HIỂN THỊ TÊN 100% CỦA 9 KHU PHỐ
             khuPhoData.forEach(function(kp) {
                 var isWarningGroup = kp.hang > 6;
                 var poly = L.polygon(kp.polygon, {
@@ -355,7 +361,7 @@
                     icon: L.divIcon({
                         className: labelClass,
                         html: `<span>${kp.hang}</span> ${kp.name} ${isWarningGroup ? '⚠️' : ''}`,
-                        iconAnchor: [50, 12] // Định tâm cố định tránh che chữ
+                        iconSize: null
                     })
                 }).addTo(mapLayersGroup);
 
