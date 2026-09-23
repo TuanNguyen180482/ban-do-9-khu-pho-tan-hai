@@ -83,57 +83,56 @@
             100% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
         }
 
-        /* BẢNG SO SÁNH CHUẨN GIAO DIỆN HÌNH MẪU */
+        /* BẢNG SO SÁNH ĐẶT Ở GÓC PHẢI MÀN HÌNH */
         .compare-modal {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 1001; width: calc(100vw - 32px); max-width: 380px;
-            background: #ffffff;
-            border-radius: 28px; padding: 22px 20px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            display: none; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: absolute; top: 110px; right: 20px;
+            z-index: 1001; width: calc(100vw - 32px); max-width: 360px;
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px; padding: 18px 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            display: none; animation: slideInRight 0.3s ease-out;
         }
-        @keyframes popIn {
-            from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .compare-modal h3 { 
-            margin: 0 0 16px 0; font-size: 15px; font-weight: 800; 
+            margin: 0 0 12px 0; font-size: 14px; font-weight: 800; 
             color: #0284c7; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
-        /* Khung nhập Tỷ lệ */
         .rate-input-card {
             background: #e0f2fe; border: 1px solid #bae6fd;
-            border-radius: 18px; padding: 12px 16px; margin-bottom: 14px;
+            border-radius: 16px; padding: 10px 14px; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: space-between;
             position: relative;
         }
-        .rate-input-card label { font-size: 12px; font-weight: 800; color: #0369a1; }
+        .rate-input-card label { font-size: 11px; font-weight: 800; color: #0369a1; }
         .rate-input-card input {
-            width: 95px; padding: 6px 10px; border: 1.5px solid #0284c7; border-radius: 12px;
-            font-size: 15px; font-weight: 800; text-align: center; color: #0369a1; background: #ffffff;
+            width: 85px; padding: 4px 8px; border: 1.5px solid #0284c7; border-radius: 10px;
+            font-size: 14px; font-weight: 800; text-align: center; color: #0369a1; background: #ffffff;
         }
-        .rate-hint { position: absolute; bottom: 4px; right: 16px; font-size: 8px; color: #0284c7; font-weight: 700; }
+        .rate-hint { position: absolute; bottom: 3px; right: 14px; font-size: 8px; color: #0284c7; font-weight: 700; }
 
-        /* Thẻ thống kê so sánh */
         .cmp-section-card {
             background: #f8fafc; border: 1px solid #e2e8f0;
-            border-radius: 18px; padding: 12px 16px; margin-bottom: 12px;
+            border-radius: 16px; padding: 10px 14px; margin-bottom: 10px;
         }
         .cmp-section-card .cmp-title {
-            font-size: 11px; font-weight: 800; color: #0f172a; margin-bottom: 8px;
+            font-size: 10px; font-weight: 800; color: #0f172a; margin-bottom: 6px;
             text-transform: uppercase; letter-spacing: 0.3px;
         }
-        .cmp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; }
+        .cmp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 11px; }
         .cmp-row span { color: #475569; font-weight: 600; }
         .cmp-row b { font-weight: 800; }
 
         .btn-close-modal {
             width: 100%; background: #0284c7; color: white; border: none;
-            padding: 12px; border-radius: 30px; font-size: 12px; font-weight: 800;
-            cursor: pointer; margin-top: 6px; box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+            padding: 10px; border-radius: 25px; font-size: 11px; font-weight: 800;
+            cursor: pointer; margin-top: 4px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
             display: flex; align-items: center; justify-content: center; gap: 6px;
             transition: background 0.2s;
         }
@@ -188,15 +187,22 @@
         .btn-secondary-custom { background: rgba(255, 255, 255, 0.9); color: #334155; border: 1px solid #cbd5e1; }
         .btn-compare { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
 
-        /* Frame Biểu đồ */
+        /* Frame Biểu đồ ở Góc Trái */
         #chart-container {
             position: absolute; bottom: 65px; left: 16px; z-index: 1000;
-            width: calc(100vw - 32px); max-width: 400px; height: 300px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            width: calc(100vw - 32px); max-width: 410px; height: 330px;
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px);
             border-radius: 24px; padding: 14px; box-shadow: 0 25px 50px rgba(0,0,0,0.18);
             display: none;
         }
-        #chart-container h4 { margin: 0 0 8px 0; font-size: 11px; font-weight: 800; color: #0284c7; text-align: center; text-transform: uppercase; }
+        #chart-container h4 { margin: 0 0 4px 0; font-size: 11px; font-weight: 800; color: #0284c7; text-align: center; text-transform: uppercase; }
+        
+        /* CHÚ THÍCH PHÁP LÝ CHO BIỂU ĐỒ */
+        .chart-note-box {
+            font-size: 8.5px; color: #475569; font-weight: 600; text-align: center;
+            background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 4px 8px; margin-bottom: 6px; line-height: 1.25;
+        }
 
         /* Thông tin Đơn vị thiết kế */
         #footer-credits {
@@ -219,8 +225,10 @@
             #header { top: 10px; padding: 10px 12px; }
             #header h1 { font-size: 12px; }
             #warning-banner { top: 135px; font-size: 9px; padding: 5px 10px; width: calc(100% - 24px); justify-content: space-between; }
+            .compare-modal { top: auto; bottom: 70px; right: 10px; left: 10px; width: calc(100vw - 20px); max-width: none; }
             #footer-credits { font-size: 9px; padding: 4px 10px; }
             .legend { display: none; }
+            #chart-container { height: 310px; }
         }
     </style>
 </head>
@@ -230,7 +238,7 @@
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
         <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ 00 PHÚT NGÀY 23/9/2026</p>
-       
+        <p style="color:#0284c7; margin-top:1px;">TÍNH THEO SỐ CƯ DÂN HÀNH CHÍNH ĐÃ ĐƯỢC ỦY BAN NHÂN DÂN PHƯỜNG PHÊ DUYỆT</p>
         
         <div class="stats-summary">
             <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">14.516</b></div>
@@ -245,7 +253,7 @@
         <button class="btn-focus" onclick="focusNextWarning()">Xem ngay</button>
     </div>
 
-    <!-- BẢNG SO SÁNH & CẬP NHẬT TỶ LỆ CẬP NHẬT CHUẨN XÁC DỮ LIỆU -->
+    <!-- BẢNG SO SÁNH ĐÃ CHUYỂN SANG GÓC PHẢI MÀN HÌNH -->
     <div id="compare-panel" class="compare-modal">
         <h3><i class="fa-solid fa-chart-simple"></i> SO SÁNH & CẬP NHẬT TỶ LỆ</h3>
         
@@ -290,10 +298,15 @@
         <button class="btn-custom btn-secondary-custom" onclick="resetMapView()"><i class="fa-solid fa-compress"></i></button>
     </div>
 
-    <!-- Frame Biểu đồ -->
+    <!-- Frame Biểu đồ ở Góc Trái -->
     <div id="chart-container">
-        <h4><i class="fa-solid fa-trophy"></i> Xếp hạng Tỷ lệ đã khám (%)</h4>
-        <div style="height: 230px; position: relative;"><canvas id="rateChart"></canvas></div>
+        <h4><i class="fa-solid fa-trophy"></i> XẾP HẠNG TỶ LỆ ĐÃ KHÁM (%)</h4>
+        
+        <div class="chart-note-box">
+            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> <b>Ghi chú:</b> Số liệu dân cư các khu phố được lấy theo Quyết định đã được phê duyệt. Ban Chỉ đạo sẽ họp và chốt sau khi kết thúc Kế hoạch Khám sức khỏe toàn dân.
+        </div>
+
+        <div style="height: 220px; position: relative;"><canvas id="rateChart"></canvas></div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -448,13 +461,11 @@
             document.getElementById('cmp-rate-30').innerText = rate.toFixed(1) + '%';
             document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
 
-            // Tính vị trí so với 30 Xã/Phường
-            var rank30 = 16; // Hạng chính thức cập nhật theo bảng báo cáo thực tế
+            var rank30 = 16;
             document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30} / 30`;
             document.getElementById('cmp-group-30').innerText = "Nhóm Trung Bình";
 
-            // Tính vị trí so với 168 Xã/Phường mở rộng
-            var rank168 = 134; // Hạng chính thức cập nhật theo bảng báo cáo thực tế
+            var rank168 = 134;
             document.getElementById('cmp-rank-168').innerText = `Hạng ${rank168} / 168`;
             document.getElementById('cmp-group-168').innerText = "Nhóm Đạt Chỉ Tiêu Mốc 50%";
         }
