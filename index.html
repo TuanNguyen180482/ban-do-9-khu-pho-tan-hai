@@ -238,7 +238,6 @@
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
         <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ 00 PHÚT NGÀY 24/9/2026</p>
-       
         
         <div class="stats-summary">
             <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">14.516</b></div>
@@ -253,13 +252,13 @@
         <button class="btn-focus" onclick="focusNextWarning()">Xem ngay</button>
     </div>
 
-    <!-- BẢNG SO SÁNH ĐÃ CHUYỂN SANG GÓC PHẢI MÀN HÌNH -->
+    <!-- BẢNG SO SÁNH ĐẶT Ở GÓC PHẢI MÀN HÌNH -->
     <div id="compare-panel" class="compare-modal">
         <h3><i class="fa-solid fa-chart-simple"></i> SO SÁNH & CẬP NHẬT TỶ LỆ</h3>
         
         <div class="rate-input-card">
             <label>Tỷ lệ khám mới (%):</label>
-            <input type="number" id="input-rate-override" step="0.1" value="51.3" onchange="manualUpdateRate(this.value)">
+            <input type="number" id="input-rate-override" step="0.1" value="51.3" oninput="manualUpdateRate(this.value)">
             <span class="rate-hint">*Nhập số % để cập nhật nhanh thứ hạng</span>
         </div>
 
@@ -311,6 +310,26 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // --- 1. DỮ LIỆU THAM CHIẾU SO SÁNH (%) ---
+        // Danh sách tỷ lệ % của 168 xã/phường/đặc khu (xếp giảm dần)
+        var SYSTEM_168_RATES = [
+            272.9, 246.8, 208.4, 84.7, 72.5, 72.1, 71.3, 70.4, 67.5, 67.2, 66.8, 66.8, 66.6, 65.9, 65.4, 63.8, 62.2, 61.8, 60.8, 60.7,
+            60.7, 60.4, 60.1, 59.7, 59.5, 59.5, 58.5, 58.4, 57.8, 57.0, 56.7, 55.8, 55.3, 55.3, 55.0, 54.9, 54.3, 54.1, 53.4, 53.3,
+            52.5, 52.0, 52.0, 52.0, 51.6, 51.5, 51.5, 49.9, 49.5, 49.5, 49.1, 48.6, 48.2, 48.0, 47.9, 47.7, 47.7, 47.4, 47.2, 46.8,
+            46.3, 46.0, 45.8, 45.2, 45.2, 44.6, 44.4, 44.3, 44.2, 44.2, 43.2, 42.9, 42.6, 41.8, 41.6, 41.3, 41.0, 40.8, 40.5, 39.8,
+            39.7, 39.6, 39.5, 39.2, 38.8, 38.7, 38.7, 38.4, 38.4, 37.8, 37.5, 37.5, 36.9, 36.8, 36.1, 35.9, 35.8, 35.7, 35.4, 35.3,
+            35.2, 34.8, 34.6, 34.5, 34.2, 33.8, 33.8, 33.5, 33.3, 33.1, 32.7, 32.6, 32.5, 32.4, 32.3, 32.3, 32.2, 31.7, 31.5, 31.4,
+            31.1, 30.8, 30.8, 30.0, 30.0, 29.9, 29.8, 29.6, 29.5, 29.2, 29.1, 29.0, 28.6, 28.4, 27.8, 27.6, 27.5, 27.0, 26.9, 26.8,
+            26.5, 26.4, 26.3, 25.0, 24.7, 24.5, 24.5, 24.4, 24.0, 23.9, 23.2, 1.7
+        ];
+
+        // Danh sách tỷ lệ % đại diện cho 30 xã/phường sáp nhập (xếp giảm dần)
+        var SYSTEM_30_RATES = [
+            70.4, 65.4, 65.9, 60.7, 60.7, 60.4, 60.1, 59.7, 59.5, 59.5, 
+            57.0, 56.7, 55.3, 55.0, 54.9, 54.3, 54.1, 52.0, 52.0, 51.5, 
+            49.9, 49.5, 47.9, 44.6, 39.7, 35.7, 33.8, 31.0, 26.3, 1.7
+        ];
+
         var DEFAULT_CENTER = [10.5150, 107.1200];
         var DEFAULT_ZOOM = 13;
 
@@ -341,7 +360,7 @@
             }
         }
 
-        // Dữ liệu chuẩn 9 khu phố (Chuẩn tổng dân số 28.322 người, khám tích lũy 14.516 người)
+        // Dữ liệu chuẩn 9 khu phố
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1319 },
             { name: "Cát Hải", center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1421 },
@@ -457,17 +476,50 @@
             updateComparisonStats(newDaKham, newRate);
         }
 
+        // --- 2. NÂNG CẤP HÀM TÍNH TOÁN SO SÁNH TỰ ĐỘNG THEO TỶ LỆ % ---
         function updateComparisonStats(totalCount, rate) {
-            document.getElementById('cmp-rate-30').innerText = rate.toFixed(1) + '%';
-            document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
+            var currentRate = parseFloat(rate) || 0;
 
-            var rank30 = 16;
+            // Xếp hạng trong 30 xã/phường sáp nhập
+            var rank30 = 1;
+            for (var i = 0; i < SYSTEM_30_RATES.length; i++) {
+                if (currentRate < SYSTEM_30_RATES[i]) {
+                    rank30++;
+                } else {
+                    break;
+                }
+            }
+            if (rank30 > 30) rank30 = 30;
+
+            var group30 = "Nhóm Trung Bình";
+            if (rank30 <= 10) { group30 = "Nhóm Dẫn Đầu"; }
+            else if (rank30 <= 20) { group30 = "Nhóm Trung Bình"; }
+            else { group30 = "Nhóm Cần Tăng Tốc ⚠️"; }
+
+            // Xếp hạng trong 168 xã/phường mở rộng
+            var rank168 = 1;
+            for (var j = 0; j < SYSTEM_168_RATES.length; j++) {
+                if (currentRate < SYSTEM_168_RATES[j]) {
+                    rank168++;
+                } else {
+                    break;
+                }
+            }
+            if (rank168 > 168) rank168 = 168;
+
+            var group168 = "Nhóm Đạt Chỉ Tiêu Mốc 50%";
+            if (currentRate >= 70.0) { group168 = "Nhóm Xuất Sắc (>70%)"; }
+            else if (currentRate >= 50.0) { group168 = "Nhóm Đạt Chỉ Tiêu Mốc 50%"; }
+            else { group168 = "Nhóm Cần Tăng Cường (<50%)"; }
+
+            // Cập nhật giao diện HTML
+            document.getElementById('cmp-rate-30').innerText = currentRate.toFixed(1) + '%';
             document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30} / 30`;
-            document.getElementById('cmp-group-30').innerText = "Nhóm Trung Bình";
+            document.getElementById('cmp-group-30').innerText = group30;
 
-            var rank168 = 134;
+            document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
             document.getElementById('cmp-rank-168').innerText = `Hạng ${rank168} / 168`;
-            document.getElementById('cmp-group-168').innerText = "Nhóm Đạt Chỉ Tiêu Mốc 50%";
+            document.getElementById('cmp-group-168').innerText = group168;
         }
 
         var legend = L.control({position: 'bottomright'});
