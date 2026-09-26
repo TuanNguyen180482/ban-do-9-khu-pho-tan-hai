@@ -196,7 +196,123 @@
             display: none;
         }
         #chart-container h4 { margin: 0 0 4px 0; font-size: 11px; font-weight: 800; color: #0284c7; text-align: center; text-transform: uppercase; }
-        
+        /* --- TỐI ƯU GIAO DIỆN DI ĐỘNG KHI XOAY DỌC VÀ XOAY NGANG --- */
+
+/* 1. Màn hình Dọc (Portrait Mobile) */
+@media screen and (max-width: 576px) and (orientation: portrait) {
+    #header { 
+        top: 10px; 
+        padding: 8px 12px; 
+        width: calc(100% - 20px); 
+    }
+    #header h1 { font-size: 11px; }
+    #header p { font-size: 8.5px; }
+
+    .stats-summary { gap: 4px; margin-top: 6px; padding-top: 6px; }
+    .stat-card { padding: 4px 6px; font-size: 9px; }
+    .stat-card b { font-size: 11px; }
+
+    #warning-banner { 
+        top: 130px; 
+        font-size: 9.5px; 
+        padding: 6px 12px; 
+        width: calc(100% - 24px); 
+        justify-content: space-between; 
+    }
+
+    .compare-modal { 
+        top: auto; 
+        bottom: 65px; 
+        right: 10px; 
+        left: 10px; 
+        width: calc(100vw - 20px); 
+        max-width: none; 
+        max-height: 70vh; 
+        overflow-y: auto; 
+    }
+
+    #chart-container { 
+        bottom: 65px; 
+        left: 10px; 
+        width: calc(100vw - 20px); 
+        max-width: none; 
+        height: 290px; 
+    }
+
+    .controls-group { 
+        bottom: 12px; 
+        left: 10px; 
+        right: 10px; 
+        justify-content: space-between; 
+    }
+    .btn-custom { padding: 8px 12px; font-size: 10px; }
+
+    .legend { display: none; }
+}
+
+/* 2. Màn hình Ngang (Landscape Mobile) */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    #header { 
+        top: 6px; 
+        padding: 6px 14px; 
+        max-width: 480px; 
+    }
+    #header h1 { font-size: 11px; }
+    #header p { display: none; } /* Ẩn bớt dòng mô tả để tiết kiệm chiều cao */
+    .stats-summary { margin-top: 4px; padding-top: 4px; }
+
+    #warning-banner { 
+        top: 75px; 
+        font-size: 9px; 
+        padding: 4px 10px; 
+    }
+
+    .compare-modal { 
+        top: 10px; 
+        right: 10px; 
+        bottom: 10px; 
+        width: 320px; 
+        max-height: calc(100vh - 20px); 
+        overflow-y: auto; 
+    }
+
+    #chart-container { 
+        bottom: 55px; 
+        left: 10px; 
+        width: 340px; 
+        height: 220px; 
+    }
+
+    .controls-group { 
+        bottom: 10px; 
+        left: 10px; 
+    }
+    .btn-custom { padding: 6px 10px; font-size: 9.5px; }
+
+    #footer-credits { display: none; } /* Ẩn footer khi xoay ngang để rộng không gian */
+}
+        // --- XỬ LÝ SỰ KIỆN XOAY DỌC / NGANG VÀ THAY ĐỔI KÍCH THƯỚC MÀN HÌNH ---
+function handleResizeAndOrientation() {
+    // 1. Cập nhật và reset kích thước bản đồ Leaflet không bị lỗi hiển thị/vệt trắng
+    if (map) {
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 300); // Trễ 300ms đợi hiệu ứng xoay màn hình của thiết bị hoàn tất
+    }
+
+    // 2. Resize lại biểu đồ Chart.js để chuẩn theo khung mới
+    if (rateChart) {
+        setTimeout(function() {
+            rateChart.resize();
+        }, 350);
+    }
+}
+
+// Bắt sự kiện xoay thiết bị di động
+window.addEventListener("orientationchange", handleResizeAndOrientation);
+
+// Bắt sự kiện thay đổi kích thước trình duyệt
+window.addEventListener("resize", handleResizeAndOrientation);
         /* CHÚ THÍCH PHÁP LÝ CHO BIỂU ĐỒ */
         .chart-note-box {
             font-size: 8.5px; color: #475569; font-weight: 600; text-align: center;
