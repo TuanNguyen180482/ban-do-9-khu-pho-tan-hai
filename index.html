@@ -3,310 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bản Đồ Khám Sức Khỏe Phường Tân Hải 2026</title>
+    <title>Bản đồ Khám Sức Khỏe 9 Khu Phố - Phường Tân Hải</title>
     
-    <!-- External Libraries -->
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body, html {
-            width: 100%; height: 100%; overflow: hidden;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: #0f172a; color: #0f172a;
+            overflow: hidden; height: 100vh; width: 100vw;
+        }
+        
+        #map { height: 100vh; width: 100%; z-index: 1; }
+
+        .leaflet-div-icon { background: transparent !important; border: none !important; }
+
+        /* Header Glassmorphism */
+        #header { 
+            position: absolute; top: 16px; left: 50%; transform: translateX(-50%); 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.92); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px; text-align: center; 
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            width: calc(100% - 24px); max-width: 680px;
+        }
+        #header h1 { 
+            margin: 0; font-size: 15px; font-weight: 800; 
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        #header p { margin: 2px 0 0 0; font-size: 10px; color: #64748b; font-weight: 700; }
+        
+        /* Mini Dashboard Thống kê */
+        .stats-summary {
+            display: flex; gap: 8px; justify-content: center;
+            margin-top: 8px; padding-top: 8px;
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .stat-card {
+            background: rgba(241, 245, 249, 0.9); padding: 5px 10px;
+            border-radius: 12px; border: 1px solid #e2e8f0;
+            font-size: 10px; color: #475569; font-weight: 700; flex: 1; text-align: center;
+        }
+        .stat-card b { font-size: 12px; font-weight: 800; margin-left: 2px; }
+
+        /* BANNER CẢNH BÁO NỔI */
+        #warning-banner {
+            position: absolute; top: 135px; left: 50%; transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(254, 242, 242, 0.95); border: 1px solid #fca5a5;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 8px 16px; border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
+            display: flex; align-items: center; gap: 10px;
+            font-size: 11px; color: #991b1b; font-weight: 800;
+            animation: pulseGlow 2s infinite alternate;
+        }
+        #warning-banner .btn-focus {
+            background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none;
+            padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        #warning-banner .btn-focus:hover { transform: scale(1.08); }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); }
+            100% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
         }
 
-        #map { width: 100vw; height: 100vh; z-index: 1; }
-
-        /* Header UI */
-        #header {
-            position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 1000;
-            background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            padding: 10px 16px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            text-align: center; border: 1px solid rgba(255, 255, 255, 0.8);
-            width: calc(100% - 24px); max-width: 650px;
+        /* BẢNG SO SÁNH ĐẶT Ở GÓC PHẢI MÀN HÌNH */
+        .compare-modal {
+            position: absolute; top: 110px; right: 20px;
+            z-index: 1001; width: calc(100vw - 32px); max-width: 360px;
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px; padding: 18px 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            display: none; animation: slideInRight 0.3s ease-out;
         }
-        #header h1 {
-            font-size: 14px; font-weight: 800; color: #0284c7;
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .compare-modal h3 { 
+            margin: 0 0 12px 0; font-size: 14px; font-weight: 800; 
+            color: #0284c7; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .rate-input-card {
+            background: #e0f2fe; border: 1px solid #bae6fd;
+            border-radius: 16px; padding: 10px 14px; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: relative;
+        }
+        .rate-input-card label { font-size: 11px; font-weight: 800; color: #0369a1; }
+        .rate-input-card input {
+            width: 85px; padding: 4px 8px; border: 1.5px solid #0284c7; border-radius: 10px;
+            font-size: 14px; font-weight: 800; text-align: center; color: #0369a1; background: #ffffff;
+        }
+        .rate-hint { position: absolute; bottom: 3px; right: 14px; font-size: 8px; color: #0284c7; font-weight: 700; }
+
+        .cmp-section-card {
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 16px; padding: 10px 14px; margin-bottom: 10px;
+        }
+        .cmp-section-card .cmp-title {
+            font-size: 10px; font-weight: 800; color: #0f172a; margin-bottom: 6px;
             text-transform: uppercase; letter-spacing: 0.3px;
         }
-        #header p { font-size: 9.5px; font-weight: 700; color: #64748b; margin-top: 2px; }
+        .cmp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 11px; }
+        .cmp-row span { color: #475569; font-weight: 600; }
+        .cmp-row b { font-weight: 800; }
 
-        .stats-summary { display: flex; justify-content: center; gap: 8px; margin-top: 6px; padding-top: 6px; border-top: 1px solid #e2e8f0; }
-        .stat-card { font-size: 10px; font-weight: 700; background: #f1f5f9; padding: 4px 8px; border-radius: 8px; color: #334155; flex: 1; text-align: center; }
-        .stat-card b { font-size: 11px; font-weight: 800; }
-
-        /* Warning Banner */
-        #warning-banner {
-            position: absolute; top: 115px; left: 50%; transform: translateX(-50%); z-index: 999;
-            background: rgba(254, 242, 242, 0.95); border: 1px solid #fca5a5;
-            padding: 6px 14px; border-radius: 30px; box-shadow: 0 6px 20px rgba(220, 38, 38, 0.15);
-            font-size: 10px; font-weight: 800; color: #991b1b; display: flex; align-items: center; gap: 8px;
-            backdrop-filter: blur(8px);
+        .btn-close-modal {
+            width: 100%; background: #0284c7; color: white; border: none;
+            padding: 10px; border-radius: 25px; font-size: 11px; font-weight: 800;
+            cursor: pointer; margin-top: 4px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: background 0.2s;
         }
-        .btn-focus { background: #dc2626; color: #fff; border: none; padding: 3px 10px; border-radius: 20px; font-size: 9.5px; font-weight: 800; cursor: pointer; }
+        .btn-close-modal:hover { background: #0369a1; }
 
-        /* Floating Panels UI */
-        .compare-modal, #chart-container {
-            position: absolute; z-index: 1000; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px);
-            border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.9);
-            padding: 14px; display: none;
+        /* ĐỊNH DẠNG TÊN 9 KHU PHỐ */
+        .khupho-badge {
+            background: rgba(255, 255, 255, 0.98);
+            border: 2px solid #0284c7; 
+            border-radius: 20px;
+            padding: 4px 10px; 
+            font-size: 11px; 
+            font-weight: 800; 
+            color: #0f172a;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25); 
+            white-space: nowrap;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            cursor: pointer;
+            transform: translate(-50%, -50%);
         }
-        .compare-modal { top: 115px; right: 16px; width: calc(100vw - 32px); max-width: 340px; }
-        #chart-container { bottom: 65px; left: 16px; width: calc(100vw - 32px); max-width: 380px; height: 300px; }
+        .khupho-badge span { 
+            background: #0284c7; 
+            color: #ffffff; 
+            border-radius: 10px; 
+            padding: 1px 7px; 
+            font-size: 10px; 
+            font-weight: 800; 
+        }
 
-        .cmp-section-card { background: #f8fafc; border-radius: 12px; padding: 8px 12px; margin-top: 6px; border: 1px solid #e2e8f0; }
-        .cmp-title { font-size: 9.5px; font-weight: 800; color: #0f172a; margin-bottom: 4px; text-transform: uppercase; }
-        .cmp-row { display: flex; justify-content: space-between; font-size: 10.5px; font-weight: 700; margin-top: 2px; }
+        .khupho-badge.label-warning { 
+            border-color: #dc2626 !important; 
+            background: #fef2f2 !important;
+            color: #991b1b !important;
+        }
+        .khupho-badge.label-warning span { 
+            background: #dc2626 !important; 
+            color: #ffffff !important;
+        }
 
-        .rate-input-card { background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; padding: 8px 12px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
-        .rate-input-card label { font-size: 10.5px; font-weight: 800; color: #0369a1; }
-        .rate-input-card input { width: 75px; padding: 3px 6px; border-radius: 8px; border: 1.5px solid #0284c7; font-weight: 800; font-size: 12px; text-align: center; color: #0369a1; }
-
-        /* Controls UI */
+        /* Group Nút Điều Khiển */
         .controls-group { position: absolute; bottom: 20px; left: 16px; z-index: 1000; display: flex; gap: 8px; flex-wrap: wrap; }
-        .btn-custom { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-size: 10.5px; font-weight: 800; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .btn-secondary-custom { background: rgba(255, 255, 255, 0.95); color: #334155; border: 1px solid #cbd5e1; }
+        .btn-custom {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white; border: none; padding: 10px 16px; border-radius: 25px;
+            font-size: 11px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35); transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-custom:hover { transform: translateY(-2px); }
+        .btn-secondary-custom { background: rgba(255, 255, 255, 0.9); color: #334155; border: 1px solid #cbd5e1; }
+        .btn-compare { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
 
-        #footer-credits { position: absolute; bottom: 8px; right: 12px; z-index: 999; font-size: 9px; font-weight: 800; color: #0284c7; background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 15px; pointer-events: none; }
-
-        /* Tối ưu Mobile Portrait (Xoay dọc) & Landscape (Xoay ngang) */
-        @media (max-width: 576px) {
-            #header { top: 8px; padding: 8px 10px; }
-            #header h1 { font-size: 12px; }
-            #warning-banner { top: 110px; width: calc(100% - 24px); justify-content: space-between; font-size: 9px; }
-            .compare-modal { top: auto; bottom: 65px; left: 12px; right: 12px; width: calc(100vw - 24px); max-width: none; }
-            #chart-container { bottom: 65px; left: 12px; right: 12px; width: calc(100vw - 24px); max-width: none; height: 280px; }
+        /* Frame Biểu đồ ở Góc Trái */
+        #chart-container {
+            position: absolute; bottom: 65px; left: 16px; z-index: 1000;
+            width: calc(100vw - 32px); max-width: 410px; height: 330px;
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 14px; box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+            display: none;
+        }
+        #chart-container h4 { margin: 0 0 4px 0; font-size: 11px; font-weight: 800; color: #0284c7; text-align: center; text-transform: uppercase; }
+        
+        /* CHÚ THÍCH PHÁP LÝ CHO BIỂU ĐỒ */
+        .chart-note-box {
+            font-size: 8.5px; color: #475569; font-weight: 600; text-align: center;
+            background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 4px 8px; margin-bottom: 6px; line-height: 1.25;
         }
 
-        @media (max-height: 500px) and (orientation: landscape) {
-            #header { top: 5px; padding: 5px 10px; }
-            #header p { display: none; }
-            #warning-banner { top: 65px; padding: 3px 10px; }
-            .compare-modal { top: 50px; bottom: auto; right: 10px; width: 300px; }
-            #chart-container { bottom: 50px; left: 10px; width: 320px; height: 220px; }
+        /* Thông tin Đơn vị thiết kế */
+        #footer-credits {
+            position: absolute; bottom: 12px; right: 12px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px);
+            padding: 6px 14px; border-radius: 30px; font-size: 10px; font-weight: 800; color: #0284c7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12); pointer-events: none;
+        }
+
+        /* Chú giải */
+        .legend { 
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            padding: 10px 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            font-size: 10px; font-weight: 700; color: #334155; border: 1px solid rgba(255,255,255,0.8);
+            margin-bottom: 35px;
+        }
+        .legend i { width: 10px; height: 10px; float: left; margin-right: 6px; margin-top: 3px; border-radius: 2px; }
+
+        @media (max-width: 576px) {
+            #header { top: 10px; padding: 10px 12px; }
+            #header h1 { font-size: 12px; }
+            #warning-banner { top: 135px; font-size: 9px; padding: 5px 10px; width: calc(100% - 24px); justify-content: space-between; }
+            .compare-modal { top: auto; bottom: 70px; right: 10px; left: 10px; width: calc(100vw - 20px); max-width: none; }
+            #footer-credits { font-size: 9px; padding: 4px 10px; }
+            .legend { display: none; }
+            #chart-container { height: 310px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header UI -->
+    <!-- Header nổi -->
     <div id="header">
-        <h1><i class="fa-solid fa-heart-pulse" style="color:#0284c7;"></i> BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT 2026</p>
+        <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
+        <p>XẾP HẠNG TIẾN ĐỘ THI ĐƯA CÁC KHU PHỐ CẬP NHẬT ĐẾN 8 GIỜ 00 PHÚT NGÀY 26/09/2026</p>
+        
         <div class="stats-summary">
-            <div class="stat-card">Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">0</b></div>
-            <div class="stat-card">Dân số: <b style="color:#0f172a;" id="txt-tong-dan-so">0</b></div>
-            <div class="stat-card">Tỷ lệ: <b style="color:#16a34a;" id="txt-ty-le-chung">0%</b></div>
+            <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">0</b></div>
+            <div class="stat-card"><i class="fa-solid fa-users" style="color:#64748b;"></i> Dân số: <b style="color:#0f172a;" id="txt-tong-dan-so">0</b></div>
+            <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#16a34a;"></i> Tỷ lệ: <b style="color:#16a34a;" id="txt-ty-le-chung">0%</b></div>
         </div>
     </div>
 
-    <!-- Banner Cảnh báo -->
+    <!-- Banner Cảnh báo Nổi -->
     <div id="warning-banner">
         <span><i class="fa-solid fa-triangle-exclamation" style="color:#dc2626;"></i> Cảnh báo: <b id="warning-count">0</b> khu phố cần tập trung tăng tốc!</span>
         <button class="btn-focus" onclick="focusNextWarning()">Xem ngay</button>
     </div>
 
-    <!-- Bảng So Sánh -->
+    <!-- BẢNG SO SÁNH ĐẶT Ở GÓC PHẢI MÀN HÌNH -->
     <div id="compare-panel" class="compare-modal">
-        <h3 style="font-size:12px; color:#0284c7; text-align:center; margin-bottom:8px;"><i class="fa-solid fa-chart-simple"></i> SO SÁNH & CẬP NHẬT TỶ LỆ</h3>
+        <h3><i class="fa-solid fa-chart-simple"></i> SO SÁNH & CẬP NHẬT TỶ LỆ</h3>
+        
         <div class="rate-input-card">
             <label>Tỷ lệ khám mới (%):</label>
-            <input type="number" id="input-rate-override" step="0.1" oninput="manualUpdateRate(this.value)">
+            <input type="number" id="input-rate-override" step="0.1" value="51.9" oninput="manualUpdateRate(this.value)">
+            <span class="rate-hint">*Nhập số % để mô phỏng thứ hạng</span>
         </div>
+
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SÁP NHẬP:</div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ % ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">0%</b></div>
-            <div class="cmp-row"><span>Vị trí ước tính:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng --</b></div>
+            <div class="cmp-row"><span>Vị trí ước tính:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng -- / 30</b></div>
             <div class="cmp-row"><span>Đánh giá nhóm:</span> <b style="color:#16a34a;" id="cmp-group-30">--</b></div>
         </div>
+
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG MỞ RỘNG:</div>
+            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ % ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">0</b></div>
-            <div class="cmp-row"><span>Vị trí hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng --</b></div>
+            <div class="cmp-row"><span>Vị trí hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng -- / 168</b></div>
             <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">--</b></div>
         </div>
-        <button class="btn-custom" style="width:100%; margin-top:8px; background:#64748b; justify-content:center;" onclick="togglePanel('compare-panel')">Đóng</button>
+
+        <button class="btn-close-modal" onclick="togglePanel('compare-panel')">
+            <i class="fa-solid fa-xmark"></i> Đóng bảng điều khiển
+        </button>
     </div>
 
-    <!-- Biểu Đồ Chart -->
-    <div id="chart-container">
-        <h4 style="font-size:11px; text-align:center; color:#0284c7; margin-bottom:6px;"><i class="fa-solid fa-trophy"></i> XẾP HẠNG TỶ LỆ ĐÃ KHÁM (%)</h4>
-        <div style="height: 210px; position: relative;"><canvas id="rateChart"></canvas></div>
-    </div>
-
-    <!-- Map Container -->
+    <!-- Bản đồ -->
     <div id="map"></div>
 
+    <!-- Footer Credit -->
     <div id="footer-credits">
         <i class="fa-solid fa-hospital"></i> TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI
     </div>
 
-    <!-- Controls Button -->
+    <!-- Group Nút Điều khiển -->
     <div class="controls-group">
-        <button class="btn-custom" onclick="toggleChart()"><i class="fa-solid fa-chart-column"></i> Biểu đồ</button>
-        <button class="btn-custom" style="background: linear-gradient(135deg, #059669, #047857);" onclick="togglePanel('compare-panel')"><i class="fa-solid fa-trophy"></i> So sánh</button>
-        <button class="btn-custom btn-secondary-custom" onclick="toggleMapTile()" id="btn-map-tile"><i class="fa-solid fa-layer-group"></i> Bản đồ</button>
+        <button id="chart-toggle-btn" class="btn-custom" onclick="toggleChart()"><i class="fa-solid fa-chart-column"></i> Biểu đồ</button>
+        <button class="btn-custom btn-compare" onclick="togglePanel('compare-panel')"><i class="fa-solid fa-trophy"></i> So sánh (30/168)</button>
+        <button class="btn-custom btn-secondary-custom" onclick="toggleMapTile()" id="btn-map-tile"><i class="fa-solid fa-layer-group"></i> Bản đồ: Hành chính</button>
         <button class="btn-custom btn-secondary-custom" onclick="resetMapView()"><i class="fa-solid fa-compress"></i></button>
     </div>
 
+    <!-- Frame Biểu đồ ở Góc Trái -->
+    <div id="chart-container">
+        <h4><i class="fa-solid fa-trophy"></i> XẾP HẠNG TỶ LỆ ĐÃ KHÁM (%)</h4>
+        
+        <div class="chart-note-box">
+            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> <b>Ghi chú:</b> Số liệu dân cư các khu phố được lấy theo Quyết định đã được phê duyệt. Ban Chỉ đạo sẽ họp và chốt sau khi kết thúc Kế hoạch Khám sức khỏe toàn dân.
+        </div>
+
+        <div style="height: 220px; position: relative;"><canvas id="rateChart"></canvas></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // --- DỮ LIỆU THAM CHIẾU HỆ THỐNG SO SÁNH ---
+        var SYSTEM_168_RATES = [
+            272.9, 246.8, 208.4, 84.7, 72.5, 72.1, 71.3, 70.4, 67.8, 67.2, 66.8, 66.8, 66.6, 65.9, 65.4, 63.9, 62.2, 61.8, 60.9, 60.7,
+            60.7, 60.4, 60.2, 59.7, 59.6, 59.5, 58.5, 58.4, 57.9, 57.0, 56.7, 55.8, 55.7, 55.3, 55.3, 55.0, 54.9, 54.3, 54.1, 53.4,
+            53.3, 52.5, 52.0, 52.0, 52.0, 51.6, 51.6, 51.5, 49.9, 49.5, 49.5, 49.1, 48.6, 48.2, 48.0, 47.9, 47.8, 47.7, 47.4, 47.2,
+            46.8, 46.4, 46.0, 45.8, 45.2, 45.2, 44.6, 44.4, 44.3, 44.2, 44.2, 43.2, 42.9, 42.6, 41.8, 41.6, 41.3, 41.0, 40.8, 40.5,
+            39.8, 39.7, 39.6, 39.5, 39.2, 38.7, 38.7, 38.4, 38.4, 37.8, 37.5, 37.5, 36.9, 36.9, 36.1, 35.8, 35.8, 35.7, 35.5, 35.4,
+            35.2, 34.8, 34.7, 34.5, 34.2, 33.8, 33.8, 33.4, 33.3, 33.1, 32.7, 32.6, 32.5, 32.3, 32.3, 32.2, 31.7, 31.5, 31.4, 31.0,
+            30.8, 30.8, 30.0, 30.0, 29.9, 29.9, 29.6, 29.5, 29.2, 29.0, 28.6, 28.4, 27.8, 27.8, 27.6, 27.5, 27.0, 26.9, 26.8, 26.6,
+            26.4, 26.3, 25.0, 24.7, 24.5, 24.5, 24.4, 24.0, 23.9, 22.6, 1.7
+        ];
+
+        var SYSTEM_30_RATES = [
+            70.4, 65.4, 65.9, 60.7, 60.7, 60.4, 60.2, 59.7, 59.5, 55.3, 
+            55.0, 54.9, 54.3, 54.1, 52.0, 52.0, 52.0, 51.5, 49.9, 49.5, 
+            47.9, 44.6, 39.7, 35.7, 33.8, 31.0, 27.8, 26.3, 22.6, 1.7
+        ];
+
         var DEFAULT_CENTER = [10.5150, 107.1200];
         var DEFAULT_ZOOM = 13;
 
         var map = L.map('map', {zoomControl: false}).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-        var streetLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20 }).addTo(map);
-        var satLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 20 });
-        var terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17 });
+
+        var streetLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, attribution: '© Google Maps' }).addTo(map);
+        var satLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 20, attribution: '© Google Maps' });
+        var terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '© OpenTopoMap' });
 
         var mapTileMode = 0;
         function toggleMapTile() {
-            map.removeLayer(streetLayer); map.removeLayer(satLayer); map.removeLayer(terrainLayer);
+            map.removeLayer(streetLayer);
+            map.removeLayer(satLayer);
+            map.removeLayer(terrainLayer);
+
             var btn = document.getElementById('btn-map-tile');
-            if (mapTileMode === 0) { satLayer.addTo(map); btn.innerHTML = '<i class="fa-solid fa-satellite"></i> Vệ tinh'; mapTileMode = 1; }
-            else if (mapTileMode === 1) { terrainLayer.addTo(map); btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Địa hình'; mapTileMode = 2; }
-            else { streetLayer.addTo(map); btn.innerHTML = '<i class="fa-solid fa-layer-group"></i> Hành chính'; mapTileMode = 0; }
+
+            mapTileMode = (mapTileMode + 1) % 3;
+            if (mapTileMode === 0) {
+                map.addLayer(streetLayer);
+                btn.innerHTML = '<i class="fa-solid fa-layer-group"></i> Bản đồ: Hành chính';
+            } else if (mapTileMode === 1) {
+                map.addLayer(satLayer);
+                btn.innerHTML = '<i class="fa-solid fa-satellite"></i> Bản đồ: Vệ tinh';
+            } else {
+                map.addLayer(terrainLayer);
+                btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Bản đồ: Địa hình';
+            }
         }
 
-        // --- CẬP NHẬT SỐ NGƯỜI ĐÃ KHÁM CỦA CÁC KHU PHỐ TẠI ĐÂY ---
+        // DỮ LIỆU BẢN ĐỒ 9 KHU PHỐ - Thay đổi 'numDaKham' tại đây để cập nhật tự động toàn bộ trang
         var khuPhoData = [
-            { name: "Phước Thành", numTongDan: 1350, numDaKham: 1319, center: [10.5250, 107.1100] },
-            { name: "Cát Hải",     numTongDan: 2698, numDaKham: 1421, center: [10.5200, 107.1150] },
-            { name: "Láng Cát",    numTongDan: 3318, numDaKham: 1800, center: [10.5150, 107.1250] },
-            { name: "Phước Hiệp",   numTongDan: 3220, numDaKham: 1592, center: [10.5100, 107.1200] },
-            { name: "Chu Hải",     numTongDan: 3950, numDaKham: 1833, center: [10.5050, 107.1300] },
-            { name: "Phước Hải",   numTongDan: 3320, numDaKham: 1664, center: [10.5000, 107.1100] },
-            { name: "Phước Long",  numTongDan: 3680, numDaKham: 1586, center: [10.5200, 107.1300] },
-            { name: "Phước Tấn",   numTongDan: 3950, numDaKham: 1759, center: [10.5100, 107.1000] },
-            { name: "Đông Hải",    numTongDan: 2836, numDaKham: 1542, center: [10.5300, 107.1200] }
+            { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1323 },
+            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1475 },
+            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 1854 },
+            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1646 },
+            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 1887 },
+            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1718 },
+            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1640 },
+            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1813 },
+            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 1596 }
         ];
 
-        var warningKhuPhos = [];
-        var currentWarningIndex = 0;
         var mapLayersGroup = L.layerGroup().addTo(map);
         var rateChart = null;
+        var warningKhuPhos = [];
 
-        // Hàm tính toán tự động cộng tổng & render hệ thống
         function renderAllSystem() {
             mapLayersGroup.clearLayers();
-            
-            // 1. TỰ ĐỘNG CỘNG TỔNG CA KHÁM VÀ TỔNG DÂN SỐ
+            warningKhuPhos = [];
+
+            // Tự động cộng dồn tổng ca khám và tổng dân số
             var sumDaKham = khuPhoData.reduce((acc, cur) => acc + cur.numDaKham, 0);
             var sumTongDan = khuPhoData.reduce((acc, cur) => acc + cur.numTongDan, 0);
             var tyLeChung = sumTongDan > 0 ? (sumDaKham / sumTongDan * 100).toFixed(1) : 0;
 
-            // 2. TỰ ĐỘNG TÍNH TỶ LỆ & SẮP XẾP XẾP HẠNG KHU PHỐ
-            khuPhoData.forEach(kp => kp.rate = parseFloat((kp.numDaKham / kp.numTongDan * 100).toFixed(1)));
-            khuPhoData.sort((a, b) => b.rate - a.rate);
-
-            // 3. ĐẨY DỮ LIỆU LÊN GIAO DIỆN
+            // Cập nhật Header
             document.getElementById('txt-tong-da-kham').innerText = sumDaKham.toLocaleString('vi-VN');
             document.getElementById('txt-tong-dan-so').innerText = sumTongDan.toLocaleString('vi-VN');
             document.getElementById('txt-ty-le-chung').innerText = tyLeChung + '%';
-            
-            if (document.getElementById('input-rate-override')) {
-                document.getElementById('input-rate-override').value = tyLeChung;
-            }
+            document.getElementById('input-rate-override').value = tyLeChung;
 
-            warningKhuPhos = khuPhoData.slice(-3); // Top 3 khu phố cần cảnh báo
-            document.getElementById('warning-count').innerText = warningKhuPhos.length;
-
+            // Cập nhật xếp hạng thi đua
             updateComparisonStats(sumDaKham, parseFloat(tyLeChung));
-            renderChart();
-            renderMapMarkers();
-        }
 
-        function updateComparisonStats(sumDaKham, tyLe) {
-            var rank30 = tyLe >= 60 ? "Hạng 5 / 30" : tyLe >= 50 ? "Hạng 18 / 30" : "Hạng 25 / 30";
-            var group30 = tyLe >= 60 ? "Nhóm Khá" : tyLe >= 50 ? "Nhóm Trung Bình" : "Nhóm Cần Tăng Tốc";
-
-            var rank168 = tyLe >= 50 ? "Hạng 47 / 168" : "Hạng 120 / 168";
-            var rankCount168 = "Hạng 134 / 168";
-
-            document.getElementById('cmp-rate-30').innerText = tyLe + '%';
-            document.getElementById('cmp-rank-30').innerText = rank30;
-            document.getElementById('cmp-group-30').innerText = group30;
-
-            document.getElementById('cmp-count-168').innerText = sumDaKham.toLocaleString('vi-VN');
-            document.getElementById('cmp-rank-168').innerText = rank168 + " (%) | " + rankCount168 + " (Ca)";
-            document.getElementById('cmp-group-168').innerText = tyLe >= 50 ? "Nhóm Đạt Chỉ Tiêu Mốc 50%" : "Nhóm Cần Tăng Cường";
-        }
-
-        function manualUpdateRate(val) {
-            var newRate = parseFloat(val) || 0;
-            var sumTongDan = khuPhoData.reduce((acc, cur) => acc + cur.numTongDan, 0);
-            var estimatedDaKham = Math.round(sumTongDan * (newRate / 100));
-            updateComparisonStats(estimatedDaKham, newRate);
-        }
-
-        function renderMapMarkers() {
-            khuPhoData.forEach((kp, idx) => {
-                var color = idx < 3 ? '#16a34a' : idx < 6 ? '#f97316' : '#dc2626';
-                var marker = L.circleMarker(kp.center, {
-                    radius: 12, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.85
-                }).bindPopup(`<b>Khu phố: ${kp.name}</b><br>Đã khám: ${kp.numDaKham.toLocaleString('vi-VN')}/${kp.numTongDan.toLocaleString('vi-VN')} (${kp.rate}%)`);
-                mapLayersGroup.addLayer(marker);
-                kp.markerInstance = marker;
+            // Tính % và số người còn cần khám cho từng khu phố
+            khuPhoData.forEach(kp => {
+                kp.tyleDaKham = kp.numTongDan > 0 ? parseFloat(((kp.numDaKham / kp.numTongDan) * 100).toFixed(1)) : 0;
+                kp.numCanKham = Math.max(0, kp.numTongDan - kp.numDaKham);
             });
-        }
 
-        function renderChart() {
-            var ctx = document.getElementById('rateChart').getContext('2d');
-            if (rateChart) rateChart.destroy();
-            
-            rateChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: khuPhoData.map(k => k.name),
-                    datasets: [{
-                        data: khuPhoData.map(k => k.rate),
-                        backgroundColor: khuPhoData.map((_, idx) => idx < 3 ? '#16a34a' : idx < 6 ? '#f97316' : '#dc2626'),
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, max: 100 } }
+            // Sắp xếp danh sách khu phố theo % giảm dần
+            khuPhoData.sort((a, b) => b.tyleDaKham - a.tyleDaKham);
+
+            // Gán thứ hạng và phân màu thi đua
+            khuPhoData.forEach((kp, index) => {
+                kp.hang = index + 1;
+                if (kp.hang <= 3) { kp.color = "#16a34a"; }
+                else if (kp.hang <= 6) { kp.color = "#d97706"; }
+                else { 
+                    kp.color = "#dc2626"; 
+                    warningKhuPhos.push(kp);
                 }
             });
+
+            // Cập nhật Banner Cảnh Báo
+            document.getElementById('warning-count').innerText = warningKhuPhos.length;
+            document.getElementById('warning-banner').style.display = warningKhuPhos.length > 0 ? 'flex' : 'none';
+
+            // Vẽ các khu phố lên Leaflet Map
+            khuPhoData.forEach(function(kp) {
+                var isWarningGroup = kp.hang > 6;
+                var poly = L.polygon(kp.polygon, {
+                    color: kp.color, weight: isWarningGroup ? 3.5 : 2.5, opacity: 0.9,
+                    fillColor: kp.color, fillOpacity: isWarningGroup ? 0.45 : 0.35,
+                    dashArray: isWarningGroup ? '6, 6' : null
+                }).addTo(mapLayersGroup);
+
+                kp.polyInstance = poly;
+
+                var labelClass = 'khupho-badge' + (isWarningGroup ? ' label-warning' : '');
+                
+                var labelMarker = L.marker(kp.center, {
+                    icon: L.divIcon({
+                        className: '', 
+                        html: `<div class="${labelClass}"><span>${kp.hang}</span> ${kp.name} ${isWarningGroup ? '⚠️' : ''}</div>`,
+                        iconSize: [0, 0]
+                    })
+                }).addTo(mapLayersGroup);
+
+                var alertBoxHtml = isWarningGroup ? `<div style="background:#fef2f2; border:1px dashed #fca5a5; color:#dc2626; padding:5px; border-radius:8px; margin-top:6px; font-size:10px; font-weight:700; text-align:center;"><i class="fa-solid fa-triangle-exclamation"></i> Cần đẩy nhanh tiến độ!</div>` : '';
+
+                var popupContent = `
+                    <div style="font-size:13px; font-weight:800; border-bottom:2px solid #f1f5f9; padding-bottom:5px; margin-bottom:6px; display:flex; justify-content:space-between;">
+                        <span>KHU PHỐ ${kp.name}</span>
+                        <span style="background:${kp.color}; color:#fff; padding:2px 8px; border-radius:12px; font-size:10px;">HẠNG ${kp.hang}</span>
+                    </div>
+                    <div>Tỷ lệ đã khám: <b style="color:${kp.color}; font-size:15px;">${kp.tyleDaKham}%</b></div>
+                    <div>Tổng dân số: <b>${kp.numTongDan.toLocaleString('vi-VN')} người</b></div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px; margin-top:6px;">
+                        <div>Còn cần khám: <b>${kp.numCanKham.toLocaleString('vi-VN')} người</b></div>
+                        <div style="color:#0284c7; margin-top:3px;">Đã khám thành công: <b>${kp.numDaKham.toLocaleString('vi-VN')} người</b></div>
+                    </div>
+                    ${alertBoxHtml}
+                `;
+
+                poly.bindPopup(popupContent);
+                labelMarker.bindPopup(popupContent);
+                labelMarker.on('click', function() { poly.openPopup(); map.flyTo(kp.center, 14); });
+            });
+
+            updateChart();
         }
 
+        var currentWarningIndex = 0;
         function focusNextWarning() {
             if (warningKhuPhos.length === 0) return;
             var targetKp = warningKhuPhos[currentWarningIndex];
             map.flyTo(targetKp.center, 15);
-            if (targetKp.markerInstance) targetKp.markerInstance.openPopup();
+            targetKp.polyInstance.openPopup();
             currentWarningIndex = (currentWarningIndex + 1) % warningKhuPhos.length;
         }
 
-        function togglePanel(id) {
-            var el = document.getElementById(id);
-            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        function manualUpdateRate(newRateVal) {
+            var newRate = parseFloat(newRateVal) || 0;
+            var totalDan = khuPhoData.reduce((acc, cur) => acc + cur.numTongDan, 0);
+            var newDaKham = Math.round(totalDan * (newRate / 100));
+
+            document.getElementById('txt-tong-da-kham').innerText = newDaKham.toLocaleString('vi-VN');
+            document.getElementById('txt-ty-le-chung').innerText = newRate.toFixed(1) + '%';
+
+            updateComparisonStats(newDaKham, newRate);
+        }
+
+        // Hàm tự động tính toán vị trí xếp hạng So sánh
+        function updateComparisonStats(totalCount, rate) {
+            var currentRate = parseFloat(rate) || 0;
+
+            // Thứ hạng trong 30 xã/phường sáp nhập
+            var rank30 = 1;
+            for (var i = 0; i < SYSTEM_30_RATES.length; i++) {
+                if (currentRate < SYSTEM_30_RATES[i]) {
+                    rank30++;
+                } else {
+                    break;
+                }
+            }
+            if (rank30 > 30) rank30 = 30;
+
+            var group30 = "Nhóm Trung Bình";
+            if (rank30 <= 10) { group30 = "Nhóm Dẫn Đầu"; }
+            else if (rank30 <= 20) { group30 = "Nhóm Trung Bình"; }
+            else { group30 = "Nhóm Cần Tăng Tốc ⚠️"; }
+
+            // Thứ hạng trong 168 xã/phường mở rộng
+            var rank168 = 1;
+            for (var j = 0; j < SYSTEM_168_RATES.length; j++) {
+                if (currentRate < SYSTEM_168_RATES[j]) {
+                    rank168++;
+                } else {
+                    break;
+                }
+            }
+            if (rank168 > 168) rank168 = 168;
+
+            var group168 = "Nhóm Đạt Chỉ Tiêu Mốc 50%";
+            if (currentRate >= 70.0) { group168 = "Nhóm Xuất Sắc (>70%)"; }
+            else if (currentRate >= 50.0) { group168 = "Nhóm Đạt Chỉ Tiêu Mốc 50%"; }
+            else { group168 = "Nhóm Cần Tăng Cường (<50%)"; }
+
+            // Hiển thị kết quả lên Bảng So sánh
+            document.getElementById('cmp-rate-30').innerText = currentRate.toFixed(1) + '%';
+            document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30} / 30`;
+            document.getElementById('cmp-group-30').innerText = group30;
+
+            document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
+            document.getElementById('cmp-rank-168').innerText = `Hạng ${rank168} / 168`;
+            document.getElementById('cmp-group-168').innerText = group168;
+        }
+
+        var legend = L.control({position: 'bottomright'});
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'legend');
+            div.innerHTML += '<b style="display:block; margin-bottom:4px;">Xếp hạng</b>';
+            div.innerHTML += '<i style="background: #16a34a;"></i> Top 1-3 (Dẫn đầu)<br>';
+            div.innerHTML += '<i style="background: #d97706;"></i> Hạng 4-6 (Khá)<br>';
+            div.innerHTML += '<i style="background: #dc2626;"></i> Hạng 7-9 (Cần cố gắng) ⚠️<br>';
+            return div;
+        };
+        legend.addTo(map);
+
+        function updateChart() {
+            var labels = khuPhoData.map(d => `${d.hang}.${d.name}`);
+            var dataValues = khuPhoData.map(d => d.tyleDaKham);
+            var barColors = khuPhoData.map(d => d.color);
+
+            var ctx = document.getElementById('rateChart').getContext('2d');
+            if (rateChart) { rateChart.destroy(); }
+
+            rateChart = new Chart(ctx, {
+                type: 'bar',
+                data: { labels: labels, datasets: [{ label: 'Tỷ lệ %', data: dataValues, backgroundColor: barColors, borderRadius: 6 }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { color: '#64748b', font: { size: 9 }, callback: v => v + '%' } },
+                        x: { ticks: { color: '#0f172a', font: { size: 8, weight: '700' } }, grid: { display: false } }
+                    },
+                    onClick: (e, activeElements) => {
+                        if (activeElements.length > 0) {
+                            var index = activeElements[0].index;
+                            var targetKp = khuPhoData[index];
+                            map.flyTo(targetKp.center, 15);
+                            targetKp.polyInstance.openPopup();
+                        }
+                    }
+                }
+            });
+        }
+
+        function togglePanel(panelId) {
+            var panel = document.getElementById(panelId);
+            var isHidden = panel.style.display === 'none' || panel.style.display === '';
+            document.querySelectorAll('.compare-modal').forEach(p => p.style.display = 'none');
+            if (isHidden) { panel.style.display = 'block'; }
         }
 
         function toggleChart() {
-            togglePanel('chart-container');
-            if (rateChart) setTimeout(() => rateChart.resize(), 100);
+            var container = document.getElementById('chart-container');
+            var btn = document.getElementById('chart-toggle-btn');
+            if (container.style.display === 'none' || container.style.display === '') {
+                container.style.display = 'block'; btn.innerHTML = '<i class="fa-solid fa-xmark"></i> Đóng';
+            } else {
+                container.style.display = 'none'; btn.innerHTML = '<i class="fa-solid fa-chart-column"></i> Biểu đồ';
+            }
         }
 
         function resetMapView() { map.flyTo(DEFAULT_CENTER, DEFAULT_ZOOM); }
 
-        // --- HỖ TRỢ LẮNG NGHE SỰ KIỆN XOAY MÀN HÌNH DI ĐỘNG ---
-        window.addEventListener('resize', handleViewportChange);
-        window.addEventListener('orientationchange', handleViewportChange);
-
-        function handleViewportChange() {
-            setTimeout(function() {
-                map.invalidateSize(); // Căn chỉnh lại bản đồ
-                if (rateChart) rateChart.resize(); // Căn chỉnh lại biểu đồ
-            }, 200);
-        }
-
-        // Khởi chạy hệ thống
+        // Khởi chạy toàn bộ hệ thống
         renderAllSystem();
     </script>
 </body>
