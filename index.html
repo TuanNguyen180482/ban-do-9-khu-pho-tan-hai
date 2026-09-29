@@ -87,7 +87,8 @@
         .compare-modal {
             position: absolute; top: 110px; right: 20px;
             z-index: 1001; width: calc(100vw - 32px); max-width: 360px;
-            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 28px; padding: 18px 16px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.9);
@@ -196,123 +197,7 @@
             display: none;
         }
         #chart-container h4 { margin: 0 0 4px 0; font-size: 11px; font-weight: 800; color: #0284c7; text-align: center; text-transform: uppercase; }
-        /* --- TỐI ƯU GIAO DIỆN DI ĐỘNG KHI XOAY DỌC VÀ XOAY NGANG --- */
 
-/* 1. Màn hình Dọc (Portrait Mobile) */
-@media screen and (max-width: 576px) and (orientation: portrait) {
-    #header { 
-        top: 10px; 
-        padding: 8px 12px; 
-        width: calc(100% - 20px); 
-    }
-    #header h1 { font-size: 11px; }
-    #header p { font-size: 8.5px; }
-
-    .stats-summary { gap: 4px; margin-top: 6px; padding-top: 6px; }
-    .stat-card { padding: 4px 6px; font-size: 9px; }
-    .stat-card b { font-size: 11px; }
-
-    #warning-banner { 
-        top: 130px; 
-        font-size: 9.5px; 
-        padding: 6px 12px; 
-        width: calc(100% - 24px); 
-        justify-content: space-between; 
-    }
-
-    .compare-modal { 
-        top: auto; 
-        bottom: 65px; 
-        right: 10px; 
-        left: 10px; 
-        width: calc(100vw - 20px); 
-        max-width: none; 
-        max-height: 70vh; 
-        overflow-y: auto; 
-    }
-
-    #chart-container { 
-        bottom: 65px; 
-        left: 10px; 
-        width: calc(100vw - 20px); 
-        max-width: none; 
-        height: 290px; 
-    }
-
-    .controls-group { 
-        bottom: 12px; 
-        left: 10px; 
-        right: 10px; 
-        justify-content: space-between; 
-    }
-    .btn-custom { padding: 8px 12px; font-size: 10px; }
-
-    .legend { display: none; }
-}
-
-/* 2. Màn hình Ngang (Landscape Mobile) */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-    #header { 
-        top: 6px; 
-        padding: 6px 14px; 
-        max-width: 480px; 
-    }
-    #header h1 { font-size: 11px; }
-    #header p { display: none; } /* Ẩn bớt dòng mô tả để tiết kiệm chiều cao */
-    .stats-summary { margin-top: 4px; padding-top: 4px; }
-
-    #warning-banner { 
-        top: 75px; 
-        font-size: 9px; 
-        padding: 4px 10px; 
-    }
-
-    .compare-modal { 
-        top: 10px; 
-        right: 10px; 
-        bottom: 10px; 
-        width: 320px; 
-        max-height: calc(100vh - 20px); 
-        overflow-y: auto; 
-    }
-
-    #chart-container { 
-        bottom: 55px; 
-        left: 10px; 
-        width: 340px; 
-        height: 220px; 
-    }
-
-    .controls-group { 
-        bottom: 10px; 
-        left: 10px; 
-    }
-    .btn-custom { padding: 6px 10px; font-size: 9.5px; }
-
-    #footer-credits { display: none; } /* Ẩn footer khi xoay ngang để rộng không gian */
-}
-        // --- XỬ LÝ SỰ KIỆN XOAY DỌC / NGANG VÀ THAY ĐỔI KÍCH THƯỚC MÀN HÌNH ---
-function handleResizeAndOrientation() {
-    // 1. Cập nhật và reset kích thước bản đồ Leaflet không bị lỗi hiển thị/vệt trắng
-    if (map) {
-        setTimeout(function() {
-            map.invalidateSize();
-        }, 300); // Trễ 300ms đợi hiệu ứng xoay màn hình của thiết bị hoàn tất
-    }
-
-    // 2. Resize lại biểu đồ Chart.js để chuẩn theo khung mới
-    if (rateChart) {
-        setTimeout(function() {
-            rateChart.resize();
-        }, 350);
-    }
-}
-
-// Bắt sự kiện xoay thiết bị di động
-window.addEventListener("orientationchange", handleResizeAndOrientation);
-
-// Bắt sự kiện thay đổi kích thước trình duyệt
-window.addEventListener("resize", handleResizeAndOrientation);
         /* CHÚ THÍCH PHÁP LÝ CHO BIỂU ĐỒ */
         .chart-note-box {
             font-size: 8.5px; color: #475569; font-weight: 600; text-align: center;
@@ -337,14 +222,44 @@ window.addEventListener("resize", handleResizeAndOrientation);
         }
         .legend i { width: 10px; height: 10px; float: left; margin-right: 6px; margin-top: 3px; border-radius: 2px; }
 
-        @media (max-width: 576px) {
-            #header { top: 10px; padding: 10px 12px; }
-            #header h1 { font-size: 12px; }
-            #warning-banner { top: 135px; font-size: 9px; padding: 5px 10px; width: calc(100% - 24px); justify-content: space-between; }
-            .compare-modal { top: auto; bottom: 70px; right: 10px; left: 10px; width: calc(100vw - 20px); max-width: none; }
-            #footer-credits { font-size: 9px; padding: 4px 10px; }
+        /* --- TỐI ƯU GIAO DIỆN DI ĐỘNG KHI XOAY DỌC VÀ XOAY NGANG --- */
+        @media screen and (max-width: 576px) and (orientation: portrait) {
+            #header { top: 10px; padding: 8px 12px; width: calc(100% - 20px); }
+            #header h1 { font-size: 11px; }
+            #header p { font-size: 8.5px; }
+
+            .stats-summary { gap: 4px; margin-top: 6px; padding-top: 6px; }
+            .stat-card { padding: 4px 6px; font-size: 9px; }
+            .stat-card b { font-size: 11px; }
+
+            #warning-banner { top: 130px; font-size: 9.5px; padding: 6px 12px; width: calc(100% - 24px); justify-content: space-between; }
+
+            .compare-modal { top: auto; bottom: 65px; right: 10px; left: 10px; width: calc(100vw - 20px); max-width: none; max-height: 70vh; overflow-y: auto; }
+
+            #chart-container { bottom: 65px; left: 10px; width: calc(100vw - 20px); max-width: none; height: 290px; }
+
+            .controls-group { bottom: 12px; left: 10px; right: 10px; justify-content: space-between; }
+            .btn-custom { padding: 8px 12px; font-size: 10px; }
+
             .legend { display: none; }
-            #chart-container { height: 310px; }
+        }
+
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            #header { top: 6px; padding: 6px 14px; max-width: 480px; }
+            #header h1 { font-size: 11px; }
+            #header p { display: none; }
+            .stats-summary { margin-top: 4px; padding-top: 4px; }
+
+            #warning-banner { top: 75px; font-size: 9px; padding: 4px 10px; }
+
+            .compare-modal { top: 10px; right: 10px; bottom: 10px; width: 320px; max-height: calc(100vh - 20px); overflow-y: auto; }
+
+            #chart-container { bottom: 55px; left: 10px; width: 340px; height: 220px; }
+
+            .controls-group { bottom: 10px; left: 10px; }
+            .btn-custom { padding: 6px 10px; font-size: 9.5px; }
+
+            #footer-credits { display: none; }
         }
     </style>
 </head>
@@ -374,7 +289,7 @@ window.addEventListener("resize", handleResizeAndOrientation);
         
         <div class="rate-input-card">
             <label>Tỷ lệ khám mới (%):</label>
-            <input type="number" id="input-rate-override" step="0.1" value="51.9" oninput="manualUpdateRate(this.value)">
+            <input type="number" id="input-rate-override" step="0.1" value="56.4" oninput="manualUpdateRate(this.value)">
             <span class="rate-hint">*Nhập số % để mô phỏng thứ hạng</span>
         </div>
 
@@ -474,7 +389,7 @@ window.addEventListener("resize", handleResizeAndOrientation);
             }
         }
 
-        // DỮ LIỆU BẢN ĐỒ 9 KHU PHỐ - Thay đổi 'numDaKham' tại đây để cập nhật tự động toàn bộ trang
+        // DỮ LIỆU BẢN ĐỒ 9 KHU PHỐ - Tổng số ca đã khám được cập nhật chuẩn theo báo cáo (Tổng = 15.984 người)
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1335 },
             { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1572 },
@@ -523,7 +438,7 @@ window.addEventListener("resize", handleResizeAndOrientation);
                 kp.hang = index + 1;
                 if (kp.hang <= 3) { kp.color = "#16a34a"; }
                 else if (kp.hang <= 6) { kp.color = "#d97706"; }
-                else { 
+                else {
                     kp.color = "#dc2626"; 
                     warningKhuPhos.push(kp);
                 }
@@ -598,11 +513,9 @@ window.addEventListener("resize", handleResizeAndOrientation);
             updateComparisonStats(newDaKham, newRate);
         }
 
-        // Hàm tự động tính toán vị trí xếp hạng So sánh
         function updateComparisonStats(totalCount, rate) {
             var currentRate = parseFloat(rate) || 0;
 
-            // Thứ hạng trong 30 xã/phường sáp nhập
             var rank30 = 1;
             for (var i = 0; i < SYSTEM_30_RATES.length; i++) {
                 if (currentRate < SYSTEM_30_RATES[i]) {
@@ -618,7 +531,6 @@ window.addEventListener("resize", handleResizeAndOrientation);
             else if (rank30 <= 20) { group30 = "Nhóm Trung Bình"; }
             else { group30 = "Nhóm Cần Tăng Tốc ⚠️"; }
 
-            // Thứ hạng trong 168 xã/phường mở rộng
             var rank168 = 1;
             for (var j = 0; j < SYSTEM_168_RATES.length; j++) {
                 if (currentRate < SYSTEM_168_RATES[j]) {
@@ -634,7 +546,6 @@ window.addEventListener("resize", handleResizeAndOrientation);
             else if (currentRate >= 50.0) { group168 = "Nhóm Đạt Chỉ Tiêu Mốc 50%"; }
             else { group168 = "Nhóm Cần Tăng Cường (<50%)"; }
 
-            // Hiển thị kết quả lên Bảng So sánh
             document.getElementById('cmp-rate-30').innerText = currentRate.toFixed(1) + '%';
             document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30} / 30`;
             document.getElementById('cmp-group-30').innerText = group30;
@@ -703,6 +614,18 @@ window.addEventListener("resize", handleResizeAndOrientation);
         }
 
         function resetMapView() { map.flyTo(DEFAULT_CENTER, DEFAULT_ZOOM); }
+
+        function handleResizeAndOrientation() {
+            if (map) {
+                setTimeout(function() { map.invalidateSize(); }, 300);
+            }
+            if (rateChart) {
+                setTimeout(function() { rateChart.resize(); }, 350);
+            }
+        }
+
+        window.addEventListener("orientationchange", handleResizeAndOrientation);
+        window.addEventListener("resize", handleResizeAndOrientation);
 
         // Khởi chạy toàn bộ hệ thống
         renderAllSystem();
