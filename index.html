@@ -129,6 +129,27 @@
         .cmp-row span { color: #475569; font-weight: 600; }
         .cmp-row b { font-weight: 800; }
 
+        /* Bảng lọc Nhóm tuổi */
+        .filter-group-card {
+            background: #fff; border: 1px solid #cbd5e1;
+            border-radius: 16px; padding: 10px; margin-bottom: 12px;
+        }
+        .filter-group-card label { font-size: 10px; font-weight: 800; color: #475569; display: block; margin-bottom: 6px; }
+        .filter-grid { display: grid; grid-template-cols: 1fr 1fr; gap: 6px; }
+        .filter-btn {
+            background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 8px; border-radius: 10px;
+            font-size: 9.5px; font-weight: 700; color: #334155; cursor: pointer; text-align: center;
+        }
+        .filter-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
+
+        .btn-close-modal {
+            width: 100%; background: #0284c7; color: white; border: none;
+            padding: 10px; border-radius: 25px; font-size: 11px; font-weight: 800;
+            cursor: pointer; margin-top: 4px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-close-modal:hover { background: #0369a1; }
 
         /* ĐỊNH DẠNG BADGE KHU PHỐ */
         .khupho-badge {
@@ -251,14 +272,14 @@
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ % ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ 5 ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">0%</b></div>
             <div class="cmp-row"><span>Vị trí ước tính:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng -- / 30</b></div>
             <div class="cmp-row"><span>Đánh giá nhóm:</span> <b style="color:#16a34a;" id="cmp-group-30">--</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ % ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ 5 ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">0</b></div>
             <div class="cmp-row"><span>Vị trí hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng -- / 168</b></div>
             <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">--</b></div>
@@ -278,7 +299,7 @@
     <div id="map"></div>
 
     <div id="footer-credits">
-        <i class="fa-solid fa-hospital"></i> TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI 
+        <i class="fa-solid fa-hospital"></i> TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI - BẢN ĐỒ DỮ LIỆU SỐ
     </div>
 
     <!-- Group Nút Điều khiển -->
@@ -293,7 +314,7 @@
     <div id="chart-container">
         <h4><i class="fa-solid fa-chart-bar"></i> TIẾN ĐỘ THI ĐƯA 9 KHU PHỐ (%)</h4>
         <div class="chart-note-box">
-            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> GHI CHÚ: SỐ LIỆU DÂN CƯ ĐƯỢC PHÂN BỐ THEO QUYẾT ĐỊNH ĐÃ ĐƯỢC PHÊ DUYỆT.
+            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> GHI CHÚ: SỐ LIỆU DÂN CƯ ĐƯỢC PHÂN BỐ CHO CÁC KHU PHỐ THEO QUYẾT ĐỊNH ĐÃ ĐƯỢC PHÊ DUYỆT.
         </div>
         <div style="height: 220px; position: relative;"><canvas id="rateChart"></canvas></div>
     </div>
