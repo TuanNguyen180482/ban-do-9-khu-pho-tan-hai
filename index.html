@@ -129,19 +129,6 @@
         .cmp-row span { color: #475569; font-weight: 600; }
         .cmp-row b { font-weight: 800; }
 
-        /* Bảng lọc Nhóm tuổi */
-        .filter-group-card {
-            background: #fff; border: 1px solid #cbd5e1;
-            border-radius: 16px; padding: 10px; margin-bottom: 12px;
-        }
-        .filter-group-card label { font-size: 10px; font-weight: 800; color: #475569; display: block; margin-bottom: 6px; }
-        .filter-grid { display: grid; grid-template-cols: 1fr 1fr; gap: 6px; }
-        .filter-btn {
-            background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 8px; border-radius: 10px;
-            font-size: 9.5px; font-weight: 700; color: #334155; cursor: pointer; text-align: center;
-        }
-        .filter-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
         .btn-close-modal {
             width: 100%; background: #0284c7; color: white; border: none;
             padding: 10px; border-radius: 25px; font-size: 11px; font-weight: 800;
@@ -170,7 +157,7 @@
         }
         .khupho-badge span { 
             background: #0284c7; 
-            color: #ffffff; 
+            color: #ffffff;
             border-radius: 10px; 
             padding: 1px 7px; 
             font-size: 10px; 
@@ -255,31 +242,20 @@
     <div id="compare-panel" class="compare-modal">
         <h3><i class="fa-solid fa-sliders"></i> BẢNG BÀN GIAO & THI ĐƯA</h3>
         
-        <!-- Bộ lọc Nhóm đối tượng -->
-        <div class="filter-group-card">
-            <label><i class="fa-solid fa-filter"></i> LỌC THEO NHÓM ĐỐI TƯỢNG:</label>
-            <div class="filter-grid">
-                <button class="filter-btn active" onclick="setAgeFilter('ALL', this)">Tất cả đối tượng</button>
-                <button class="filter-btn" onclick="setAgeFilter('CHILD', this)">Trẻ < 6 tuổi</button>
-                <button class="filter-btn" onclick="setAgeFilter('TEEN', this)">6 - dưới 18 tuổi</button>
-                <button class="filter-btn" onclick="setAgeFilter('ADULT', this)">18 - dưới 60 tuổi</button>
-            </div>
-        </div>
-
         <div class="rate-input-card">
             <label>Tỷ lệ khám mới (%):</label>
             <input type="number" id="input-rate-override" step="0.1" value="57.0" oninput="manualUpdateRate(this.value)">
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ 5 ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">0%</b></div>
             <div class="cmp-row"><span>Vị trí ước tính:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng -- / 30</b></div>
             <div class="cmp-row"><span>Đánh giá nhóm:</span> <b style="color:#16a34a;" id="cmp-group-30">--</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ 5 ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">0</b></div>
             <div class="cmp-row"><span>Vị trí hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng -- / 168</b></div>
             <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">--</b></div>
@@ -344,30 +320,22 @@
             else { map.addLayer(terrainLayer); btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Địa hình'; }
         }
 
-        // DỮ LIỆU TÍCH HỢP ĐẦY ĐỦ CÁC CẤU TRÚC ĐỐI TƯỢNG
+        // DỮ LIỆU CÁC KHU PHỐ
         var khuPhoData = [
-            { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1335, child: 120, teen: 350, adult: 865 },
-            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1605, child: 150, teen: 480, adult: 963 },
-            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 1969, child: 180, teen: 610, adult: 1171 },
-            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1762, child: 170, teen: 550, adult: 1034 },
-            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2003, child: 200, teen: 620, adult: 1175 },
-            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1824, child: 165, teen: 580, adult: 1071 },
-            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1756, child: 190, teen: 540, adult: 1018 },
-            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1929, child: 210, teen: 600, adult: 1111 },
-            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2036, child: 148, teen: 602, adult: 1278 }
+            { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1335 },
+            { name: "Cát Hải", center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1605 },
+            { name: "Láng Cát", center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 1969 },
+            { name: "Phước Hiệp", center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1762 },
+            { name: "Chu Hải", center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2003 },
+            { name: "Phước Hải", center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1824 },
+            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1756 },
+            { name: "Phước Tấn", center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1929 },
+            { name: "Đông Hải", center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2036 }
         ];
 
-        var currentAgeFilter = 'ALL';
         var mapLayersGroup = L.layerGroup().addTo(map);
         var rateChart = null;
         var warningKhuPhos = [];
-
-        function setAgeFilter(filterType, btn) {
-            currentAgeFilter = filterType;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderAllSystem();
-        }
 
         function renderAllSystem() {
             mapLayersGroup.clearLayers();
@@ -377,19 +345,8 @@
             var sumTongDan = 0;
 
             khuPhoData.forEach(kp => {
-                if (currentAgeFilter === 'CHILD') {
-                    kp.activeDaKham = kp.child;
-                    kp.activeDanSo = Math.round(kp.numTongDan * 0.1);
-                } else if (currentAgeFilter === 'TEEN') {
-                    kp.activeDaKham = kp.teen;
-                    kp.activeDanSo = Math.round(kp.numTongDan * 0.3);
-                } else if (currentAgeFilter === 'ADULT') {
-                    kp.activeDaKham = kp.adult;
-                    kp.activeDanSo = Math.round(kp.numTongDan * 0.6);
-                } else {
-                    kp.activeDaKham = kp.numDaKham;
-                    kp.activeDanSo = kp.numTongDan;
-                }
+                kp.activeDaKham = kp.numDaKham;
+                kp.activeDanSo = kp.numTongDan;
                 
                 sumDaKham += kp.activeDaKham;
                 sumTongDan += kp.activeDanSo;
@@ -446,8 +403,8 @@
                         <span>KHU PHỐ ${kp.name}</span>
                         <span style="background:${kp.color}; color:#fff; padding:2px 8px; border-radius:12px; font-size:10px;">HẠNG ${kp.hang}</span>
                     </div>
-                    <div>Tỷ lệ nhóm hiện tại: <b style="color:${kp.color}; font-size:15px;">${kp.tyleDaKham}%</b></div>
-                    <div>Dân số lọc: <b>${kp.activeDanSo.toLocaleString('vi-VN')} người</b></div>
+                    <div>Tỷ lệ hiện tại: <b style="color:${kp.color}; font-size:15px;">${kp.tyleDaKham}%</b></div>
+                    <div>Dân số: <b>${kp.activeDanSo.toLocaleString('vi-VN')} người</b></div>
                     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px; margin-top:6px;">
                         <div>Còn cần khám: <b>${kp.numCanKham.toLocaleString('vi-VN')} người</b></div>
                         <div style="color:#0284c7; margin-top:3px;">Đã khám thành công: <b>${kp.activeDaKham.toLocaleString('vi-VN')} người</b></div>
