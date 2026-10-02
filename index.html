@@ -254,7 +254,23 @@
     <!-- Panel Điều Khiển Tích Hợp -->
     <div id="compare-panel" class="compare-modal">
         <h3><i class="fa-solid fa-sliders"></i> BẢNG BÀN GIAO & THI ĐƯA</h3>
-         
+        
+        <!-- Bộ lọc Nhóm đối tượng -->
+        <div class="filter-group-card">
+            <label><i class="fa-solid fa-filter"></i> LỌC THEO NHÓM ĐỐI TƯỢNG:</label>
+            <div class="filter-grid">
+                <button class="filter-btn active" onclick="setAgeFilter('ALL', this)">Tất cả đối tượng</button>
+                <button class="filter-btn" onclick="setAgeFilter('CHILD', this)">Trẻ < 6 tuổi</button>
+                <button class="filter-btn" onclick="setAgeFilter('TEEN', this)">6 - dưới 18 tuổi</button>
+                <button class="filter-btn" onclick="setAgeFilter('ADULT', this)">18 - dưới 60 tuổi</button>
+            </div>
+        </div>
+
+        <div class="rate-input-card">
+            <label>Tỷ lệ khám mới (%):</label>
+            <input type="number" id="input-rate-override" step="0.1" value="57.0" oninput="manualUpdateRate(this.value)">
+        </div>
+
         <div class="cmp-section-card">
             <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ 5 ĐÃ HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">0%</b></div>
@@ -330,15 +346,15 @@
 
         // DỮ LIỆU TÍCH HỢP ĐẦY ĐỦ CÁC CẤU TRÚC ĐỐI TƯỢNG
         var khuPhoData = [
-            { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1335  },
-            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1605},
-            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 1969 },
-            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1762 },
-            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2003 },
-            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1824 },
-            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1756 },
-            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1929 },
-            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2036 }
+            { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1335, child: 120, teen: 350, adult: 865 },
+            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1605, child: 150, teen: 480, adult: 963 },
+            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 1969, child: 180, teen: 610, adult: 1171 },
+            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1762, child: 170, teen: 550, adult: 1034 },
+            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2003, child: 200, teen: 620, adult: 1175 },
+            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1824, child: 165, teen: 580, adult: 1071 },
+            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1756, child: 190, teen: 540, adult: 1018 },
+            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1929, child: 210, teen: 600, adult: 1111 },
+            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2036, child: 148, teen: 602, adult: 1278 }
         ];
 
         var currentAgeFilter = 'ALL';
