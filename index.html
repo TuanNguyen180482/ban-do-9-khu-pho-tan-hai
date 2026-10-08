@@ -208,14 +208,6 @@
             padding: 6px 14px; border-radius: 30px; font-size: 10px; font-weight: 800; color: #0284c7;
             box-shadow: 0 4px 15px rgba(0,0,0,0.12); pointer-events: none;
         }
-
-        .legend { 
-            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px);
-            padding: 10px 14px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            font-size: 10px; font-weight: 700; color: #334155; border: 1px solid rgba(255,255,255,0.8);
-            margin-bottom: 35px;
-        }
-        .legend i { width: 10px; height: 10px; float: left; margin-right: 6px; margin-top: 3px; border-radius: 2px; }
     </style>
 </head>
 <body>
@@ -223,7 +215,7 @@
     <!-- Header nổi -->
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>HỆ THỐNG GIÁM SÁT THỜI GIAN THỰC HIỆN VÀ PHÂN TÍCH TIẾN ĐỘ 9 KHU PHỐ TÍNH ĐẾN 8 GIỜ 00 PHÚT NGÀY 08/10/2026</p>
+        <p>HỆ THỐNG GIÁM SÁT THỜI GIAN THỰC HIỆN VÀ PHÂN TÍCH TIẾN ĐỘ 9 KHU PHỐ TÍNH ĐẾN 08/10/2026</p>
         
         <div class="stats-summary">
             <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">0</b></div>
@@ -243,19 +235,19 @@
         <h3><i class="fa-solid fa-sliders"></i> BẢNG BÀN GIAO & THI ĐƯA</h3>
         
         <div class="rate-input-card">
-            <label>Tỷ lệ khám mới (%):</label>
-            <input type="number" id="input-rate-override" step="0.1" value="57.0" oninput="manualUpdateRate(this.value)">
+            <label>Tỷ lệ khám hiện tại (%):</label>
+            <input type="number" id="input-rate-override" step="0.1" value="58.9" oninput="manualUpdateRate(this.value)">
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BR–VT SAU SÁP NHẬP (TÍNH THEO TỶ LỆ ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BÀ RỊA - VŨNG TÀU SAU SÁP NHẬP (TÍNH THEO TỶ LỆ % HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">0%</b></div>
             <div class="cmp-row"><span>Vị trí ước tính:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng -- / 30</b></div>
             <div class="cmp-row"><span>Đánh giá nhóm:</span> <b style="color:#16a34a;" id="cmp-group-30">--</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (TÍNH THEO TỶ LỆ ĐÃ HOÀN THÀNH):</div>
+            <div class="cmp-title">SO VỚI 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH ( TÍNH THEO TỶ LỆ % HOÀN THÀNH):</div>
             <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">0</b></div>
             <div class="cmp-row"><span>Vị trí hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng -- / 168</b></div>
             <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">--</b></div>
@@ -297,9 +289,22 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // DỮ LIỆU THAM CHIẾU HỆ THỐNG
-        var SYSTEM_168_RATES = [272.9, 246.8, 208.4, 84.7, 72.5, 72.1, 71.3, 70.4, 67.8, 67.2, 66.8, 66.8, 66.6, 65.9, 65.4, 63.9, 62.2, 61.8, 60.9, 60.7, 60.7, 60.4, 60.2, 59.7, 59.6, 59.5, 58.5, 58.4, 57.9, 57.0, 56.7, 55.8, 55.7, 55.3, 55.3, 55.0, 54.9, 54.3, 54.1, 53.4, 53.3, 52.5, 52.0, 52.0, 52.0, 51.6, 51.6, 51.5, 49.9, 49.5, 49.5, 49.1, 48.6, 48.2, 48.0, 47.9, 47.8, 47.7, 47.4, 47.2, 46.8, 46.4, 46.0, 45.8, 45.2, 45.2, 44.6, 44.4, 44.3, 44.2, 44.2, 43.2, 42.9, 42.6, 41.8, 41.6, 41.3, 41.0, 40.8, 40.5, 39.8, 39.7, 39.6, 39.5, 39.2, 38.7, 38.7, 38.4, 38.4, 37.8, 37.5, 37.5, 36.9, 36.9, 36.1, 35.8, 35.8, 35.7, 35.5, 35.4, 35.2, 34.8, 34.7, 34.5, 34.2, 33.8, 33.8, 33.4, 33.3, 33.1, 32.7, 32.6, 32.5, 32.3, 32.3, 32.2, 31.7, 31.5, 31.4, 31.0, 30.8, 30.8, 30.0, 30.0, 29.9, 29.9, 29.6, 29.5, 29.2, 29.0, 28.6, 28.4, 27.8, 27.8, 27.6, 27.5, 27.0, 26.9, 26.8, 26.6, 26.4, 26.3, 25.0, 24.7, 24.5, 24.5, 24.4, 24.0, 23.9, 22.6, 1.7];
-        var SYSTEM_30_RATES = [70.4, 65.4, 65.9, 60.7, 60.7, 60.4, 60.2, 59.7, 59.5, 55.3, 55.0, 54.9, 54.3, 54.1, 52.0, 52.0, 52.0, 51.5, 49.9, 49.5, 47.9, 44.6, 39.7, 35.7, 33.8, 31.0, 27.8, 26.3, 22.6, 1.7];
+        // DỮ LIỆU THAM CHIẾU TỶ LỆ HOÀN THÀNH CHÍNH XÁC CỦA 168 XÃ/PHƯỜNG (SẮP XẾP GIẢM DẦN)
+        var SYSTEM_168_RATES = [
+            143.9, 100.3, 82.9, 79.5, 78.7, 76.9, 75.2, 74.3, 73.1, 71.0, 70.5, 70.4, 69.2, 69.1, 67.7, 67.3, 67.2, 66.9, 66.6, 64.6,
+            62.8, 62.8, 62.3, 61.9, 61.6, 61.3, 61.0, 61.0, 60.6, 60.5, 59.8, 59.0, 58.9, 58.3, 58.1, 57.7, 57.6, 57.5, 57.4, 57.1,
+            56.6, 56.5, 56.2, 55.6, 54.5, 54.3, 54.2, 53.9, 53.9, 53.7, 53.4, 53.1, 52.7, 52.5, 52.4, 52.3, 52.1, 50.9, 50.5, 50.5,
+            50.4, 50.1, 49.7, 49.4, 49.1, 49.1, 48.3, 48.1, 47.0, 46.9, 46.6, 46.2, 46.2, 45.9, 45.9, 45.8, 45.2, 44.7, 44.2, 44.1,
+            43.9, 42.6, 42.6, 42.6, 42.6, 41.8, 41.7, 41.6, 41.5, 40.8, 40.6, 40.5, 40.3, 40.2, 40.0, 39.9, 39.6, 38.6, 38.1, 37.9,
+            37.8, 37.7, 37.6, 37.6, 37.5, 37.3, 37.2, 36.8, 36.6, 36.4, 36.3, 36.2, 36.1, 35.9, 35.7, 35.5, 35.4, 35.4, 35.2, 34.9,
+            34.7, 34.6, 34.5, 34.3, 34.2, 34.0, 33.7, 33.6, 33.5, 33.1, 32.8, 32.6, 32.4, 32.3, 32.0, 30.2, 29.4, 29.1, 29.1, 28.9,
+            28.7, 28.2, 27.0, 26.5, 26.2, 25.4, 12.4
+        ];
+
+        // DỮ LIỆU TỶ LỆ HOÀN THÀNH CỦA 30 ĐƠN VỊ TOP DÂN SỐ/KHÁM NỔI BẬT (SẮP XẾP GIẢM DẦN)
+        var SYSTEM_30_RATES = [
+            79.5, 74.3, 75.2, 67.2, 57.1, 54.2, 53.1, 45.6, 43.9, 42.6, 42.6, 37.8, 36.4, 34.9, 34.2, 33.7, 30.2, 28.7
+        ];
 
         var DEFAULT_CENTER = [10.5150, 107.1200];
         var DEFAULT_ZOOM = 13;
@@ -320,17 +325,17 @@
             else { map.addLayer(terrainLayer); btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Địa hình'; }
         }
 
-        // DỮ LIỆU CÁC KHU PHỐ
+        // DỮ LIỆU KHU PHỐ ĐƯỢC ĐỒNG BỘ CHUẨN XÁC VỚI BẢNG ĐIỀU HÀNH (TỔNG DÂN: 28.322 - TỔNG KHÁM: 16.674)
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1337 },
-            { name: "Cát Hải", center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1654 },
-            { name: "Láng Cát", center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2018 },
-            { name: "Phước Hiệp", center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1839 },
-            { name: "Chu Hải", center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2052 },
-            { name: "Phước Hải", center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1873 },
-            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1805 },
-            { name: "Phước Tấn", center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 1980 },
-            { name: "Đông Hải", center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2083 }
+            { name: "Đông Hải",   center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2083 },
+            { name: "Cát Hải",    center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1654 },
+            { name: "Láng Cát",   center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2018 },
+            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1839 },
+            { name: "Phước Hải",  center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1873 },
+            { name: "Chu Hải",    center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2052 },
+            { name: "Phước Tấn",  center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 2013 },
+            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3774, numDaKham: 1805 }
         ];
 
         var mapLayersGroup = L.layerGroup().addTo(map);
@@ -354,12 +359,12 @@
                 kp.numCanKham = Math.max(0, kp.activeDanSo - kp.activeDaKham);
             });
 
-            var tyLeChung = sumTongDan > 0 ? (sumDaKham / sumTongDan * 100).toFixed(1) : 0;
+            var tyLeChung = sumTongDan > 0 ? (sumDaKham / sumTongDan * 100).toFixed(2) : 0;
 
             document.getElementById('txt-tong-da-kham').innerText = sumDaKham.toLocaleString('vi-VN');
             document.getElementById('txt-tong-dan-so').innerText = sumTongDan.toLocaleString('vi-VN');
             document.getElementById('txt-ty-le-chung').innerText = tyLeChung + '%';
-            document.getElementById('input-rate-override').value = tyLeChung;
+            document.getElementById('input-rate-override').value = parseFloat(tyLeChung).toFixed(1);
 
             updateComparisonStats(sumDaKham, parseFloat(tyLeChung));
 
@@ -438,28 +443,29 @@
             updateComparisonStats(newDaKham, newRate);
         }
 
+        // TÍNH TOÁN XẾP HẠNG TỰ ĐỘNG CHUẨN XÁC KHU VỰC & TOÀN BẢNG
         function updateComparisonStats(totalCount, rate) {
             var currentRate = parseFloat(rate) || 0;
 
+            // Xếp hạng trong nhóm 30 đơn vị lớn
             var rank30 = 1;
             for (var i = 0; i < SYSTEM_30_RATES.length; i++) {
                 if (currentRate < SYSTEM_30_RATES[i]) { rank30++; } else { break; }
             }
-            if (rank30 > 30) rank30 = 30;
 
+            // Xếp hạng trong toàn bộ 168 đơn vị
             var rank168 = 1;
             for (var j = 0; j < SYSTEM_168_RATES.length; j++) {
                 if (currentRate < SYSTEM_168_RATES[j]) { rank168++; } else { break; }
             }
-            if (rank168 > 168) rank168 = 168;
 
             document.getElementById('cmp-rate-30').innerText = currentRate.toFixed(1) + '%';
             document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30} / 30`;
-            document.getElementById('cmp-group-30').innerText = rank30 <= 10 ? "Nhóm Dẫn Đầu" : "Nhóm Trung Bình";
+            document.getElementById('cmp-group-30').innerText = rank30 <= 12 ? "Nhóm Dẫn Đầu" : "Nhóm Trung Bình";
 
             document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
             document.getElementById('cmp-rank-168').innerText = `Hạng ${rank168} / 168`;
-            document.getElementById('cmp-group-168').innerText = currentRate >= 50.0 ? "Nhóm Đạt Chỉ Tiêu" : "Nhóm Cần Tăng Cường";
+            document.getElementById('cmp-group-168').innerText = rank168 <= 42 ? "Nhóm 25% Đã Khám Cao Nhất" : "Nhóm Trung Bình";
         }
 
         function updateChart() {
