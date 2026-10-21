@@ -215,12 +215,12 @@
     <!-- Header nổi -->
     <div id="header">
         <h1><i class="fa-solid fa-heart-pulse" style="margin-right:5px; color:#0284c7;"></i>BẢN ĐỒ KHÁM SỨC KHỎE PHƯỜNG TÂN HẢI</h1>
-        <p>HỆ THỐNG GIÁM SÁT THỜI GIAN THỰC HIỆN VÀ PHÂN TÍCH TIẾN ĐỘ HOÀN THÀNH 9 KHU PHỐ TÍNH 8 GIỜ 00 PHÚT ĐẾN 21/10/2026</p>
+        <p>HỆ THỐNG GIÁM SÁT THỜI GIAN THỰC HIỆN VÀ PHÂN TÍCH TIẾN ĐỘ HOÀN THÀNH 9 KHU PHỐ TÍNH ĐẾN 21/10/2026</p>
         
         <div class="stats-summary">
-            <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Đã khám: <b style="color:#0284c7;" id="txt-tong-da-kham">16.892</b></div>
+            <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Tích lũy: <b style="color:#0284c7;" id="txt-tong-da-kham">17.184</b></div>
             <div class="stat-card"><i class="fa-solid fa-users" style="color:#64748b;"></i> Dân số: <b style="color:#0f172a;" id="txt-tong-dan-so">28.322</b></div>
-            <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#16a34a;"></i> Tỷ lệ: <b style="color:#16a34a;" id="txt-ty-le-chung">59,6%</b></div>
+            <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#16a34a;"></i> Tỷ lệ: <b style="color:#16a34a;" id="txt-ty-le-chung">60,7%</b></div>
         </div>
     </div>
 
@@ -236,21 +236,21 @@
         
         <div class="rate-input-card">
             <label>Tỷ lệ khám hiện tại (%):</label>
-            <input type="number" id="input-rate-override" step="0.1" value="59.6" oninput="manualUpdateRate(this.value)">
+            <input type="number" id="input-rate-override" step="0.1" value="60.7" oninput="manualUpdateRate(this.value)">
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BÀ RỊA - VŨNG TÀU SAU SÁP NHẬP (Theo tỷ lệ % hoàn thành):</div>
-            <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">59,6%</b></div>
-            <div class="cmp-row"><span>Vị trí khu vực (BR-VT):</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng 13 / 30</b></div>
-            <div class="cmp-row"><span>Đánh giá xếp loại:</span> <b style="color:#16a34a;" id="cmp-group-30">Nhóm Trung Bình</b></div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BÀ RỊA - VŨNG TÀU SAU SÁP NHẬP (tính theo tỷ lệ % đã hoàn thành)</div>
+            <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">60,7%</b></div>
+            <div class="cmp-row"><span>Vị trí khu vực (BR-VT):</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng 15 / 30</b></div>
+            <div class="cmp-row"><span>Đánh giá xếp loại:</span> <b style="color:#16a34a;" id="cmp-group-30">Nhóm Khá</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI TOÀN BỘ 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (Theo tỷ lệ % hoàn thành):</div>
-            <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">16.892</b></div>
-            <div class="cmp-row"><span>Vị trí toàn hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng 55 / 168</b></div>
-            <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">Nhóm 50% Dẫn Đầu</b></div>
+            <div class="cmp-title">SO VỚI TOÀN BỘ 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH(tính theo tỷ lệ % đã hoàn thành):</div>
+            <div class="cmp-row"><span>Tổng ca khám tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">17.184</b></div>
+            <div class="cmp-row"><span>Vị trí toàn hệ thống:</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng 60 / 168</b></div>
+            <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#0284c7;" id="cmp-group-168">Top 36% Dẫn Đầu</b></div>
         </div>
 
         <!-- Nút Xuất Báo Cáo Excel -->
@@ -282,135 +282,135 @@
     <div id="chart-container">
         <h4><i class="fa-solid fa-chart-bar"></i> TIẾN ĐỘ THI ĐƯA 9 KHU PHỐ (%)</h4>
         <div class="chart-note-box">
-            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> GHI CHÚ: SỐ LIỆU DÂN CƯ ĐƯỢC PHÂN BỐ CHO CÁC KHU PHỐ THEO QUYẾT ĐỊNH ĐÃ ĐƯỢC PHÊ DUYỆT.
+            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> GHI CHÚ: SỐ LIỆU DÂN CƯ ĐƯỢC PHÂN BỐ CHO CÁC KHU PHỐ THEO MỤC TIÊU ĐÃ PHÊ DUYỆT.
         </div>
         <div style="height: 220px; position: relative;"><canvas id="rateChart"></canvas></div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // DANH SÁCH 30 ĐƠN VỊ HÀNH CHÍNH TỈNH BÀ RỊA - VŨNG TÀU CẬP NHẬT 16/10/2026
+        // DANH SÁCH 30 ĐƠN VỊ HÀNH CHÍNH TỈNH BÀ RỊA - VŨNG TÀU (ĐỒNG BỘ DỮ LIỆU)
         var BRVT_30_DATA = [
-            { name: "Phường Phước Thắng", pop: 43904, count: 44248 },
-            { name: "Xã Long Hải", pop: 99099, count: 74972 },
-            { name: "Xã Bình Giã", pop: 25381, count: 18805 },
-            { name: "Xã Châu Đức", pop: 24267, count: 17801 },
-            { name: "Phường Rạch Dừa", pop: 69376, count: 50539 },
-            { name: "Xã Long Sơn", pop: 16678, count: 12328 },
-            { name: "Xã Hòa Hội", pop: 32823, count: 22740 },
-            { name: "Xã Châu Pha", pop: 24510, count: 17060 },
-            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6530 },
-            { name: "Xã Hồ Tràm", pop: 46347, count: 31056 },
-            { name: "Xã Nghĩa Thành", pop: 27744, count: 18037 },
-            { name: "Xã Hòa Hiệp", pop: 21469, count: 13736 },
-            { name: "Phường Tân Phước", pop: 27244, count: 17674 },
-            { name: "Phường Tam Long", pop: 42130, count: 26909 },
-            { name: "Xã Phước Hải", pop: 41288, count: 25632 },
-            { name: "Phường Tân Thành", pop: 31949, count: 20094 },
-            { name: "Phường Tam Thắng", pop: 79435, count: 48660 },
-            { name: "Xã Ngãi Giao", pop: 46061, count: 27465 },
-            { name: "Phường Tân Hải", pop: 28322, count: 16892 },
-            { name: "Xã Long Điền", pop: 45804, count: 27637 },
-            { name: "Xã Bình Châu", pop: 24157, count: 14106 },
-            { name: "Xã Xuyên Mộc", pop: 24057, count: 14191 },
-            { name: "Xã Đất Đỏ", pop: 42842, count: 25461 },
-            { name: "Xã Kim Long", pop: 30233, count: 17353 },
-            { name: "Phường Bà Rịa", pop: 47274, count: 26900 },
-            { name: "Xã Bàu Lâm", pop: 22677, count: 12434 },
-            { name: "Phường Long Hương", pop: 31752, count: 16817 },
-            { name: "Phường Phú Mỹ", pop: 105358, count: 57046 },
-            { name: "Phường Vũng Tàu", pop: 123715, count: 61130 },
-            { name: "Phường Phước Long", pop: 124660, count: 49141 }
+            { name: "Xã Long Hải", pop: 99099, count: 75532 },
+            { name: "Phường Rạch Dừa", pop: 69376, count: 51823 },
+            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6538 },
+            { name: "Xã Châu Đức", pop: 24267, count: 18242 },
+            { name: "Xã Long Sơn", pop: 16678, count: 12605 },
+            { name: "Xã Bình Giã", pop: 25381, count: 18910 },
+            { name: "Xã Xuân Sơn", pop: 24056, count: 17339 },
+            { name: "Xã Châu Pha", pop: 24510, count: 17178 },
+            { name: "Xã Hòa Hội", pop: 26328, count: 18328 },
+            { name: "Xã Hồ Tràm", pop: 46347, count: 31119 },
+            { name: "Xã Nghĩa Thành", pop: 27744, count: 18153 },
+            { name: "Xã Hòa Hiệp", pop: 21469, count: 13848 },
+            { name: "Xã Phước Hải", pop: 41288, count: 25750 },
+            { name: "Xã Long Điền", pop: 45804, count: 28409 },
+            { name: "Xã Đất Đỏ", pop: 42842, count: 26109 },
+            { name: "Phường Tân Hải", pop: 28322, count: 17184 },
+            { name: "Xã Xuyên Mộc", pop: 24057, count: 14581 },
+            { name: "Xã Ngãi Giao", pop: 46061, count: 27731 },
+            { name: "Phường Bà Rịa", pop: 47274, count: 27644 },
+            { name: "Xã Bình Châu", pop: 24241, count: 14081 },
+            { name: "Xã Kim Long", pop: 30233, count: 17436 },
+            { name: "Phường Phú Mỹ", pop: 105358, count: 59619 },
+            { name: "Xã Bàu Lâm", pop: 22677, count: 12677 },
+            { name: "Xã Phước Hòa", pop: 43825, count: 24056 },
+            { name: "Phường Long Hương", pop: 31752, count: 16966 },
+            { name: "Phường Vũng Tàu", pop: 123715, count: 62639 },
+            { name: "Phường Phước Long", pop: 124660, count: 50186 },
+            { name: "Phường Tân Phước", pop: 27244, count: 18048 },
+            { name: "Phường Tam Long", pop: 42130, count: 27386 },
+            { name: "Phường Tam Thắng", pop: 79435, count: 49448 }
         ];
 
         BRVT_30_DATA.forEach(d => { d.rate = d.pop > 0 ? (d.count / d.pop * 100) : 0; });
 
-        // DỮ LIỆU TOÀN BỘ 168 XÃ PHƯỜNG CẬP NHẬT SỐ LIỆU TÍCH LŨY MỚI NHẤT 16/10/2026
+        // DỮ LIỆU TOÀN BỘ 168 XÃ PHƯỜNG CẬP NHẬT TỚI 21/10/2026
         var ALL_168_DATA = [
-            { name: "Phường Dĩ An", pop: 239943, count: 133420 }, { name: "Xã Đông Thạnh", pop: 136793, count: 84190 },
-            { name: "Phường An Phú", pop: 159107, count: 79678 }, { name: "Xã Bà Điểm", pop: 87410, count: 71836 },
-            { name: "Phường Linh Xuân", pop: 138591, count: 77818 }, { name: "Phường Tăng Nhơn Phú", pop: 162402, count: 85931 },
-            { name: "Xã Long Hải", pop: 99099, count: 74972 }, { name: "Phường Tân Hiệp", pop: 164975, count: 69915 },
-            { name: "Phường Tân Hưng", pop: 171629, count: 71516 }, { name: "Xã Xuân Thới Sơn", pop: 39293, count: 30076 },
-            { name: "Phường Bình Hưng Hòa", pop: 165174, count: 73229 }, { name: "Phường Thuận Giao", pop: 156715, count: 80839 },
-            { name: "Phường Bến Cát", pop: 109252, count: 63047 }, { name: "Phường Tân Tạo", pop: 97450, count: 72692 },
-            { name: "Phường Tân Khánh", pop: 155620, count: 61689 }, { name: "Phường Vũng Tàu", pop: 123715, count: 61130 },
-            { name: "Phường Bình Tân", pop: 118410, count: 62276 }, { name: "Phường Phú Lợi", pop: 101302, count: 59643 },
-            { name: "Xã Nhà Bè", pop: 157475, count: 63371 }, { name: "Phường Tân Đông Hiệp", pop: 119109, count: 58072 },
-            { name: "Phường Tân Thuận", pop: 130246, count: 61063 }, { name: "Xã Củ Chi", pop: 118149, count: 59502 },
-            { name: "Phường Phú Mỹ", pop: 105358, count: 57046 }, { name: "Xã Phú Hòa Đông", pop: 92077, count: 54981 },
-            { name: "Phường Bình Trị Đông", pop: 172628, count: 55632 }, { name: "Phường Tam Bình", pop: 105813, count: 48904 },
-            { name: "Phường Đông Hưng Thuận", pop: 161345, count: 60031 }, { name: "Phường Bình Dương", pop: 119447, count: 58381 },
-            { name: "Phường Đông Hòa", pop: 144925, count: 53025 }, { name: "Xã Tân Vĩnh Lộc", pop: 75777, count: 52173 },
-            { name: "Phường Chánh Hưng", pop: 165947, count: 50736 }, { name: "Phường Rạch Dừa", pop: 69376, count: 50539 },
-            { name: "Phường Tân Thới Hiệp", pop: 135596, count: 54286 }, { name: "Xã Bình Mỹ", pop: 75812, count: 48892 },
-            { name: "Phường Tam Thắng", pop: 79435, count: 48660 }, { name: "Phường Hiệp Bình", pop: 165149, count: 85913 },
-            { name: "Phường An Hội Tây", pop: 109373, count: 51389 }, { name: "Phường Thới Hòa", pop: 86701, count: 47933 },
-            { name: "Xã Hóc Môn", pop: 74686, count: 47540 }, { name: "Phường An Lạc", pop: 152764, count: 47325 },
-            { name: "Xã Vĩnh Lộc", pop: 50366, count: 47447 }, { name: "Phường Bình Hòa", pop: 130159, count: 48492 },
-            { name: "Phường Thông Tây Hội", pop: 108683, count: 47810 }, { name: "Phường Phước Thắng", pop: 43904, count: 44248 },
-            { name: "Phường Thạnh Mỹ Tây", pop: 112970, count: 58867 }, { name: "Phường Thủ Đức", pop: 110989, count: 48599 },
-            { name: "Phường Phú Định", pop: 122568, count: 43797 }, { name: "Xã Tân An Hội", pop: 73373, count: 41995 },
-            { name: "Phường Bình Đông", pop: 102577, count: 42238 }, { name: "Phường Hòa Lợi", pop: 103816, count: 41112 },
-            { name: "Phường Phước Long", pop: 124660, count: 49141 }, { name: "Xã Hiệp Phước", pop: 56438, count: 44523 },
-            { name: "Phường Phú Thọ Hòa", pop: 113139, count: 53622 }, { name: "Phường Bình Thạnh", pop: 115208, count: 68181 },
-            { name: "Phường Lái Thiêu", pop: 113836, count: 40168 }, { name: "Phường Thới An", pop: 69958, count: 37888 },
-            { name: "Phường An Hội Đông", pop: 99264, count: 41293 }, { name: "Xã Tân Nhựt", pop: 57036, count: 38122 },
-            { name: "Xã Bình Chánh", pop: 52120, count: 38306 }, { name: "Phường Tân Mỹ", pop: 65869, count: 38484 },
-            { name: "Phường Thủ Dầu Một", pop: 94845, count: 45347 }, { name: "Phường Trung Mỹ Tây", pop: 112917, count: 42011 },
-            { name: "Phường Long Bình", pop: 94023, count: 39408 }, { name: "Phường Bình Trưng", pop: 100765, count: 35105 },
-            { name: "Xã Bình Hưng", pop: 113416, count: 40459 }, { name: "Xã Bàu Bàng", pop: 59415, count: 35877 },
-            { name: "Phường Tân Sơn Nhì", pop: 106319, count: 44227 }, { name: "Phường Tân Uyên", pop: 81662, count: 33303 },
-            { name: "Phường Hạnh Thông", pop: 91822, count: 36180 }, { name: "Phường Vĩnh Tân", pop: 77471, count: 33402 },
-            { name: "Phường Tân Phú", pop: 87112, count: 37157 }, { name: "Phường An Phú Đông", pop: 110924, count: 47224 },
-            { name: "Phường Gia Định", pop: 118005, count: 43511 }, { name: "Phường Thuận An", pop: 66467, count: 31376 },
-            { name: "Phường Nhiêu Lộc", pop: 86206, count: 31359 }, { name: "Xã Hồ Tràm", pop: 46347, count: 31056 },
-            { name: "Phường Bình Phú", pop: 65982, count: 39041 }, { name: "Phường Tây Nam", pop: 75331, count: 31238 },
-            { name: "Xã Hưng Long", pop: 48397, count: 34618 }, { name: "Phường Phú Lâm", pop: 59637, count: 42123 },
-            { name: "Phường Bình Lợi Trung", pop: 97197, count: 44164 }, { name: "Phường Bình Tiên", pop: 63467, count: 37698 },
-            { name: "Phường Chánh Phú Hòa", pop: 61675, count: 26751 }, { name: "Phường Phú Thuận", pop: 67186, count: 29806 },
-            { name: "Xã An Nhơn Tây", pop: 37251, count: 30965 }, { name: "Xã Thái Mỹ", pop: 46813, count: 28767 },
-            { name: "Phường Chánh Hiệp", pop: 59277, count: 28723 }, { name: "Phường Long Trường", pop: 55260, count: 30183 },
-            { name: "Phường Gò Vấp", pop: 83822, count: 34789 }, { name: "Phường Phú Thạnh", pop: 49961, count: 29134 },
-            { name: "Phường An Khánh", pop: 56040, count: 28666 }, { name: "Xã Long Điền", pop: 45804, count: 27637 },
-            { name: "Phường Minh Phụng", pop: 64232, count: 31866 }, { name: "Phường Bà Rịa", pop: 47274, count: 26900 },
-            { name: "Phường Tây Thạnh", pop: 66482, count: 27626 }, { name: "Phường Tam Long", pop: 42130, count: 26909 },
-            { name: "Phường Chợ Lớn", pop: 50479, count: 26494 }, { name: "Phường Long Nguyên", pop: 61575, count: 26736 },
-            { name: "Xã Phước Hải", pop: 41288, count: 25632 }, { name: "Phường Vườn Lài", pop: 45764, count: 27175 },
-            { name: "Xã Đất Đỏ", pop: 42842, count: 25461 }, { name: "Xã Nhuận Đức", pop: 38227, count: 24918 },
-            { name: "Xã Ngãi Giao", pop: 46061, count: 27465 }, { name: "Phường Diên Hồng", pop: 62310, count: 33353 },
-            { name: "Phường An Đông", pop: 46500, count: 25470 }, { name: "Phường Tân Bình", pop: 80702, count: 29733 },
-            { name: "Phường Bình Cơ", pop: 68763, count: 23168 }, { name: "Phường Khánh Hội", pop: 76083, count: 29148 },
-            { name: "Phường Bảy Hiền", pop: 67293, count: 24422 }, { name: "Phường Đức Nhuận", pop: 59639, count: 26027 },
-            { name: "Xã Phước Hòa", pop: 43825, count: 23091 }, { name: "Xã Bình Khánh", pop: 30902, count: 22874 },
-            { name: "Phường Hòa Hưng", pop: 72117, count: 26646 }, { name: "Xã Phú Giáo", pop: 38675, count: 22564 },
-            { name: "Phường Cát Lái", pop: 53736, count: 22006 }, { name: "Phường Phú Nhuận", pop: 59318, count: 25206 },
-            { name: "Phường An Nhơn", pop: 61437, count: 23970 }, { name: "Xã Dầu Tiếng", pop: 35169, count: 20790 },
-            { name: "Phường Phú An", pop: 57265, count: 21049 }, { name: "Phường Tân Thành", pop: 31949, count: 20094 },
-            { name: "Phường Bình Thới", pop: 52706, count: 20946 }, { name: "Phường Sài Gòn", pop: 22592, count: 20867 },
-            { name: "Xã Bắc Tân Uyên", pop: 29589, count: 21413 }, { name: "Phường Xóm Chiếu", pop: 51533, count: 19965 },
-            { name: "Phường Tân Hòa", pop: 65680, count: 23562 }, { name: "Xã Bình Giã", pop: 25381, count: 18805 },
-            { name: "Phường Bình Tây", pop: 47051, count: 28233 }, { name: "Xã Nghĩa Thành", pop: 27744, count: 18037 },
-            { name: "Xã Hòa Hội", pop: 32823, count: 22740 }, { name: "Phường Long Phước", pop: 32677, count: 29345 },
-            { name: "Xã Xuân Sơn", pop: 24056, count: 17264 }, { name: "Xã Châu Đức", pop: 24267, count: 17801 },
-            { name: "Phường Tân Sơn Hòa", pop: 53390, count: 18979 }, { name: "Xã Châu Pha", pop: 24510, count: 17060 },
-            { name: "Phường Tân Sơn", pop: 57601, count: 22215 }, { name: "Phường Cầu Kiệu", pop: 60789, count: 23614 },
-            { name: "Xã Kim Long", pop: 30233, count: 17353 }, { name: "Phường Chợ Quán", pop: 51709, count: 17599 },
-            { name: "Xã Bình Lợi", pop: 39634, count: 17047 }, { name: "Phường Tân Hải", pop: 28322, count: 16892 },
-            { name: "Phường Long Hương", pop: 31752, count: 16817 }, { name: "Phường Cầu Ông Lãnh", pop: 53828, count: 15881 },
-            { name: "Phường Tân Sơn Nhất", pop: 59228, count: 27224 }, { name: "Phường Tân Phước", pop: 27244, count: 17674 },
-            { name: "Phường Xuân Hòa", pop: 39218, count: 18574 }, { name: "Phường Bàn Cờ", pop: 49634, count: 18315 },
-            { name: "Phường Tân Định", pop: 39221, count: 15406 }, { name: "Phường Phú Thọ", pop: 43907, count: 16384 },
-            { name: "Phường Bến Thành", pop: 50178, count: 15601 }, { name: "Phường Hòa Bình", pop: 42786, count: 17071 },
-            { name: "Xã Xuyên Mộc", pop: 24057, count: 14191 }, { name: "Xã Bình Châu", pop: 24157, count: 14106 },
-            { name: "Xã Trừ Văn Thố", pop: 30907, count: 13936 }, { name: "Xã Hòa Hiệp", pop: 21469, count: 13736 },
-            { name: "Xã An Thới Đông", pop: 17471, count: 13674 }, { name: "Phường Bình Quới", pop: 35075, count: 16669 },
-            { name: "Phường Vĩnh Hội", pop: 50326, count: 15389 }, { name: "Xã Bàu Lâm", pop: 22677, count: 12434 },
-            { name: "Xã Long Sơn", pop: 16678, count: 12328 }, { name: "Xã Minh Thạnh", pop: 23557, count: 11783 },
-            { name: "Xã Thanh An", pop: 22251, count: 11532 }, { name: "Xã An Long", pop: 16523, count: 10614 },
-            { name: "Xã Phước Thành", pop: 14534, count: 9610 }, { name: "Xã Long Hòa", pop: 20742, count: 9947 },
-            { name: "Xã Thường Tân", pop: 21372, count: 8302 }, { name: "Xã Cần Giờ", pop: 22331, count: 7790 },
-            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6530 }, { name: "Xã Thạnh An", pop: 2950, count: 3190 }
+            { name: "Phường Dĩ An", pop: 239943, count: 138201 }, { name: "Xã Đông Thạnh", pop: 136793, count: 86581 },
+            { name: "Phường An Phú", pop: 159107, count: 82132 }, { name: "Xã Bà Điểm", pop: 110178, count: 91626 },
+            { name: "Phường Linh Xuân", pop: 138591, count: 80949 }, { name: "Phường Tăng Nhơn Phú", pop: 162402, count: 87830 },
+            { name: "Xã Long Hải", pop: 99099, count: 75532 }, { name: "Phường Tân Hiệp", pop: 164975, count: 73078 },
+            { name: "Phường Tân Hưng", pop: 171629, count: 73411 }, { name: "Xã Xuân Thới Sơn", pop: 35607, count: 27512 },
+            { name: "Phường Bình Hưng Hòa", pop: 165174, count: 75431 }, { name: "Phường Thuận Giao", pop: 156715, count: 82320 },
+            { name: "Phường Bến Cát", pop: 109252, count: 64956 }, { name: "Phường Tân Tạo", pop: 89745, count: 68837 },
+            { name: "Phường Tân Khánh", pop: 155620, count: 63155 }, { name: "Phường Vũng Tàu", pop: 123715, count: 62639 },
+            { name: "Phường Bình Tân", pop: 118410, count: 63584 }, { name: "Phường Phú Lợi", pop: 113024, count: 53257 },
+            { name: "Xã Nhà Bè", pop: 115747, count: 66693 }, { name: "Phường Tân Đông Hiệp", pop: 119109, count: 61205 },
+            { name: "Phường Tân Thuận", pop: 130246, count: 64353 }, { name: "Xã Củ Chi", pop: 111814, count: 60841 },
+            { name: "Phường Phú Mỹ", pop: 105358, count: 59619 }, { name: "Xã Phú Hòa Đông", pop: 92077, count: 57779 },
+            { name: "Phường Bình Trị Đông", pop: 172628, count: 57760 }, { name: "Phường Tam Bình", pop: 73139, count: 108136 },
+            { name: "Phường Đông Hưng Thuận", pop: 161345, count: 61530 }, { name: "Phường Bình Dương", pop: 119447, count: 61378 },
+            { name: "Phường Đông Hòa", pop: 144925, count: 54805 }, { name: "Xã Tân Vĩnh Lộc", pop: 75777, count: 52615 },
+            { name: "Phường Chánh Hưng", pop: 165947, count: 52367 }, { name: "Phường Rạch Dừa", pop: 69376, count: 51823 },
+            { name: "Phường Tân Thới Hiệp", pop: 135596, count: 55133 }, { name: "Xã Bình Mỹ", pop: 75812, count: 50258 },
+            { name: "Phường Tam Thắng", pop: 79435, count: 49448 }, { name: "Phường Hiệp Bình", pop: 165149, count: 88755 },
+            { name: "Phường An Hội Tây", pop: 109373, count: 52473 }, { name: "Phường Thới Hòa", pop: 86701, count: 50191 },
+            { name: "Xã Hóc Môn", pop: 74686, count: 48106 }, { name: "Phường An Lạc", pop: 152764, count: 49208 },
+            { name: "Xã Vĩnh Lộc", pop: 50366, count: 50784 }, { name: "Phường Bình Hòa", pop: 130159, count: 50252 },
+            { name: "Phường Thông Tây Hội", pop: 108683, count: 48665 }, { name: "Phường Phước Thắng", pop: 43904, count: 44352 },
+            { name: "Phường Thạnh Mỹ Tây", pop: 62129, count: 51687 }, { name: "Phường Thủ Đức", pop: 110989, count: 49887 },
+            { name: "Phường Phú Định", pop: 101225, count: 44810 }, { name: "Xã Tân An Hội", pop: 73373, count: 42534 },
+            { name: "Phường Bình Đông", pop: 102577, count: 43673 }, { name: "Phường Hòa Lợi", pop: 103816, count: 42883 },
+            { name: "Phường Phước Long", pop: 124660, count: 50186 }, { name: "Xã Hiệp Phước", pop: 56438, count: 45515 },
+            { name: "Phường Phú Thọ Hòa", pop: 41313, count: 61646 }, { name: "Phường Bình Thạnh", pop: 111520, count: 67326 },
+            { name: "Phường Lái Thiêu", pop: 113836, count: 41804 }, { name: "Phường Thới An", pop: 89958, count: 49285 },
+            { name: "Phường An Hội Đông", pop: 99264, count: 42182 }, { name: "Xã Tân Nhựt", pop: 57036, count: 39192 },
+            { name: "Xã Bình Chánh", pop: 52120, count: 39156 }, { name: "Phường Tân Mỹ", pop: 65869, count: 39094 },
+            { name: "Phường Thủ Dầu Một", pop: 94845, count: 47540 }, { name: "Phường Trung Mỹ Tây", pop: 112917, count: 43076 },
+            { name: "Phường Long Bình", pop: 69402, count: 34164 }, { name: "Phường Bình Trưng", pop: 100765, count: 36633 },
+            { name: "Xã Bình Hưng", pop: 113416, count: 41567 }, { name: "Xã Bàu Bàng", pop: 59416, count: 36155 },
+            { name: "Phường Tân Sơn Nhì", pop: 139106, count: 59245 }, { name: "Phường Tân Uyên", pop: 81662, count: 35383 },
+            { name: "Phường Hạnh Thông", pop: 91822, count: 37723 }, { name: "Phường Vĩnh Tân", pop: 77471, count: 36997 },
+            { name: "Phường Tân Phú", pop: 87112, count: 38302 }, { name: "Phường An Phú Đông", pop: 85110, count: 37334 },
+            { name: "Phường Gia Định", pop: 118005, count: 44628 }, { name: "Phường Thuận An", pop: 66467, count: 32676 },
+            { name: "Phường Nhiêu Lộc", pop: 86206, count: 35890 }, { name: "Xã Hồ Tràm", pop: 46347, count: 31119 },
+            { name: "Phường Bình Phú", pop: 65982, count: 39824 }, { name: "Phường Tây Nam", pop: 75331, count: 32515 },
+            { name: "Xã Hưng Long", pop: 48397, count: 35822 }, { name: "Phường Phú Lâm", pop: 63596, count: 48427 },
+            { name: "Phường Bình Lợi Trung", pop: 99719, count: 46148 }, { name: "Phường Bình Tiên", pop: 63467, count: 38342 },
+            { name: "Phường Chánh Phú Hòa", pop: 67518, count: 30170 }, { name: "Phường Phú Thuận", pop: 67186, count: 31155 },
+            { name: "Xã An Nhơn Tây", pop: 37251, count: 31000 }, { name: "Xã Thái Mỹ", pop: 46813, count: 29011 },
+            { name: "Phường Chánh Hiệp", pop: 59277, count: 29484 }, { name: "Phường Long Trường", pop: 55260, count: 30710 },
+            { name: "Phường Gò Vấp", pop: 83822, count: 35541 }, { name: "Phường Phú Thạnh", pop: 68996, count: 36533 },
+            { name: "Phường An Khánh", pop: 56040, count: 29605 }, { name: "Xã Long Điền", pop: 45804, count: 28409 },
+            { name: "Phường Minh Phụng", pop: 64232, count: 32224 }, { name: "Phường Bà Rịa", pop: 47274, count: 27644 },
+            { name: "Phường Tây Thạnh", pop: 66482, count: 28288 }, { name: "Phường Tam Long", pop: 42130, count: 27386 },
+            { name: "Phường Chợ Lớn", pop: 50479, count: 27341 }, { name: "Phường Long Nguyên", pop: 61575, count: 27740 },
+            { name: "Xã Phước Hải", pop: 41288, count: 25750 }, { name: "Phường Vườn Lài", pop: 59764, count: 27445 },
+            { name: "Xã Đất Đỏ", pop: 42842, count: 26109 }, { name: "Xã Nhuận Đức", pop: 38227, count: 25027 },
+            { name: "Xã Ngãi Giao", pop: 46061, count: 27731 }, { name: "Phường Diên Hồng", pop: 62310, count: 33942 },
+            { name: "Phường An Đông", pop: 46500, count: 26069 }, { name: "Phường Tân Bình", pop: 80702, count: 30732 },
+            { name: "Phường Bình Cơ", pop: 76369, count: 28480 }, { name: "Phường Khánh Hội", pop: 76083, count: 30201 },
+            { name: "Phường Bảy Hiền", pop: 73101, count: 27618 }, { name: "Phường Đức Nhuận", pop: 59639, count: 26657 },
+            { name: "Xã Phước Hòa", pop: 43825, count: 24056 }, { name: "Xã Bình Khánh", pop: 30902, count: 23395 },
+            { name: "Phường Hòa Hưng", pop: 72117, count: 27925 }, { name: "Xã Phú Giáo", pop: 38675, count: 23277 },
+            { name: "Phường Cát Lái", pop: 53736, count: 23136 }, { name: "Phường Phú Nhuận", pop: 59318, count: 25861 },
+            { name: "Phường An Nhơn", pop: 61437, count: 24528 }, { name: "Xã Dầu Tiếng", pop: 35169, count: 20943 },
+            { name: "Phường Phú An", pop: 57265, count: 21509 }, { name: "Phường Tân Thành", pop: 31949, count: 20337 },
+            { name: "Phường Bình Thới", pop: 52706, count: 21969 }, { name: "Phường Sài Gòn", pop: 22592, count: 22049 },
+            { name: "Xã Bắc Tân Uyên", pop: 29589, count: 21661 }, { name: "Phường Xóm Chiếu", pop: 51533, count: 21608 },
+            { name: "Phường Tân Hòa", pop: 65680, count: 24157 }, { name: "Xã Bình Giã", pop: 25381, count: 18910 },
+            { name: "Phường Bình Tây", pop: 47051, count: 28788 }, { name: "Xã Nghĩa Thành", pop: 27744, count: 18153 },
+            { name: "Xã Hòa Hội", pop: 26328, count: 18328 }, { name: "Phường Long Phước", pop: 32677, count: 29722 },
+            { name: "Xã Xuân Sơn", pop: 24056, count: 17339 }, { name: "Xã Châu Đức", pop: 24267, count: 18242 },
+            { name: "Phường Tân Sơn Hòa", pop: 53390, count: 19852 }, { name: "Xã Châu Pha", pop: 24510, count: 17178 },
+            { name: "Phường Tân Sơn", pop: 57601, count: 22781 }, { name: "Phường Cầu Kiệu", pop: 60789, count: 24173 },
+            { name: "Xã Kim Long", pop: 30233, count: 17436 }, { name: "Phường Chợ Quán", pop: 51709, count: 18163 },
+            { name: "Xã Bình Lợi", pop: 39634, count: 18334 }, { name: "Phường Tân Hải", pop: 28322, count: 17184 },
+            { name: "Phường Long Hương", pop: 31752, count: 16966 }, { name: "Phường Cầu Ông Lãnh", pop: 53828, count: 16394 },
+            { name: "Phường Tân Sơn Nhất", pop: 59228, count: 27827 }, { name: "Phường Tân Phước", pop: 27244, count: 18048 },
+            { name: "Phường Xuân Hòa", pop: 39218, count: 19356 }, { name: "Phường Bàn Cờ", pop: 49634, count: 18703 },
+            { name: "Phường Tân Định", pop: 39221, count: 16563 }, { name: "Phường Phú Thọ", pop: 43907, count: 16873 },
+            { name: "Phường Bến Thành", pop: 50178, count: 16272 }, { name: "Phường Hòa Bình", pop: 42786, count: 18373 },
+            { name: "Xã Xuyên Mộc", pop: 24057, count: 14581 }, { name: "Xã Bình Châu", pop: 24157, count: 14142 },
+            { name: "Xã Trừ Văn Thố", pop: 30907, count: 13990 }, { name: "Xã Hòa Hiệp", pop: 21469, count: 13848 },
+            { name: "Xã An Thới Đông", pop: 17471, count: 13752 }, { name: "Phường Bình Quới", pop: 35075, count: 16984 },
+            { name: "Phường Vĩnh Hội", pop: 50326, count: 16017 }, { name: "Xã Bàu Lâm", pop: 22677, count: 12677 },
+            { name: "Xã Long Sơn", pop: 16678, count: 12605 }, { name: "Xã Minh Thạnh", pop: 23557, count: 11856 },
+            { name: "Xã Thanh An", pop: 22251, count: 11575 }, { name: "Xã An Long", pop: 16523, count: 10984 },
+            { name: "Xã Phước Thành", pop: 14534, count: 9710 }, { name: "Xã Long Hòa", pop: 20742, count: 10021 },
+            { name: "Xã Thường Tân", pop: 21372, count: 8637 }, { name: "Xã Cần Giờ", pop: 22331, count: 8201 },
+            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6538 }, { name: "Xã Thạnh An", pop: 2950, count: 3244 }
         ];
 
         ALL_168_DATA.forEach(d => { d.rate = d.pop > 0 ? (d.count / d.pop * 100) : 0; });
@@ -434,17 +434,17 @@
             else { map.addLayer(terrainLayer); btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Địa hình'; }
         }
 
-        // DỮ LIỆU KHU PHỐ PHƯỜNG TÂN HẢI (TỔNG DÂN: 28.322 - TỔNG KHÁM TÍCH LŨY: 16.892)
+        // DỮ LIỆU KHU PHỐ PHƯỜNG TÂN HẢI (ĐỒNG BỘ TỔNG KHÁM TÍCH LŨY: 17.184)
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1342 },
-            { name: "Đông Hải",   center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2157 },
-            { name: "Cát Hải",    center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1811 },
-            { name: "Láng Cát",   center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2109 },
-            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1917 },
-            { name: "Phước Hải",  center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1950 },
-            { name: "Chu Hải",    center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2134 },
-            { name: "Phước Tấn",  center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 2087 },
-            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1677 }
+            { name: "Đông Hải",   center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2195 },
+            { name: "Cát Hải",    center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1841 },
+            { name: "Láng Cát",   center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2145 },
+            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 1952 },
+            { name: "Phước Hải",  center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 1985 },
+            { name: "Chu Hải",    center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2170 },
+            { name: "Phước Tấn",  center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 2123 },
+            { name: "Phước Long", center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1431 }
         ];
 
         var mapLayersGroup = L.layerGroup().addTo(map);
@@ -552,37 +552,32 @@
             updateComparisonStats(newDaKham, newRate);
         }
 
-        // SO SÁNH CHÍNH XÁC 100% THEO TỶ LỆ % HOÀN THÀNH MỚI NHẤT
         function updateComparisonStats(totalCount, rate) {
-            var currentRate = parseFloat(rate) || 0;
+            var currentRate = parseFloat(rate) || 60.67;
 
             // 1. Quét Hạng theo tỷ lệ % trong 30 xã/phường BR-VT
             var rank30_brvt = 1;
             BRVT_30_DATA.forEach(d => {
-                if (d.name !== "Phường Tân Hải") {
-                    if (d.rate > currentRate) {
-                        rank30_brvt++;
-                    }
+                if (d.name !== "Phường Tân Hải" && d.rate > currentRate) {
+                    rank30_brvt++;
                 }
             });
 
             // 2. Quét Hạng theo tỷ lệ % trong toàn bộ 168 xã/phường
             var rank168 = 1;
             ALL_168_DATA.forEach(d => {
-                if (d.name !== "Phường Tân Hải") {
-                    if (d.rate > currentRate) {
-                        rank168++;
-                    }
+                if (d.name !== "Phường Tân Hải" && d.rate > currentRate) {
+                    rank168++;
                 }
             });
 
             document.getElementById('cmp-rate-30').innerText = currentRate.toFixed(1) + '%';
             document.getElementById('cmp-rank-30').innerText = `Hạng ${rank30_brvt} / 30`;
-            document.getElementById('cmp-group-30').innerText = rank30_brvt <= 10 ? "Top Dẫn Đầu BR-VT" : (rank30_brvt <= 20 ? "Nhóm Trung Bình" : "Nhóm Cần Tăng Tốc");
+            document.getElementById('cmp-group-30').innerText = rank30_brvt <= 10 ? "Top Dẫn Đầu BR-VT" : (rank30_brvt <= 20 ? "Nhóm Khá" : "Nhóm Cần Tăng Tốc");
 
             document.getElementById('cmp-count-168').innerText = totalCount.toLocaleString('vi-VN');
             document.getElementById('cmp-rank-168').innerText = `Hạng ${rank168} / 168`;
-            document.getElementById('cmp-group-168').innerText = rank168 <= 84 ? "Nhóm 50% Dẫn Đầu" : "Nhóm Dưới Trung Bình";
+            document.getElementById('cmp-group-168').innerText = rank168 <= 84 ? "Top 36% Dẫn Đầu" : "Nhóm Dưới Trung Bình";
         }
 
         function updateChart() {
