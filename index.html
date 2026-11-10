@@ -38,7 +38,6 @@
         #map { height: 100vh; width: 100%; z-index: 1; }
         .leaflet-div-icon { background: transparent !important; border: none !important; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: rgba(2, 132, 199, 0.3); border-radius: 10px; }
@@ -54,7 +53,7 @@
             border-radius: 20px;
             box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.9);
             border: 1px solid var(--glass-border);
-            width: calc(100% - 24px); max-width: 800px;
+            width: calc(100% - 24px); max-width: 820px;
             transition: all 0.3s ease;
         }
 
@@ -65,7 +64,7 @@
             text-transform: uppercase;
         }
 
-        #header p { margin: 3px 0 0 0; font-size: 10px; color: #64748b; font-weight: 700; }
+        #header p { margin: 3px 0 0 0; font-size: 10.5px; color: #64748b; font-weight: 700; }
         
         .stats-summary {
             display: flex; gap: 6px; justify-content: center;
@@ -85,7 +84,7 @@
         .stat-card i { margin-right: 4px; }
         .stat-card b { font-size: 12.5px; font-weight: 800; margin-left: 2px; }
 
-        /* BANNER CẢNH BÁO */
+        /* WARNING BANNER */
         #warning-banner {
             position: absolute; top: 145px; left: 50%; transform: translateX(-50%);
             z-index: 1000;
@@ -112,17 +111,17 @@
             100% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
         }
 
-        /* MODAL SO SÁNH */
+        /* COMPARE MODAL */
         .compare-modal {
-            position: absolute; top: 90px; right: 16px;
-            z-index: 1001; width: calc(100vw - 32px); max-width: 440px;
-            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(24px);
+            position: absolute; top: 88px; right: 16px;
+            z-index: 1001; width: calc(100vw - 32px); max-width: 450px;
+            background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-radius: 24px; padding: 18px 16px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             border: 1px solid var(--glass-border);
             display: none; animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            max-height: calc(100vh - 120px); overflow-y: auto;
+            max-height: calc(100vh - 110px); overflow-y: auto;
         }
 
         @keyframes slideInRight {
@@ -175,7 +174,7 @@
 
         .btn-action-modal:hover { filter: brightness(1.06); }
 
-        /* BADGE KHU PHỐ */
+        /* BADGE KHU PHO */
         .khupho-badge {
             background: rgba(255, 255, 255, 0.95);
             border: 2px solid var(--primary-blue); 
@@ -203,7 +202,7 @@
             background: var(--danger-red) !important; color: #ffffff !important;
         }
 
-        /* NÚT ĐIỀU KHIỂN DƯỚI BẢN ĐỒ */
+        /* NÚT ĐIỀU KHIỂN */
         .controls-group { position: absolute; bottom: 20px; left: 16px; z-index: 1000; display: flex; gap: 6px; flex-wrap: wrap; }
 
         .btn-custom {
@@ -224,7 +223,7 @@
 
         .btn-secondary-custom:hover { background: #ffffff; color: #0284c7; }
 
-        /* FRAME BIỂU ĐỒ */
+        /* BIỂU ĐỒ */
         #chart-container {
             position: absolute; bottom: 70px; left: 16px; z-index: 1000;
             width: calc(100vw - 32px); max-width: 440px; height: 320px;
@@ -263,9 +262,9 @@
         <p>HỆ THỐNG GIÁM SÁT THỜI GIAN THỰC & ĐÁNH GIÁ TIẾN ĐỘ 9 KHU PHỐ (CẬP NHẬT 10/11/2026)</p>
         
         <div class="stats-summary">
-            <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Tích lũy: <b style="color:#0284c7;" id="txt-tong-da-kham">17.941</b></div>
+            <div class="stat-card"><i class="fa-solid fa-user-check" style="color:#0284c7;"></i> Tích lũy: <b style="color:#0284c7;" id="txt-tong-da-kham">18.067</b></div>
             <div class="stat-card"><i class="fa-solid fa-users" style="color:#64748b;"></i> Dân số: <b style="color:#0f172a;" id="txt-tong-dan-so">28.322</b></div>
-            <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#10b981;"></i> Tỷ lệ: <b style="color:#10b981;" id="txt-ty-le-chung">63,35%</b></div>
+            <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#10b981;"></i> Tỷ lệ: <b style="color:#10b981;" id="txt-ty-le-chung">63,79%</b></div>
             <div class="stat-card"><i class="fa-solid fa-calendar-day" style="color:#f59e0b;"></i> Hôm nay: <b style="color:#f59e0b;" id="txt-hom-nay">0</b></div>
         </div>
     </div>
@@ -282,30 +281,30 @@
         
         <div class="rate-input-card">
             <label>Tỷ lệ hoàn thành (%):</label>
-            <input type="number" id="input-rate-override" step="0.01" value="63.35" oninput="manualUpdateRate(this.value)">
+            <input type="number" id="input-rate-override" step="0.01" value="63.79" oninput="manualUpdateRate(this.value)">
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BÀ RỊA - VŨNG TÀU SAU SÁP NHẬP (THEO TỶ LỆ % HOÀN THÀNH)</div>
-            <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">63,35%</b></div>
-            <div class="cmp-row"><span>Vị trí BR-VT:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng 18 / 30</b></div>
+            <div class="cmp-title">SO VỚI 30 XÃ/PHƯỜNG BÀ RỊA - VŨNG TÀU SAU SÁP NHẬP(THEO TỶ LỆ % ĐÃ HOÀN THÀNH)</div>
+            <div class="cmp-row"><span>Tỷ lệ hoàn thành:</span> <b style="color:#0284c7;" id="cmp-rate-30">63,79%</b></div>
+            <div class="cmp-row"><span>Vị trí BR-VT:</span> <b style="color:#0284c7;" id="cmp-rank-30">Hạng 22 / 30</b></div>
             <div class="cmp-row"><span>Phân nhóm:</span> <b style="color:#10b981;" id="cmp-group-30">Nhóm Khá</b></div>
-            <div class="cmp-row"><span>Dẫn đầu BR-VT:</span> <b>Phước Thắng (104,3%)</b></div>
+            <div class="cmp-row"><span>Dẫn đầu BR-VT:</span> <b>Phước Thắng (105,1%)</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">SO VỚI TOÀN BỘ 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH(HEO TỶ LỆ % HOÀN THÀNH)</div>
-            <div class="cmp-row"><span>Tổng tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">17.941 ca</b></div>
+            <div class="cmp-title">SO VỚI TOÀN BỘ 168 XÃ/PHƯỜNG THÀNH PHỐ HỒ CHÍ MINH (THEO TỶ LỆ % ĐÃ HOÀN THÀNH)</div>
+            <div class="cmp-row"><span>Tổng tích lũy:</span> <b style="color:#0284c7;" id="cmp-count-168">18.067 ca</b></div>
             <div class="cmp-row"><span>Vị trí tỷ lệ (%):</span> <b style="color:#0284c7;" id="cmp-rank-168">Hạng 39 / 168</b></div>
             <div class="cmp-row"><span>Phân nhóm thi đua:</span> <b style="color:#10b981;" id="cmp-group-168">Top 23% Tỷ Lệ Cao</b></div>
-            <div class="cmp-row"><span>Thứ hạng số lượng:</span> <b style="color:#64748b;">Hạng 145 / 168</b></div>
+            <div class="cmp-row"><span>Thứ hạng số lượng:</span> <b style="color:#64748b;">Hạng 148 / 168</b></div>
         </div>
 
         <div class="cmp-section-card">
-            <div class="cmp-title">CHI TIẾT CƠ CẤU KHÁM TÍCH LŨY (06/11/2026)</div>
-            <div class="cmp-row"><span>Khám sức khỏe (KSK):</span> <b>17.612 ca</b></div>
+            <div class="cmp-title">CƠ CẤU KHÁM VÀ CHẤT LƯỢNG DỮ LIỆU (10/11/2026)</div>
+            <div class="cmp-row"><span>Khám sức khỏe (KSK):</span> <b>17.740 ca</b></div>
             <div class="cmp-row"><span>Khám sàng lọc (KSL):</span> <b>53 ca</b></div>
-            <div class="cmp-row"><span>Xác nhận đã khám (XNK):</span> <b>276 ca</b></div>
+            <div class="cmp-row"><span>Xác nhận đã khám (XNK):</span> <b>274 ca</b></div>
             <div class="cmp-row"><span>Chất lượng dữ liệu:</span> <b style="color:#10b981;">100% đạt chuẩn (0 lỗi)</b></div>
         </div>
 
@@ -322,7 +321,7 @@
     <div id="map"></div>
 
     <div id="footer-credits">
-        <i class="fa-solid fa-hospital"></i> TRUNG TÂM CUNG ỨNG DỊCH VỤ CÔNG PHƯỜNG TÂN HẢI - BẢN ĐỒ GIÁM SÁT Y TẾ SỐ
+        <i class="fa-solid fa-hospital"></i> TRUNG TÂM Y TẾ / TYT PHƯỜNG TÂN HẢI - BẢN ĐỒ GIÁM SÁT SỐ
     </div>
 
     <!-- Nút Điều khiển -->
@@ -337,58 +336,58 @@
     <div id="chart-container">
         <h4><i class="fa-solid fa-chart-bar"></i> TIẾN ĐỘ THI ĐƯA 9 KHU PHỐ (%)</h4>
         <div class="chart-note-box">
-            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> TỔNG TÍCH LŨY TOÀN PHƯỜNG: 17.941 NGƯỜI (ĐẠT 63,35%)
+            <i class="fa-solid fa-circle-info" style="color:#0284c7;"></i> TỔNG TÍCH LŨY TOÀN PHƯỜNG: 18.067 NGƯỜI (ĐẠT 63,79%)
         </div>
         <div style="height: 195px; position: relative;"><canvas id="rateChart"></canvas></div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. DỮ LIỆU ĐẦY ĐỦ 30 ĐƠN VỊ BR-VT THEO BÁO CÁO MỚI NHẤT 06/11/2026
+        // 1. DỮ LIỆU ĐẦY ĐỦ 30 ĐƠN VỊ BR-VT THEO BÁO CÁO 10/11/2026
         var BRVT_DATA = [
-            { name: "Phường Phước Thắng", pop: 43904, count: 45793, rate: 104.3 },
-            { name: "Phường Rạch Dừa", pop: 69376, count: 56182, rate: 81.0 },
-            { name: "Xã Long Hải", pop: 99099, count: 77385, rate: 78.1 },
-            { name: "Xã Long Sơn", pop: 16678, count: 12776, rate: 76.6 },
-            { name: "Xã Châu Đức", pop: 24267, count: 18492, rate: 76.2 },
-            { name: "Xã Bình Giã", pop: 25381, count: 19293, rate: 76.0 },
-            { name: "Xã Châu Pha", pop: 24510, count: 18314, rate: 74.7 },
-            { name: "Xã Xuân Sơn", pop: 24056, count: 17826, rate: 74.1 },
-            { name: "Xã Phước Thành", pop: 14534, count: 10753, rate: 74.0 },
-            { name: "Phường Tân Phước", pop: 27244, count: 19550, rate: 71.8 },
-            { name: "Xã Hòa Hội", pop: 32823, count: 23189, rate: 70.6 },
-            { name: "Xã Hồ Tràm", pop: 46347, count: 31750, rate: 68.5 },
-            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6608, rate: 68.3 },
-            { name: "Xã Nghĩa Thành", pop: 27744, count: 18738, rate: 67.5 },
-            { name: "Xã Long Điền", pop: 45804, count: 30809, rate: 67.3 },
-            { name: "Phường Tam Thắng", pop: 79435, count: 53217, rate: 67.0 },
-            { name: "Xã Hòa Hiệp", pop: 21469, count: 14335, rate: 66.8 },
-            { name: "Xã Phước Hải", pop: 41288, count: 27317, rate: 66.2 },
-            { name: "Xã Đất Đỏ", pop: 42842, count: 27929, rate: 65.2 },
-            { name: "Phường Tân Hải", pop: 28322, count: 17941, rate: 63.35 },
-            { name: "Phường Phú Mỹ", pop: 105358, count: 66333, rate: 63.0 },
-            { name: "Phường Bà Rịa", pop: 47274, count: 29505, rate: 62.4 },
-            { name: "Xã Ngãi Giao", pop: 46061, count: 28555, rate: 62.0 },
-            { name: "Xã Kim Long", pop: 30233, count: 18113, rate: 59.9 },
-            { name: "Xã Bình Châu", pop: 24241, count: 14512, rate: 59.9 },
-            { name: "Xã Xuyên Mộc", pop: 24057, count: 14193, rate: 59.0 },
-            { name: "Phường Tân Mỹ", pop: 65869, count: 37558, rate: 57.0 },
-            { name: "Xã Bàu Lâm", pop: 22677, count: 12808, rate: 56.5 },
-            { name: "Phường Long Hương", pop: 31752, count: 17809, rate: 56.1 },
-            { name: "Phường Vũng Tàu", pop: 123715, count: 67776, rate: 54.8 }
+            { name: "Phường Phước Thắng", pop: 43904, count: 46165, rate: 105.1 },
+            { name: "Phường Rạch Dừa", pop: 69376, count: 56711, rate: 81.7 },
+            { name: "Xã Long Hải", pop: 99099, count: 78206, rate: 78.9 },
+            { name: "Xã Châu Đức", pop: 24267, count: 18836, rate: 77.6 },
+            { name: "Xã Long Sơn", pop: 16678, count: 12815, rate: 76.8 },
+            { name: "Xã Bình Giã", pop: 25381, count: 19355, rate: 76.3 },
+            { name: "Xã Châu Pha", pop: 24510, count: 18419, rate: 75.1 },
+            { name: "Xã Xuân Sơn", pop: 24056, count: 18055, rate: 75.1 },
+            { name: "Xã Phước Thành", pop: 14534, count: 10807, rate: 74.4 },
+            { name: "Phường Tân Phước", pop: 27244, count: 20028, rate: 73.5 },
+            { name: "Xã Hòa Hội", pop: 32823, count: 23339, rate: 71.1 },
+            { name: "Đặc khu Côn Đảo", pop: 9673, count: 6667, rate: 68.9 },
+            { name: "Xã Hồ Tràm", pop: 46347, count: 31853, rate: 68.7 },
+            { name: "Xã Long Điền", pop: 45804, count: 31369, rate: 68.5 },
+            { name: "Xã Đất Đỏ", pop: 42842, count: 29314, rate: 68.4 },
+            { name: "Xã Nghĩa Thành", pop: 27744, count: 18898, rate: 68.1 },
+            { name: "Xã Hòa Hiệp", pop: 21469, count: 14610, rate: 68.1 },
+            { name: "Phường Tam Thắng", pop: 79435, count: 53916, rate: 67.9 },
+            { name: "Xã Phước Hải", pop: 41288, count: 27447, rate: 66.5 },
+            { name: "Phường Bến Cát", pop: 109252, count: 71990, rate: 65.9 },
+            { name: "Phường Tân Hải", pop: 28322, count: 18067, rate: 63.79 },
+            { name: "Phường Phú Mỹ", pop: 105358, count: 66877, rate: 63.5 },
+            { name: "Phường Bà Rịa", pop: 47274, count: 29727, rate: 62.9 },
+            { name: "Xã Ngãi Giao", pop: 46061, count: 28665, rate: 62.2 },
+            { name: "Xã Xuyên Mộc", pop: 24057, count: 14534, rate: 60.4 },
+            { name: "Xã Kim Long", pop: 30233, count: 18185, rate: 60.1 },
+            { name: "Xã Bình Châu", pop: 24241, count: 14540, rate: 60.0 },
+            { name: "Xã Bàu Lâm", pop: 22677, count: 13175, rate: 58.1 },
+            { name: "Phường Long Hương", pop: 31752, count: 18423, rate: 58.0 },
+            { name: "Phường Vũng Tàu", pop: 123715, count: 68748, rate: 55.6 }
         ];
 
-        // 2. DỮ LIỆU TỶ LỆ TOÀN BỘ 168 XÃ PHƯỜNG THEO BÁO CÁO 06/11/2026 (ĐÃ SẮP XẾP GIẢM DẦN)
+        // 2. DỮ LIỆU TỶ LỆ 168 XÃ PHƯỜNG (10/11/2026 - ĐÃ SẮP XẾP GIẢM DẦN)
         var ALL_168_RATES = [
-            111.7, 105.9, 104.3, 88.7, 87.7, 86.5, 86.3, 82.7, 81.1, 81.0, 80.8, 80.5, 79.4, 78.1, 77.4, 76.6, 76.4, 76.2, 76.0, 74.7,
-            74.5, 74.2, 74.1, 74.0, 73.9, 72.7, 72.2, 71.8, 70.6, 70.3, 70.3, 69.7, 69.1, 68.5, 68.4, 68.3, 67.6, 67.5, 67.3,
-            67.0, 66.8, 66.5, 66.4, 66.2, 65.9, 65.8, 65.2, 64.6, 64.4, 64.3, 64.2, 64.0, 63.9, 63.35, // Vị trí Phường Tân Hải (Hạng 39/168)
-            63.1, 63.0, 62.8, 62.5, 62.4, 62.0, 60.7, 60.7, 59.9, 59.9, 59.5, 59.3, 59.0, 58.8, 58.7, 58.2, 57.8, 57.6, 57.2, 57.1,
-            57.0, 57.0, 56.5, 56.1, 56.1, 55.9, 55.5, 54.9, 54.8, 54.7, 53.8, 53.4, 53.3, 53.0, 53.0, 52.6, 52.6, 52.4, 52.3, 52.2,
-            52.0, 52.0, 51.7, 51.0, 50.9, 50.8, 50.4, 50.4, 50.3, 50.2, 49.9, 49.7, 49.6, 49.4, 49.3, 49.3, 49.0, 48.9, 48.7, 48.3,
-            48.3, 47.9, 47.9, 47.3, 47.3, 47.1, 46.9, 46.7, 46.6, 46.3, 46.1, 45.9, 45.5, 45.2, 45.2, 44.9, 44.1, 43.7, 43.6, 43.5,
-            43.4, 43.4, 43.2, 43.1, 43.0, 43.0, 42.8, 42.8, 42.6, 42.5, 42.5, 42.1, 41.4, 41.2, 41.0, 40.8, 40.3, 40.3, 40.1, 39.7,
-            38.5, 38.1, 37.7, 37.1, 36.6, 36.4, 33.9
+            112.1, 106.7, 105.1, 97.7, 89.1, 88.9, 88.2, 87.1, 83.5, 81.9, 81.7, 81.2, 81.1, 79.8, 78.9, 78.2, 77.6, 76.8, 76.7, 76.3,
+            75.8, 75.1, 75.1, 75.0, 74.8, 74.4, 73.9, 73.5, 72.4, 72.2, 71.1, 71.0, 70.8, 70.5, 69.6, 69.6, 68.9, 68.7, 68.5,
+            68.4, 68.1, 68.1, 67.9, 67.0, 66.5, 66.3, 65.9, 65.3, 65.0, 64.7, 64.7, 64.6, 63.8, 63.79, // Phường Tân Hải (Hạng 39/168)
+            63.5, 63.5, 63.5, 63.0, 62.9, 62.6, 62.5, 62.2, 62.1, 61.5, 61.2, 61.1, 60.5, 60.4, 60.1, 60.0, 59.7, 59.3, 58.7, 58.5,
+            58.3, 58.1, 58.0, 57.9, 57.8, 56.5, 55.9, 55.9, 55.6, 55.5, 55.5, 55.2, 55.0, 54.5, 54.1, 54.0, 53.9, 53.6, 53.6, 53.3,
+            53.1, 52.9, 52.2, 52.1, 51.9, 51.8, 51.8, 51.3, 51.1, 50.8, 50.7, 50.4, 50.4, 50.4, 50.2, 50.2, 50.0, 50.0, 49.4, 48.5,
+            48.3, 48.3, 48.2, 48.2, 47.8, 47.7, 47.4, 47.4, 47.1, 47.1, 46.7, 46.5, 46.2, 45.9, 44.8, 44.8, 44.6, 44.5, 44.4, 44.4,
+            44.4, 44.3, 44.2, 43.9, 43.9, 43.8, 43.7, 43.6, 43.5, 43.1, 42.9, 42.2, 41.8, 41.8, 41.6, 41.0, 40.9, 40.7, 39.2, 38.3,
+            37.8, 37.0, 34.8
         ];
 
         var DEFAULT_CENTER = [10.5150, 107.1200];
@@ -410,17 +409,17 @@
             else { map.addLayer(terrainLayer); btn.innerHTML = '<i class="fa-solid fa-mountain"></i> Địa hình'; }
         }
 
-        // 3. DỮ LIỆU 9 KHU PHỐ CHUẨN XÁC TỔNG TÍCH LŨY 17.941 CA TRÊN 28.322 DÂN (TỶ LỆ 63,35%)
+        // 3. DỮ LIỆU 9 KHU PHỐ ĐỒNG BỘ CHUẨN XÁC 18.067 CA / 28.322 DÂN (63,79%)
         var khuPhoData = [
             { name: "Phước Thành", center: [10.5420, 107.1350], polygon: [[10.5480, 107.1280], [10.5480, 107.1420], [10.5360, 107.1420], [10.5360, 107.1280]], numTongDan: 1350, numDaKham: 1346 },
-            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2338 },
-            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1948 },
-            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2284 },
-            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 2102 },
-            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 2059 },
-            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2281 },
-            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 2235 },
-            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1474 }
+            { name: "Đông Hải",    center: [10.5080, 107.1350], polygon: [[10.5130, 107.1280], [10.5130, 107.1420], [10.5030, 107.1420], [10.5030, 107.1280]], numTongDan: 2836, numDaKham: 2355 },
+            { name: "Cát Hải",     center: [10.4950, 107.1120], polygon: [[10.5000, 107.1060], [10.5000, 107.1180], [10.4900, 107.1180], [10.4900, 107.1060]], numTongDan: 2698, numDaKham: 1965 },
+            { name: "Láng Cát",    center: [10.5180, 107.1250], polygon: [[10.5230, 107.1180], [10.5230, 107.1320], [10.5130, 107.1320], [10.5130, 107.1180]], numTongDan: 3318, numDaKham: 2310 },
+            { name: "Phước Hải",   center: [10.5020, 107.1280], polygon: [[10.5070, 107.1220], [10.5070, 107.1340], [10.4970, 107.1340], [10.4970, 107.1220]], numTongDan: 3320, numDaKham: 2125 },
+            { name: "Phước Hiệp",  center: [10.5260, 107.1120], polygon: [[10.5310, 107.1050], [10.5310, 107.1190], [10.5210, 107.1190], [10.5210, 107.1050]], numTongDan: 3220, numDaKham: 2070 },
+            { name: "Chu Hải",     center: [10.5000, 107.1200], polygon: [[10.5050, 107.1140], [10.5050, 107.1260], [10.4950, 107.1260], [10.4950, 107.1140]], numTongDan: 3950, numDaKham: 2305 },
+            { name: "Phước Tấn",   center: [10.5320, 107.1220], polygon: [[10.5370, 107.1150], [10.5370, 107.1290], [10.5270, 107.1290], [10.5270, 107.1150]], numTongDan: 3950, numDaKham: 2108 },
+            { name: "Phước Long",  center: [10.4900, 107.1020], polygon: [[10.4950, 107.0950], [10.4950, 107.1090], [10.4850, 107.1090], [10.4850, 107.0950]], numTongDan: 3680, numDaKham: 1483 }
         ];
 
         var mapLayersGroup = L.layerGroup().addTo(map);
@@ -528,7 +527,7 @@
         }
 
         function updateComparisonStats(totalCount, rate) {
-            var currentRate = parseFloat(rate) || 63.35;
+            var currentRate = parseFloat(rate) || 63.79;
 
             // 1. Quét thứ hạng trong 30 đơn vị BR-VT
             var rank_brvt = 1;
